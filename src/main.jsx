@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Root from "./Pages/Root/Root";
 import Home from "./Pages/Home/Home";
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import Register from "./Pages/Register/Register";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "register",
-        element: <div>This is the Register Page of BloodSync.</div>,
+        element: <Register></Register>,
       },
     ],
   },
