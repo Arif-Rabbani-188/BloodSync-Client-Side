@@ -241,29 +241,20 @@ const Navbar = () => {
               </li>
               <li>
                 <NavLink
-                  to="/about"
+                  to="/dashboard"
                   className="block py-2 text-black hover:text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  About
+                    Dashboard
                 </NavLink>
               </li>
               <li>
                 <NavLink
-                  to="/complaint"
+                  to="/donation-requests"
                   className="block py-2 text-black hover:text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Complaint
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/contact"
-                  className="block py-2 text-black hover:text-gray-700"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Contact
+                    Donation Requests
                 </NavLink>
               </li>
               <li>
@@ -272,7 +263,16 @@ const Navbar = () => {
                   className="block py-2 text-black hover:text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Blog
+                    Blog
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/funding"
+                  className="block py-2 text-black hover:text-gray-700"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                    Funding
                 </NavLink>
               </li>
               <li>

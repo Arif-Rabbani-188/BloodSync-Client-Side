@@ -10,8 +10,8 @@ const Appointment = () => {
     });
   };
   return (
-    <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-tl-[200px] rounded-br-[200px] p-8 flex items-center justify-center font-sans">
-      <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16 w-10/12 flex flex-col lg:flex-row gap-12">
+    <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-tl-[200px] rounded-br-[200px] px-3 md:p-8 flex items-center justify-center font-sans">
+      <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16 md:w-10/12 flex flex-col lg:flex-row gap-12">
         {/* Left Section: Helpful Information */}
         <div className="flex-1">
           <p className="text-sm text-gray-500 mb-2">Appointment</p>

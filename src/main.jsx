@@ -10,6 +10,9 @@ import Register from "./Pages/Register/Register";
 import AuthProvider from "./Contexts/AuthContext/AuthProvider";
 import Login from "./Pages/Login/Login";
 import PrivateRoute from "./Route/PrivateRoute/PrivateRoute";
+import DonorDashHome from "./Pages/Dashboard/DonorDashBoard/DonorDashHome/DonorDashHome";
+import DonorCreateReq from "./Pages/Dashboard/DonorDashBoard/DonorCreateReq/DonorCreateReq";
+import DonorMyDonationRequests from "./Pages/Dashboard/DonorDashBoard/DonorMyDonationRequests/DonorMyDonationRequests";
 
 const router = createBrowserRouter([
   {
@@ -51,15 +54,19 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>This is the Dashboard Home Page of BloodSync.</div>,
+        element: <DonorDashHome></DonorDashHome>
       },
       {
-        path: "profile",
-        element: <div>This is the Profile Page of BloodSync.</div>,
+        path: "home",
+        element: <DonorDashHome></DonorDashHome>,
       },
       {
-        path: "settings",
-        element: <div>This is the Settings Page of BloodSync.</div>,
+        path: "my-donation",
+        element: <DonorMyDonationRequests></DonorMyDonationRequests>,
+      },
+      {
+        path: "create-donation",
+        element: <DonorCreateReq></DonorCreateReq>,
       }
     ],
   },
