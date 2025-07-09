@@ -7,6 +7,9 @@ import Root from "./Pages/Root/Root";
 import Home from "./Pages/Home/Home";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Register from "./Pages/Register/Register";
+import AuthProvider from "./Contexts/AuthContext/AuthProvider";
+import Login from "./Pages/Login/Login";
+import PrivateRoute from "./Route/PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +23,9 @@ const router = createBrowserRouter([
       },
       {
         path: "donation-requests",
-        element: <div>This is the About Page of BloodSync.</div>,
+        element: <PrivateRoute>
+          <div>This is the About Page of BloodSync.</div>
+        </PrivateRoute>,
       },
       {
         path: "funding",
@@ -32,7 +37,7 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <div>This is the Login Page of BloodSync.</div>,
+        element: <Login></Login>,
       },
       {
         path: "register",
@@ -62,6 +67,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+   <AuthProvider>
     <RouterProvider router={router}></RouterProvider>
+   </AuthProvider>
   </StrictMode>
 );

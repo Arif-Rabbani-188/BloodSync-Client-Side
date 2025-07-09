@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 
 const Register = () => {
+    const {user, createUserWithEmail} = use(AuthContext);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        avatarUrl: '',
+        photoURL: '',
         bloodGroup: '',
         selectedDistrict: '',
         selectedUpazila: '',
@@ -64,25 +66,10 @@ const Register = () => {
                 const url = response.data.data.display_url;
                 setFormData(prevData => ({
                     ...prevData,
-                    avatarUrl: url,
+                    photoURL: url,
                 }));
-                console.log("Image uploaded:", url);
-                import('sweetalert2').then(Swal => {
-                    Swal.default.fire({
-                        icon: 'success',
-                        title: 'Image uploaded!',
-                        text: 'Your avatar has been uploaded successfully.',
-                    });
-                });
             } catch (error) {
                 console.error("Upload failed", error);
-                import('sweetalert2').then(Swal => {
-                    Swal.default.fire({
-                        icon: 'error',
-                        title: 'Image upload failed',
-                        text: 'Please try again.',
-                    });
-                });
             }
         };
 
@@ -98,9 +85,9 @@ const Register = () => {
                     className="w-full text-gray-700 p-2 btn bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                     accept="image/*"
                 />
-                {formData.avatarUrl && (
+                {formData.photoURL && (
                     <div className="mt-4 flex justify-center">
-                        <img src={formData.avatarUrl} alt="Uploaded Avatar" className="w-32 h-32 object-cover rounded-full border-2 border-blue-300 shadow-md" />
+                        <img src={formData.photoURL} alt="Uploaded Avatar" className="w-32 h-32 object-cover rounded-full border-2 border-blue-300 shadow-md" />
                     </div>
                 )}
             </div>
@@ -120,7 +107,18 @@ const Register = () => {
         }
 
         try {
-            // Check if user already exists by email
+            const userData = {
+                name: formData.name,
+                email: formData.email,
+                photoURL: formData.photoURL,
+                bloodGroup: formData.bloodGroup,
+                district: formData.selectedDistrict,
+                upazila: formData.selectedUpazila,
+                status: 'active',
+                role: 'donor',
+                createdAt: new Date().toISOString(),
+            };
+
             const checkRes = await axios.get("http://localhost:3000/users");
             const userExists = checkRes.data.some(user => user.email === formData.email);
             if (userExists) {
@@ -134,8 +132,9 @@ const Register = () => {
                 return;
             }
 
-            // Proceed with registration
-            const response = await axios.post("http://localhost:3000/users", formData);
+            createUserWithEmail(formData.email, formData.password, formData.photoURL, formData.name)
+                .then((result) => {
+                    const response = axios.post("http://localhost:3000/users", userData);
             console.log("Registration successful:", response.data);
             import('sweetalert2').then(Swal => {
                 Swal.default.fire({
@@ -147,13 +146,33 @@ const Register = () => {
             setFormData({
                 name: '',
                 email: '',
-                avatarUrl: '',
+                photoURL: '',
                 bloodGroup: '',
                 selectedDistrict: '',
                 selectedUpazila: '',
                 password: '',
-                confirmPassword: '',
+                confirmPassword: ''
             });
+                    
+                })
+                .catch((error) => {
+                    console.error("Error creating user:", error);
+                    import('sweetalert2').then(Swal => {
+                        Swal.default.fire({
+                            icon: 'error',
+                            title: 'Registration failed',
+                            text: error.message,
+                        });
+                    });
+                    return;
+                });
+            // Check if user already exists by email
+            
+
+            
+
+            // Proceed with registration
+            
         } catch (error) {
             import('sweetalert2').then(Swal => {
                 Swal.default.fire({
