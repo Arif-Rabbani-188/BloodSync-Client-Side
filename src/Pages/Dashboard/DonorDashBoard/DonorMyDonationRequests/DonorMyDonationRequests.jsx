@@ -118,7 +118,7 @@ const DashboardHome = () => {
                       )}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {req.status === "inprogress" && req.donorName && (
+                      {req.status === "inprogress" || req.status === "done" && req.donorName && (
                         <div>
                           <div>{req.donorName}</div>
                           <div className="text-xs text-gray-500">
@@ -127,7 +127,9 @@ const DashboardHome = () => {
                         </div>
                       )}
                     </td>
-                    <td className="py-2 px-4 border-b">
+                    {
+                      req.status === "pending" && (
+                        <td className="py-2 px-4 border-b">
                       <button
                         className="text-blue-600 underline mr-2"
                         onClick={() =>
@@ -153,6 +155,8 @@ const DashboardHome = () => {
                         View
                       </button>
                     </td>
+                      )
+                    }
                   </tr>
                 ))}
               </tbody>
@@ -214,7 +218,8 @@ const DashboardHome = () => {
                     <div className="text-xs text-gray-500">{req.donorEmail}</div>
                   </div>
                 )}
-                <div className="flex gap-2 mt-3">
+                {
+                  req.status === "pending" && (<div className="flex gap-2 mt-3">
                   <button
                     className="text-blue-600 underline"
                     onClick={() =>
@@ -237,7 +242,8 @@ const DashboardHome = () => {
                   >
                     View
                   </button>
-                </div>
+                </div>)
+                }
               </div>
             ))}
           </div>
