@@ -3,106 +3,64 @@ import { AuthContext } from "../../../../Contexts/AuthContext/AuthContext";
 import axios from "axios";
 import useUserRole from "../../../../Hooks/useUserRole";
 
-// Simple avatar generator for creative section
-
 // Creative section: Donor stats and motivation
 function DonorHero({ user }) {
-const [donations, setDonations] = useState([]);
+  const [donations, setDonations] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
     if (user?.email) {
-        axios
-            .get(`http://localhost:3000/donationRequest?email=${user.email}`)
-            .then((res) => setDonations(res.data || []))
-            .catch(() => setDonations([]));
+      axios
+        .get(`http://localhost:3000/donationRequest/${user.email}`)
+        .then((res) => setDonations(res.data || []))
+        .catch(() => setDonations([]));
     }
-}, [user]);
+  }, [user]);
 
-const {role, isloading} = useUserRole();
+  const { role } = useUserRole();
 
-return (
-    <div
-        style={{
-            background: "linear-gradient(90deg, #1976d2 60%)",
-            borderRadius: 16,
-            padding: 32,
-            color: "#fff",
-            marginBottom: 32,
-            display: "flex",
-            alignItems: "center",
-            gap: 32,
-            boxShadow: "0 4px 24px rgba(25,118,210,0.08)",
-        }}
-    >
-        <div>
-            <h2 style={{ margin: 0, fontWeight: 700, fontSize: 28 }}>
-                Welcome, {user?.displayName || user?.name || "Donor"}!
-            </h2>
-            <p style={{ margin: "8px 0 0 0", fontSize: 18 }}>
-                Thank you for being a life saver.{" "}
-                <span role="img" aria-label="heart">
-                    ❤️
-                </span>
-            </p>
-            <div style={{ marginTop: 16, fontSize: 16 }}>
-                <strong>Total Donations:</strong>{" "}
-                <span style={{ fontSize: 22 }}>{donations.length}</span>
-            </div>
-            <div style={{ marginTop: 16, fontSize: 16 }}>
-                <strong>Role:</strong>{" "}
-                <span style={{ fontSize: 16 }}>{role}</span>
-            </div>
+  return (
+    <div className="bg-gradient-to-r from-blue-700 to-blue-700/60 rounded-xl p-8 text-white mb-8 flex items-center gap-8 shadow-lg">
+      <div>
+        <h2 className="m-0 font-bold text-2xl md:text-3xl">
+          Welcome, {user?.displayName || user?.name || "Donor"}!
+        </h2>
+        <p className="mt-2 text-lg">
+          Thank you for being a life saver.{" "}
+          <span role="img" aria-label="heart">
+            ❤️
+          </span>
+        </p>
+        <div className="mt-4 text-base">
+          <strong>Total Donations:</strong>{" "}
+          <span className="text-2xl">{donations.length}</span>
         </div>
+        <div className="mt-4 text-base">
+          <strong>Role:</strong> <span className="text-base">{role}</span>
+        </div>
+      </div>
     </div>
-);
+  );
 }
 
 const DonorDashHome = () => {
   const { user, loading } = useContext(AuthContext);
 
   return (
-    <div
-      className="md:ml-80 mt-20 md:mt-5 p-4"
-      style={{ background: "#f4f8fb", minHeight: "100vh" }}
-    >
+    <div className="md:ml-80 mt-20 md:mt-5 p-4 bg-[#f4f8fb] min-h-screen">
       {loading ? (
-        <div style={{ textAlign: "center", marginTop: 64 }}>Loading...</div>
+        <div className="text-center mt-16">Loading...</div>
       ) : (
         <>
           <DonorHero user={user} />
           <RecentDonationRequests userId={user?._id || user?.id} />
-          <div style={{ marginTop: "2rem", textAlign: "center" }}>
+          <div className="mt-8 text-center">
             <a href="/dashboard/my-donation-requests">
-              <button
-                style={{
-                  background: "#1976d2",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 8,
-                  padding: "10px 24px",
-                  fontWeight: 600,
-                  fontSize: 16,
-                  cursor: "pointer",
-                  boxShadow: "0 2px 8px rgba(25,118,210,0.12)",
-                }}
-              >
+              <button className="bg-blue-700 text-white rounded-lg px-6 py-2 font-semibold text-base shadow-md hover:bg-blue-800 transition">
                 View My All Requests
               </button>
             </a>
           </div>
-          <div
-            style={{
-              marginTop: 40,
-              background: "#fff",
-              borderRadius: 12,
-              padding: 24,
-              boxShadow: "0 2px 12px rgba(25,118,210,0.06)",
-              textAlign: "center",
-              color: "#1976d2",
-              fontSize: 20,
-              fontStyle: "italic",
-            }}
-          >
+          <div className="mt-10 bg-white rounded-xl p-6 shadow-md text-center text-blue-700 text-xl italic">
             "A single pint can save three lives, a single gesture can create a
             million smiles."
           </div>
@@ -113,7 +71,7 @@ const DonorDashHome = () => {
 };
 
 function RecentDonationRequests({ userId }) {
-    const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState(null);
@@ -122,7 +80,7 @@ function RecentDonationRequests({ userId }) {
     if (user?.email) {
       setLoading(true);
       axios
-        .get(`http://localhost:3000/donationRequest?email=${user.email}`)
+        .get(`http://localhost:3000/donationRequest/${user.email}`)
         .then((res) => setRequests(res.data || []))
         .catch(() => setRequests([]))
         .finally(() => setLoading(false));
@@ -133,19 +91,15 @@ function RecentDonationRequests({ userId }) {
   }, [user]);
 
   if (loading)
-    return (
-      <div style={{ textAlign: "center", margin: 32 }}>
-        Loading recent requests...
-      </div>
-    );
-  if (!requests.length) return null; // Hide section if no requests
+    return <div className="text-center my-8">Loading recent requests...</div>;
+  if (!requests.length) return null;
 
   function handleDelete(id) {
     setDeleteId(id);
   }
 
   function confirmDelete() {
-    fetch(`/api/donation-requests/${deleteId}`, { method: "DELETE" }).then(
+    fetch(`http://localhost:3000/donationRequestById/${deleteId}`, { method: "DELETE" }).then(
       () => {
         setRequests((reqs) => reqs.filter((r) => r._id !== deleteId));
         setDeleteId(null);
@@ -172,165 +126,195 @@ function RecentDonationRequests({ userId }) {
   }
 
   const statusColors = {
-    pending: "#fbc02d",
-    inprogress: "#1976d2",
-    done: "#388e3c",
-    canceled: "#e53935",
+    pending: "text-yellow-600",
+    inprogress: "text-blue-700",
+    done: "text-green-700",
+    canceled: "text-red-600",
   };
 
-  console.log("Requests:", requests);
-
   return (
-    <div
-      style={{
-        background: "#fff",
-        borderRadius: 12,
-        padding: 24,
-        boxShadow: "0 2px 12px rgba(25,118,210,0.06)",
-        marginBottom: 24,
-      }}
-    >
-      <h3 style={{ marginBottom: 16, color: "#1976d2", fontWeight: 700 }}>
+    <div className="bg-white rounded-xl p-6 shadow-md mb-6">
+      <h3 className="mb-4 text-blue-700 font-bold text-xl">
         My Recent Donation Requests
       </h3>
-      <div style={{ overflowX: "auto" }}>
-        <table
-          style={{ width: "100%", borderCollapse: "collapse", minWidth: 800 }}
-        >
-          <thead>
-            <tr style={{ background: "#e3f2fd" }}>
-              <th style={thStyle}>Recipient Name</th>
-              <th style={thStyle}>Location</th>
-              <th style={thStyle}>Date</th>
-              <th style={thStyle}>Time</th>
-              <th style={thStyle}>Blood Group</th>
-              <th style={thStyle}>Status</th>
-              <th style={thStyle}>Donor Info</th>
-              <th style={thStyle}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests.map((req) => (
-              <tr key={req._id} style={{ borderBottom: "1px solid #f5f5f5" }}>
-                <td style={tdStyle}>{req.recipientName}</td>
-                <td style={tdStyle}>
-                  {req.recipientDistrict}, {req.recipientUpazila}
-                </td>
-                <td style={tdStyle}>{req.donationDate}</td>
-                <td style={tdStyle}>{req.donationTime}</td>
-                <td style={{ ...tdStyle, fontWeight: 700, color: "#1976d2" }}>
-                  {req.bloodGroup}
-                </td>
-                <td
-                  style={{
-                    ...tdStyle,
-                    color: statusColors[req.status] || "#888",
-                    fontWeight: 600,
-                  }}
+      {/* Table for desktop, cards for mobile */}
+      <div>
+        {/* Desktop Table */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full min-w-[800px] border-collapse">
+            <thead>
+              <tr className="bg-blue-100">
+                <th className={thClass}>Recipient Name</th>
+                <th className={thClass}>Location</th>
+                <th className={thClass}>Date</th>
+                <th className={thClass}>Time</th>
+                <th className={thClass}>Blood Group</th>
+                <th className={thClass}>Status</th>
+                <th className={thClass}>Donor Info</th>
+                <th className={thClass}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {requests.map((req) => (
+                <tr key={req._id} className="border-b border-gray-100">
+                  <td className={tdClass}>{req.recipientName}</td>
+                  <td className={tdClass}>
+                    {req.recipientDistrict}, {req.recipientUpazila}
+                  </td>
+                  <td className={tdClass}>{req.donationDate}</td>
+                  <td className={tdClass}>{req.donationTime}</td>
+                  <td className="font-bold text-blue-700 px-2 py-2 text-sm">
+                    {req.bloodGroup}
+                  </td>
+                  <td
+                    className={`${tdClass} font-semibold ${
+                      statusColors[req.status] || "text-gray-500"
+                    }`}
+                  >
+                    {req.status.charAt(0).toUpperCase() + req.status.slice(1)}
+                  </td>
+                  <td className={tdClass}>
+                    {req.status === "inprogress" && req.donor ? (
+                      <div>
+                        <div className="font-semibold">{req.donor.name}</div>
+                        <div className="text-xs text-gray-500">
+                          {req.donorEmail}
+                        </div>
+                      </div>
+                    ) : (
+                      <span className="text-gray-300">-</span>
+                    )}
+                  </td>
+                  <td className={tdClass}>
+                    <a href={`/dashboard/donation-requests/${req._id}`}>
+                      <button className={actionBtnClass}>View</button>
+                    </a>
+                    <a href={`/dashboard/donation-requests/edit/${req._id}`}>
+                      <button className={actionBtnClass}>Edit</button>
+                    </a>
+                    <button
+                      className={actionBtnClass}
+                      onClick={() => handleDelete(req._id)}
+                    >
+                      Delete
+                    </button>
+                    {req.status === "inprogress" && (
+                      <>
+                        <button
+                          className={`${actionBtnClass} bg-green-700 text-white hover:bg-green-800`}
+                          onClick={() => handleStatusChange(req._id, "done")}
+                        >
+                          Done
+                        </button>
+                        <button
+                          className={`${actionBtnClass} bg-red-600 text-white hover:bg-red-700`}
+                          onClick={() => handleStatusChange(req._id, "canceled")}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {/* Mobile Cards */}
+        <div className="md:hidden flex flex-col gap-4">
+          {requests.map((req) => (
+            <div
+              key={req._id}
+              className="border rounded-lg shadow p-4 bg-blue-50"
+            >
+              <div className="flex justify-between items-center mb-2">
+                <div className="font-bold text-blue-700 text-lg">
+                  {req.recipientName}
+                </div>
+                <div
+                  className={`font-semibold text-sm ${
+                    statusColors[req.status] || "text-gray-500"
+                  }`}
                 >
                   {req.status.charAt(0).toUpperCase() + req.status.slice(1)}
-                </td>
-                <td style={tdStyle}>
-                  {req.status === "inprogress" && req.donor ? (
-                    <div>
-                      <div style={{ fontWeight: 600 }}>{req.donor.name}</div>
-                      <div style={{ fontSize: 13, color: "#888" }}>
-                        {req.donorEmail}
-                      </div>
-                    </div>
-                  ) : (
-                    <span style={{ color: "#bbb" }}>-</span>
-                  )}
-                </td>
-                <td style={tdStyle}>
-                  <a href={`/dashboard/donation-requests/${req._id}`}>
-                    <button style={actionBtnStyle}>View</button>
-                  </a>
-                  <a href={`/dashboard/donation-requests/edit/${req._id}`}>
-                    <button style={actionBtnStyle}>Edit</button>
-                  </a>
-                  <button
-                    style={actionBtnStyle}
-                    onClick={() => handleDelete(req._id)}
-                  >
-                    Delete
-                  </button>
-                  {req.status === "inprogress" && (
-                    <>
-                      <button
-                        style={{
-                          ...actionBtnStyle,
-                          background: "#388e3c",
-                          color: "#fff",
-                        }}
-                        onClick={() => handleStatusChange(req._id, "done")}
-                      >
-                        Done
-                      </button>
-                      <button
-                        style={{
-                          ...actionBtnStyle,
-                          background: "#e53935",
-                          color: "#fff",
-                        }}
-                        onClick={() => handleStatusChange(req._id, "canceled")}
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+              </div>
+              <div className="text-sm mb-1">
+                <span className="font-semibold">Location:</span>{" "}
+                {req.recipientDistrict}, {req.recipientUpazila}
+              </div>
+              <div className="text-sm mb-1">
+                <span className="font-semibold">Date:</span> {req.donationDate}
+              </div>
+              <div className="text-sm mb-1">
+                <span className="font-semibold">Time:</span> {req.donationTime}
+              </div>
+              <div className="text-sm mb-1">
+                <span className="font-semibold">Blood Group:</span>{" "}
+                <span className="font-bold text-blue-700">{req.bloodGroup}</span>
+              </div>
+              <div className="text-sm mb-1">
+                <span className="font-semibold">Donor Info:</span>{" "}
+                {req.status === "inprogress" && req.donor ? (
+                  <span>
+                    <span className="font-semibold">{req.donor.name}</span>
+                    <span className="block text-xs text-gray-500">
+                      {req.donorEmail}
+                    </span>
+                  </span>
+                ) : (
+                  <span className="text-gray-300">-</span>
+                )}
+              </div>
+              <div className="flex flex-wrap gap-2 mt-2">
+                <a href={`/dashboard/donation-requests/${req._id}`}>
+                  <button className={actionBtnClass}>View</button>
+                </a>
+                <a href={`/dashboard/donation-requests/edit/${req._id}`}>
+                  <button className={actionBtnClass}>Edit</button>
+                </a>
+                <button
+                  className={actionBtnClass}
+                  onClick={() => handleDelete(req._id)}
+                >
+                  Delete
+                </button>
+                {req.status === "inprogress" && (
+                  <>
+                    <button
+                      className={`${actionBtnClass} bg-green-700 text-white hover:bg-green-800`}
+                      onClick={() => handleStatusChange(req._id, "done")}
+                    >
+                      Done
+                    </button>
+                    <button
+                      className={`${actionBtnClass} bg-red-600 text-white hover:bg-red-700`}
+                      onClick={() => handleStatusChange(req._id, "canceled")}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       {/* Confirmation Modal */}
       {deleteId && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            background: "rgba(0,0,0,0.3)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 8,
-              padding: 32,
-              minWidth: 320,
-              boxShadow: "0 4px 24px rgba(25,118,210,0.18)",
-              textAlign: "center",
-            }}
-          >
-            <div style={{ marginBottom: 16, fontSize: 18 }}>
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-[1000]">
+          <div className="bg-white rounded-lg p-8 min-w-[320px] shadow-xl text-center">
+            <div className="mb-4 text-lg">
               Are you sure you want to delete this request?
             </div>
             <button
-              style={{
-                ...actionBtnStyle,
-                background: "#e53935",
-                color: "#fff",
-                marginRight: 8,
-              }}
+              className="mr-2 px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700"
               onClick={confirmDelete}
             >
               Yes, Delete
             </button>
             <button
-              style={{
-                ...actionBtnStyle,
-                background: "#e3f2fd",
-                color: "#1976d2",
-              }}
+              className="px-4 py-2 rounded bg-blue-100 text-blue-700 font-semibold hover:bg-blue-200"
               onClick={cancelDelete}
             >
               Cancel
@@ -342,33 +326,10 @@ function RecentDonationRequests({ userId }) {
   );
 }
 
-const thStyle = {
-  padding: "10px 8px",
-  textAlign: "left",
-  fontWeight: 700,
-  color: "#1976d2",
-  fontSize: 15,
-  borderBottom: "2px solid #bbdefb",
-};
-
-const tdStyle = {
-  padding: "8px 8px",
-  fontSize: 15,
-  color: "#333",
-  verticalAlign: "top",
-};
-
-const actionBtnStyle = {
-  margin: "0 4px 4px 0",
-  padding: "6px 14px",
-  border: "none",
-  borderRadius: 6,
-  background: "#e3f2fd",
-  color: "#1976d2",
-  fontWeight: 600,
-  cursor: "pointer",
-  fontSize: 14,
-  transition: "background 0.2s",
-};
+const thClass =
+  "px-3 py-2 text-left font-bold text-blue-700 text-sm border-b-2 border-blue-200";
+const tdClass = "px-2 py-2 text-sm text-gray-800 align-top";
+const actionBtnClass =
+  "mr-1 mb-1 px-3 py-1 rounded bg-blue-100 text-blue-700 font-semibold text-xs hover:bg-blue-200 transition";
 
 export default DonorDashHome;
