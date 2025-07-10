@@ -107,12 +107,18 @@ const Register = () => {
         }
 
         try {
+            // Capitalize the first letter of the district name
+            const selectedDistrictObj = districts.find(d => d.id === formData.selectedDistrict);
+            const districtName = selectedDistrictObj
+                ? selectedDistrictObj.name.charAt(0).toUpperCase() + selectedDistrictObj.name.slice(1)
+                : formData.selectedDistrict;
+
             const userData = {
                 name: formData.name,
                 email: formData.email,
                 photoURL: formData.photoURL,
                 bloodGroup: formData.bloodGroup,
-                district: formData.selectedDistrict,
+                district: districtName,
                 upazila: formData.selectedUpazila,
                 status: 'active',
                 role: 'donor',
