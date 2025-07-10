@@ -57,6 +57,14 @@ const Navbar = () => {
                 </li>
                 <li>
                   <NavLink
+                    to="/search-donor"
+                    className="text-black hover:text-gray-700"
+                  >
+                    Search Donor
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
                     to="/blog"
                     className="text-black hover:text-gray-700"
                   >
@@ -132,8 +140,8 @@ const Navbar = () => {
                               </span>
                             </div>
                             <span className="text-xs text-gray-600 capitalize">
-                                Role: {userData?.role || "unknown"}
-                              </span>
+                              Role: {userData?.role || "unknown"}
+                            </span>
                           </div>
                         </div>
                         <button
@@ -217,9 +225,9 @@ const Navbar = () => {
                         {userData?.status || "unknown"}
                       </span>
                     </div>
-                     <span className="text-xs text-gray-600 capitalize">
-                        Role: {userData?.role || "unknown"}
-                      </span>
+                    <span className="text-xs text-gray-600 capitalize">
+                      Role: {userData?.role || "unknown"}
+                    </span>
                   </div>
                 </div>
                 <button
@@ -245,7 +253,7 @@ const Navbar = () => {
                   className="block py-2 text-black hover:text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                    Dashboard
+                  Dashboard
                 </NavLink>
               </li>
               <li>
@@ -254,7 +262,16 @@ const Navbar = () => {
                   className="block py-2 text-black hover:text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                    Donation Requests
+                  Donation Requests
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/search-donor"
+                  className="block py-2 text-black hover:text-gray-700"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Search Donor
                 </NavLink>
               </li>
               <li>
@@ -263,7 +280,7 @@ const Navbar = () => {
                   className="block py-2 text-black hover:text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                    Blog
+                  Blog
                 </NavLink>
               </li>
               <li>
@@ -272,7 +289,7 @@ const Navbar = () => {
                   className="block py-2 text-black hover:text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                    Funding
+                  Funding
                 </NavLink>
               </li>
               <li>

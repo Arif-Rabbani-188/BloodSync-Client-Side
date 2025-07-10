@@ -1,48 +1,69 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../../Contexts/AuthContext/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
+import Swal from "sweetalert2";
 
-const DashboardHome = () => {
+const AllDonationRequests = () => {
   const { user } = useContext(AuthContext);
   const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.email) {
-      axios
-        .get(`http://localhost:3000/donationRequest/${user.email}`)
-        .then((res) => setRequests(res.data || []))
-        .catch(() => setRequests([]));
-    }
-  }, [user]);
+    const fetchRequests = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/donationRequest`);
+        setRequests(res.data || []);
+      } catch {
+        setRequests([]);
+      }
+    };
+    fetchRequests();
+  }, []);
 
   const handleStatusChange = async (id, newStatus) => {
-    await axios.patch(`http://localhost:3000/donationRequest/${id}`, {
+    const { isConfirmed } = await Swal.fire({
+      title: `Are you sure?`,
+      text: `You are about to mark this request as "${newStatus}".`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, confirm",
+      cancelButtonText: "Cancel",
+    });
+    if (!isConfirmed) return;
+
+    await axios.patch(`http://localhost:3000/donationRequestById/${id}`, {
       status: newStatus,
     });
     setRequests((prev) =>
       prev.map((req) => (req._id === id ? { ...req, status: newStatus } : req))
     );
+    Swal.fire("Updated!", "Status has been updated.", "success");
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this request?")) {
-      await axios.delete(`http://localhost:3000/donationRequest/${id}`);
-      setRequests((prev) => prev.filter((req) => req._id !== id));
-    }
-  };
+    const { isConfirmed } = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+    if (!isConfirmed) return;
 
-  const recentRequests = requests
-    .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))
-    .slice(0, 3);
+    await axios.delete(`http://localhost:3000/donationRequestById/${id}`);
+    setRequests((prev) => prev.filter((req) => req._id !== id));
+    Swal.fire("Deleted!", "The request has been deleted.", "success");
+  };
 
   return (
     <div className="p-4 md:ml-80 mt-20 md:mt-10 w-10/12 mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-center">
         Welcome, {user?.displayName || user?.email}!
       </h2>
-      {recentRequests.length > 0 && (
+      {!requests && <p>Loading...</p>}
+      {requests?.length > 0 && (
         <>
           <h3 className="text-lg font-semibold mb-2">
             Recent Donation Requests
@@ -62,7 +83,7 @@ const DashboardHome = () => {
                 </tr>
               </thead>
               <tbody>
-                {recentRequests.map((req) => (
+                {requests.map((req) => (
                   <tr key={req._id} className="hover:bg-gray-50 text-center">
                     <td className="py-2 px-4 border-b">{req.recipientName}</td>
                     <td className="py-2 px-4 border-b">
@@ -151,4 +172,4 @@ const DashboardHome = () => {
   );
 };
 
-export default DashboardHome;
+export default AllDonationRequests;

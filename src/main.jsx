@@ -13,6 +13,15 @@ import PrivateRoute from "./Route/PrivateRoute/PrivateRoute";
 import DonorDashHome from "./Pages/Dashboard/DonorDashBoard/DonorDashHome/DonorDashHome";
 import DonorCreateReq from "./Pages/Dashboard/DonorDashBoard/DonorCreateReq/DonorCreateReq";
 import DonorMyDonationRequests from "./Pages/Dashboard/DonorDashBoard/DonorMyDonationRequests/DonorMyDonationRequests";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AllUsers from "./Pages/Dashboard/AdminDashboard/AllUsers";
+import AllDonationRequests from "./Pages/Dashboard/AdminDashboard/AllDonationRequests";
+import PublickDonation from "./Pages/PublicDonationPage/PublickDonation";
+import ViewDetailRequest from "./Pages/PublicDonationPage/ViewDetailRequest";
+import AdminDashboardHome from "./Pages/Dashboard/AdminDashboard/AdminDashboardHome";
+import SearchDonor from "./Pages/SearchDonor/SearchDonor";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -26,9 +35,11 @@ const router = createBrowserRouter([
       },
       {
         path: "donation-requests",
-        element: <PrivateRoute>
-          <div>This is the About Page of BloodSync.</div>
-        </PrivateRoute>,
+        element: <PublickDonation></PublickDonation>
+      },
+      {
+        path: "donation-requests/:id",
+        element: <PrivateRoute><ViewDetailRequest></ViewDetailRequest></PrivateRoute>,
       },
       {
         path: "funding",
@@ -46,6 +57,10 @@ const router = createBrowserRouter([
         path: "register",
         element: <Register></Register>,
       },
+      {
+        path: "search-donor",
+        element: <SearchDonor></SearchDonor>,
+      }
     ],
   },
   {
@@ -57,8 +72,20 @@ const router = createBrowserRouter([
         element: <DonorDashHome></DonorDashHome>
       },
       {
-        path: "home",
+        path:"admin-home",
+        element: <AdminDashboardHome></AdminDashboardHome>
+      },
+      {
+        path: "donor-home",
         element: <DonorDashHome></DonorDashHome>,
+      },
+      {
+        path: "all-users",
+        element: <AllUsers></AllUsers>,
+      },
+      {
+        path: "all-donation-requests",
+        element: <AllDonationRequests></AllDonationRequests>,
       },
       {
         path: "my-donation",
@@ -74,8 +101,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <QueryClientProvider client={queryClient}>
    <AuthProvider>
     <RouterProvider router={router}></RouterProvider>
    </AuthProvider>
+   </QueryClientProvider>
   </StrictMode>
 );

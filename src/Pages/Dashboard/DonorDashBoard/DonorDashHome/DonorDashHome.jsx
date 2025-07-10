@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../Contexts/AuthContext/AuthContext";
 import axios from "axios";
+import useUserRole from "../../../../Hooks/useUserRole";
 
 // Simple avatar generator for creative section
 
@@ -16,6 +17,8 @@ useEffect(() => {
             .catch(() => setDonations([]));
     }
 }, [user]);
+
+const {role, isloading} = useUserRole();
 
 return (
     <div
@@ -44,6 +47,10 @@ return (
             <div style={{ marginTop: 16, fontSize: 16 }}>
                 <strong>Total Donations:</strong>{" "}
                 <span style={{ fontSize: 22 }}>{donations.length}</span>
+            </div>
+            <div style={{ marginTop: 16, fontSize: 16 }}>
+                <strong>Role:</strong>{" "}
+                <span style={{ fontSize: 16 }}>{role}</span>
             </div>
         </div>
     </div>
@@ -228,7 +235,7 @@ function RecentDonationRequests({ userId }) {
                     <div>
                       <div style={{ fontWeight: 600 }}>{req.donor.name}</div>
                       <div style={{ fontSize: 13, color: "#888" }}>
-                        {req.donor.email}
+                        {req.donorEmail}
                       </div>
                     </div>
                   ) : (
