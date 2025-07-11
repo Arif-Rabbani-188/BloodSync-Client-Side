@@ -65,7 +65,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/blog"
+                    to="/blogs"
                     className="text-black hover:text-gray-700"
                   >
                     Blog
@@ -276,7 +276,7 @@ const Navbar = () => {
               </li>
               <li>
                 <NavLink
-                  to="/blog"
+                  to="/blogs"
                   className="block py-2 text-black hover:text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >

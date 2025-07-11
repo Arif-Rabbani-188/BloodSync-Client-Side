@@ -21,6 +21,11 @@ import ViewDetailRequest from "./Pages/PublicDonationPage/ViewDetailRequest";
 import AdminDashboardHome from "./Pages/Dashboard/AdminDashboard/AdminDashboardHome";
 import SearchDonor from "./Pages/SearchDonor/SearchDonor";
 import RequestViewDetail from "./Pages/DonationRequestDetail/RequestViewDetail";
+import ContentPage from "./Pages/ContentManagment/ContentPage";
+import AddBlogs from "./Pages/ContentManagment/AddBlogs";
+import AllBlogs from "./Pages/Blogs/AllBlogs";
+import SingleBlog from "./Pages/Blogs/SingleBlog";
+import DashboardHome from "./Pages/Dashboard/DashboardHome/DashboardHome";
 
 const queryClient = new QueryClient();
 
@@ -47,10 +52,6 @@ const router = createBrowserRouter([
         element: <div>This is the Complaint Page of BloodSync.</div>,
       },
       {
-        path: "blog",
-        element: <div>This is the Blog Page of BloodSync.</div>,
-      },
-      {
         path: "login",
         element: <Login></Login>,
       },
@@ -61,6 +62,14 @@ const router = createBrowserRouter([
       {
         path: "search-donor",
         element: <SearchDonor></SearchDonor>,
+      },
+      {
+        path:"blogs",
+        element: <AllBlogs></AllBlogs>
+      },
+      {
+        path: "blogs/:id",
+        element:<SingleBlog></SingleBlog>
       }
     ],
   },
@@ -70,7 +79,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DonorDashHome></DonorDashHome>
+        element: <DashboardHome></DashboardHome>
       },
       {
         path:"admin-home",
@@ -103,6 +112,14 @@ const router = createBrowserRouter([
       {
         path: "create-donation",
         element: <DonorCreateReq></DonorCreateReq>,
+      },
+      {
+        path: "content-management",
+        element: <ContentPage></ContentPage>
+      },
+      {
+        path: "content-management/add-blog",
+        element:<AddBlogs></AddBlogs>
       }
     ],
   },

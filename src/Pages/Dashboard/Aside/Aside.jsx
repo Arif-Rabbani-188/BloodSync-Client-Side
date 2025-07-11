@@ -74,57 +74,30 @@ const Aside = () => {
               Home
             </NavLink>
           </li>
-          {role === "donor" && !isLoading && (
-            <li>
-              <NavLink
-              onClick={toggleSidebar}
-                to="/dashboard/donor-home"
-                className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
+          <li>
+            <NavLink
+            onClick={toggleSidebar}
+              to="/dashboard"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
+            >
+              <svg
+                className="w-6 h-6 mr-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  className="w-6 h-6 mr-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0l7 7m-7-7v10a1 1 0 01-1 1h-3"
-                  ></path>
-                </svg>
-                Dashboard Home
-              </NavLink>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0l7 7m-7-7v10a1 1 0 01-1 1h-3"
+                ></path>
+              </svg>
+              Dashboard Home
+            </NavLink>
             </li>
-          )}
-          {role === "admin" && !isLoading && (
-            <li>
-              <NavLink
-              onClick={toggleSidebar}
-                to="/dashboard/admin-home"
-                className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
-              >
-                <svg
-                  className="w-6 h-6 mr-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0l7 7m-7-7v10a1 1 0 01-1 1h-3"
-                  ></path>
-                </svg>
-                Dashboard Home
-              </NavLink>
-            </li>
-          )}
-          {role === "admin" && !isLoading && (
+          {(role === "admin" || role === "volunteer") && !isLoading && (
             <li>
               <NavLink
               onClick={toggleSidebar}
@@ -149,7 +122,7 @@ const Aside = () => {
               </NavLink>
             </li>
           )}
-          {role === "admin" && !isLoading && (
+          {( (role === "admin" || role === "volunteer") && !isLoading ) && (
             <li>
               <NavLink
               onClick={toggleSidebar}
@@ -220,7 +193,7 @@ const Aside = () => {
               Create Donation Request
             </NavLink>
           </li>
-          {role === "admin" && !isLoading && (
+          {(role === "admin" || role === "volunteer") && !isLoading && (
             <li>
               <NavLink
               onClick={toggleSidebar}

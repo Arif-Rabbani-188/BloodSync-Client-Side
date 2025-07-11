@@ -1,9 +1,21 @@
-import React, { use } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FaUsers, FaHandHoldingUsd, FaTint } from "react-icons/fa";
 import useUsers from "../../../Hooks/useUsers";
+import axios from "axios";
 
 const AdminDashboardHome = () => {
     const{data: users} = useUsers();
+    const [requests, setRequests] = useState([]);
+    useEffect(() => {
+      axios.get('http://localhost:3000/donationRequest')
+      .then(response => {
+        console.log("Donation Requests:", response.data);
+        setRequests(response?.data.length);
+      })
+      .catch(error => {
+        console.error("Error fetching donation requests:", error);
+      })
+    }, [users]);
 
     console.log(users);
    
@@ -22,7 +34,7 @@ const AdminDashboardHome = () => {
     },
     {
       icon: <FaTint size={32} className="text-red-600" />,
-      count: 320,
+      count: requests || 0,
       title: "Blood Requests",
       bg: "bg-red-50",
     },

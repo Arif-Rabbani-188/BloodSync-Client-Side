@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useUsers from "../../../Hooks/useUsers";
+import useUserRole from "../../../Hooks/useUserRole";
 
 const PAGE_SIZE = 5;
 
@@ -9,6 +10,21 @@ const AllUsers = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(1);
   const{data: users ,isLoading, refetch} = useUsers();
+  const {role} = useUserRole();
+
+    if (role !== "admin" && role !== "volunteer") {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold text-red-500 mb-2">Access Denied</h1>
+                    <p className="text-lg text-slate-600">
+                        You do not have the necessary permissions to view this page.<br />
+                        Please contact your administrator if you believe this is a mistake.
+                    </p>
+                </div>
+            </div>
+        );
+    }
 
   if (!users || isLoading) {
     return <div className="text-center mt-20">Loading...</div>;
