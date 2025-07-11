@@ -26,6 +26,7 @@ import AddBlogs from "./Pages/ContentManagment/AddBlogs";
 import AllBlogs from "./Pages/Blogs/AllBlogs";
 import SingleBlog from "./Pages/Blogs/SingleBlog";
 import DashboardHome from "./Pages/Dashboard/DashboardHome/DashboardHome";
+import Error from "./Pages/Error/Error";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement: <Error />, // Add error page for root and its children
     children: [
       { index: true, element: <Home></Home> },
       {
@@ -70,12 +72,17 @@ const router = createBrowserRouter([
       {
         path: "blogs/:id",
         element:<SingleBlog></SingleBlog>
+      },
+      {
+        path: "/*",
+        element: <Error></Error>
       }
     ],
   },
   {
     path: "dashboard",
     element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+    errorElement: <Error />, // Add error page for dashboard and its children
     children: [
       {
         index: true,
