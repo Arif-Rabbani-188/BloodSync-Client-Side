@@ -230,12 +230,20 @@ const Navbar = () => {
                     </span>
                   </div>
                 </div>
-                <button
+                {
+                  user ? (<button
                   onClick={handleLogOut}
                   className="w-full py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded transition"
                 >
                   Log Out
-                </button>
+                </button>): (<button className="w-full py-2 px-4 bg-blue-600 text-white rounded transition"> <NavLink
+                  to="/login"
+                  className="block font-bold text-white hover:text-gray-700"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Login
+                </NavLink></button>)
+                }
               </div>
               <hr />
               <li>
@@ -290,15 +298,6 @@ const Navbar = () => {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Funding
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/login"
-                  className="block py-2 text-black hover:text-gray-700"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Login
                 </NavLink>
               </li>
             </ul>
