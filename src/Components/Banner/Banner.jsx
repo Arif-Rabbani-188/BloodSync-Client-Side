@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaArrowRight, FaSearch } from "react-icons/fa";
 import { NavLink } from "react-router";
+import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 
 const Banner = () => {
+  const {user} = useContext(AuthContext);
   return (
     <div className="hero pt-30 pb-10 bg-gradient-to-br from-green-100 to-white min-h-[600px] rounded-tl-[100px]">
       <div className="flex flex-col lg:flex-row-reverse w-11/12 mx-auto items-center justify-between">
@@ -22,13 +24,15 @@ const Banner = () => {
             Your contribution can make a difference!
           </p>
           <div className="flex flex-col md:flex-row gap-5 justify-center items-center">
-            <NavLink className="p-2 pl-5 rounded-tr-lg font-bold text-lg bg-white rounded-full shadow-2xl flex items-center gap-5">
+            {
+              !user && (<NavLink to="/register" className="p-2 pl-5 rounded-tr-lg font-bold text-lg bg-white rounded-full shadow-2xl flex items-center gap-5">
             Join as a Donor{" "}
             <span className="p-2 bg-green-400 text-white rounded-tl-full rounded-bl-full rounded-br-full">
               <FaArrowRight />
             </span>
-          </NavLink>
-          <NavLink className="p-2 pl-5 rounded-tr-lg font-bold text-lg bg-white rounded-full shadow-2xl flex items-center gap-5">
+          </NavLink>)
+            }
+          <NavLink to="/search-donor" className="p-2 pl-5 rounded-tr-lg font-bold text-lg bg-white rounded-full shadow-2xl flex items-center gap-5">
             Search Donors{" "}
             <span className="p-2 bg-green-400 text-white rounded-tl-full rounded-bl-full rounded-br-full">
               <FaSearch />

@@ -150,7 +150,7 @@ const Register = () => {
                 Swal.default.fire({
                     icon: 'success',
                     title: 'Registration successful!',
-                    text: 'Check console for data.',
+                    text: 'Welcome to BloodSync, you can now start donating blood.',
                 });
             });
             setFormData({

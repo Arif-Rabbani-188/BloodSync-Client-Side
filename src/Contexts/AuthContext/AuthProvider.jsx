@@ -48,16 +48,12 @@ export const AuthProvider = ({ children }) => {
 
   const createUserWithEmail = async (email, password, photoURL, name) => {
     const result = await createUserWithEmailAndPassword(auth, email, password);
-    Swal.fire({
-      title: "Registration Successful",
-      icon: "success",
-      draggable: false,
-    });
     await updateProfile(result.user, {
       displayName: name,
       photoURL: photoURL,
     });
     setUser(result.user);
+    
   };
 
   const signInWithEmail = async (email, password) => {
