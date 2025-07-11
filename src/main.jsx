@@ -75,19 +75,19 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     children: [
       {
         index: true,
-        element: <DashboardHome></DashboardHome>
+        element: <PrivateRoute><DashboardHome></DashboardHome></PrivateRoute>
       },
       {
         path:"admin-home",
-        element: <AdminDashboardHome></AdminDashboardHome>
+        element: <PrivateRoute><AdminDashboardHome></AdminDashboardHome></PrivateRoute>
       },
       {
         path: "donor-home",
-        element: <DonorDashHome></DonorDashHome>,
+        element: <PrivateRoute><DonorDashHome></DonorDashHome></PrivateRoute>,
       },
       {
         path: "donation-requests/:id",
@@ -99,27 +99,27 @@ const router = createBrowserRouter([
       },
       {
         path: "all-users",
-        element: <AllUsers></AllUsers>,
+        element: <PrivateRoute><AllUsers></AllUsers></PrivateRoute>,
       },
       {
         path: "all-donation-requests",
-        element: <AllDonationRequests></AllDonationRequests>,
+        element: <PrivateRoute><AllUsers></AllUsers></PrivateRoute>,
       },
       {
         path: "my-donation",
-        element: <DonorMyDonationRequests></DonorMyDonationRequests>,
+        element: <PrivateRoute><DonorMyDonationRequests></DonorMyDonationRequests></PrivateRoute>,
       },
       {
         path: "create-donation",
-        element: <DonorCreateReq></DonorCreateReq>,
+        element: <PrivateRoute><DonorCreateReq></DonorCreateReq></PrivateRoute>,
       },
       {
         path: "content-management",
-        element: <ContentPage></ContentPage>
+        element: <PrivateRoute><ContentPage></ContentPage></PrivateRoute>
       },
       {
         path: "content-management/add-blog",
-        element:<AddBlogs></AddBlogs>
+        element: <PrivateRoute><AddBlogs></AddBlogs></PrivateRoute>
       }
     ],
   },
