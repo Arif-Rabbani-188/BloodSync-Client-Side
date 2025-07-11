@@ -41,7 +41,7 @@ const AdminDashboardHome = () => {
   ];
   
   return (
-    <div className="p-6 md:ml-80 mt-20 md:mt-10 w-10/12 mx-auto">
+    <div className="p-6 md:ml-80 mt-20 md:mt-10  mx-auto">
       {/* Welcome Section */}
       <div className="mb-8 bg-white rounded-lg shadow p-6 flex items-center gap-4">
         <div className="text-4xl">🏠</div>
