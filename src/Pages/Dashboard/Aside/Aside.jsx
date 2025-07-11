@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Logo from "../../../Components/Logo/Logo";
 import { NavLink } from "react-router";
 import useUserRole from "../../../Hooks/useUserRole";
+import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
 
 const Aside = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const {userData} = use(AuthContext);
 
   const { role, isLoading } = useUserRole();
 
@@ -50,6 +53,7 @@ const Aside = () => {
         <ul className="space-y-4">
           <li>
             <NavLink
+            onClick={toggleSidebar}
               to="/home"
               className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
             >
@@ -73,6 +77,7 @@ const Aside = () => {
           {role === "donor" && !isLoading && (
             <li>
               <NavLink
+              onClick={toggleSidebar}
                 to="/dashboard/donor-home"
                 className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
               >
@@ -97,6 +102,7 @@ const Aside = () => {
           {role === "admin" && !isLoading && (
             <li>
               <NavLink
+              onClick={toggleSidebar}
                 to="/dashboard/admin-home"
                 className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
               >
@@ -121,6 +127,7 @@ const Aside = () => {
           {role === "admin" && !isLoading && (
             <li>
               <NavLink
+              onClick={toggleSidebar}
                 to="/dashboard/all-users"
                 className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-blue-100 hover:text-blue-700 transition duration-200"
               >
@@ -145,6 +152,7 @@ const Aside = () => {
           {role === "admin" && !isLoading && (
             <li>
               <NavLink
+              onClick={toggleSidebar}
                 to="/dashboard/all-donation-requests"
                 className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition duration-200"
               >
@@ -168,6 +176,7 @@ const Aside = () => {
           )}
           <li>
             <NavLink
+            onClick={toggleSidebar}
               to="/dashboard/my-donation"
               className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-green-100 hover:text-green-700 transition duration-200"
             >
@@ -190,6 +199,7 @@ const Aside = () => {
           </li>
           <li>
             <NavLink
+            onClick={toggleSidebar}
               to="/dashboard/create-donation"
               className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
             >
@@ -213,6 +223,7 @@ const Aside = () => {
           {role === "admin" && !isLoading && (
             <li>
               <NavLink
+              onClick={toggleSidebar}
                 to="/dashboard/content-management"
                 className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition duration-200"
               >

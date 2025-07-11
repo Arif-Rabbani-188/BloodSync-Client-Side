@@ -75,7 +75,9 @@ const DashboardHome = () => {
                 </tr>
               </thead>
               <tbody>
-                {recentRequests.map((req) => (
+                {requests
+                  .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))
+                  .map((req) => (
                   <tr key={req._id} className="hover:bg-gray-50 text-center">
                     <td className="py-2 px-4 border-b">{req.recipientName}</td>
                     <td className="py-2 px-4 border-b">
@@ -118,7 +120,7 @@ const DashboardHome = () => {
                       )}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {req.status === "inprogress" || req.status === "done" && req.donorName && (
+                      {(req.status === "inprogress" || req.status === "done") && req.donorName && (
                         <div>
                           <div>{req.donorName}</div>
                           <div className="text-xs text-gray-500">
@@ -127,36 +129,34 @@ const DashboardHome = () => {
                         </div>
                       )}
                     </td>
-                    {
-                      req.status === "pending" && (
-                        <td className="py-2 px-4 border-b">
-                      <button
-                        className="text-blue-600 underline mr-2"
-                        onClick={() =>
-                          navigate(
-                            `/dashboard/edit-donation-request/${req._id}`
-                          )
-                        }
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="text-red-600 underline mr-2"
-                        onClick={() => handleDelete(req._id)}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="text-green-600 underline"
-                        onClick={() =>
-                          navigate(`/dashboard/donation-request/${req._id}`)
-                        }
-                      >
-                        View
-                      </button>
-                    </td>
-                      )
-                    }
+                    {req.status === "pending" && (
+                      <td className="py-2 px-4 border-b">
+                        <button
+                          className="text-blue-600 underline mr-2"
+                          onClick={() =>
+                            navigate(
+                              `/dashboard/edit-donation-request/${req._id}`
+                            )
+                          }
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="text-red-600 underline mr-2"
+                          onClick={() => handleDelete(req._id)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="text-green-600 underline"
+                          onClick={() =>
+                            navigate(`/dashboard/donation-request/${req._id}`)
+                          }
+                        >
+                          View
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -164,7 +164,9 @@ const DashboardHome = () => {
           </div>
           {/* Cards for mobile screens */}
           <div className="md:hidden flex flex-col gap-4">
-            {recentRequests.map((req) => (
+            {requests
+              .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))
+              .map((req) => (
               <div key={req._id} className="bg-white rounded shadow p-4 border">
                 <div className="font-semibold text-lg mb-2">{req.recipientName}</div>
                 <div className="text-sm mb-1">
@@ -218,32 +220,32 @@ const DashboardHome = () => {
                     <div className="text-xs text-gray-500">{req.donorEmail}</div>
                   </div>
                 )}
-                {
-                  req.status === "pending" && (<div className="flex gap-2 mt-3">
-                  <button
-                    className="text-blue-600 underline"
-                    onClick={() =>
-                      navigate(`/dashboard/edit-donation-request/${req._id}`)
-                    }
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="text-red-600 underline"
-                    onClick={() => handleDelete(req._id)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="text-green-600 underline"
-                    onClick={() =>
-                      navigate(`/dashboard/donation-request/${req._id}`)
-                    }
-                  >
-                    View
-                  </button>
-                </div>)
-                }
+                {req.status === "pending" && (
+                  <div className="flex gap-2 mt-3">
+                    <button
+                      className="text-blue-600 underline"
+                      onClick={() =>
+                        navigate(`/dashboard/edit-donation-request/${req._id}`)
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="text-red-600 underline"
+                      onClick={() => handleDelete(req._id)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="text-green-600 underline"
+                      onClick={() =>
+                        navigate(`/dashboard/donation-request/${req._id}`)
+                      }
+                    >
+                      View
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>

@@ -140,7 +140,11 @@ const Register = () => {
 
             createUserWithEmail(formData.email, formData.password, formData.photoURL, formData.name)
                 .then((result) => {
-                    const response = axios.post("http://localhost:3000/users", userData);
+                    const updatedUser = {
+                        ...userData,
+                        email: formData.email.toLowerCase(),
+                    };
+                    const response = axios.post("http://localhost:3000/users", updatedUser);
             console.log("Registration successful:", response.data);
             import('sweetalert2').then(Swal => {
                 Swal.default.fire({

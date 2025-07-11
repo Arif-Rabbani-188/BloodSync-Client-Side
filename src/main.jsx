@@ -20,6 +20,7 @@ import PublickDonation from "./Pages/PublicDonationPage/PublickDonation";
 import ViewDetailRequest from "./Pages/PublicDonationPage/ViewDetailRequest";
 import AdminDashboardHome from "./Pages/Dashboard/AdminDashboard/AdminDashboardHome";
 import SearchDonor from "./Pages/SearchDonor/SearchDonor";
+import RequestViewDetail from "./Pages/DonationRequestDetail/RequestViewDetail";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,14 @@ const router = createBrowserRouter([
       {
         path: "donor-home",
         element: <DonorDashHome></DonorDashHome>,
+      },
+      {
+        path: "donation-requests/:id",
+        element: <PrivateRoute><ViewDetailRequest></ViewDetailRequest></PrivateRoute>,
+      },
+      {
+        path: "donation-requests/edit/:id",
+        element: <PrivateRoute><RequestViewDetail></RequestViewDetail></PrivateRoute>,
       },
       {
         path: "all-users",

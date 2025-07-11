@@ -14,12 +14,12 @@ const fetchUserRole = async (email) => {
 };
 
 export const useUserRole = () => {
-  const { user } = use(AuthContext); // get user from context
+  const { userData } = use(AuthContext); // get user from context
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['userRole', user?.email],
-    queryFn: () => fetchUserRole(user.email),
-    enabled: !!user?.email, // only run when email is available
+    queryKey: ['userRole', userData?.email],
+    queryFn: () => fetchUserRole(userData.email),
+    enabled: !!userData?.email, // only run when email is available
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 

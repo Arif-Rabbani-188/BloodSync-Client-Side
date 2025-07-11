@@ -12,19 +12,30 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/users")
-      .then((response) => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/users");
         const currentUser = response.data.find((u) => u.email === user?.email);
+
+        console.log("Current User Data:", response.data);
+        console.log("Current User:", user?.email);
+        console.log("Found User:", currentUser);
         if (currentUser) {
           setUserData(currentUser);
         } else {
           setUserData(null);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching user data:", error);
         setUserData(null);
-      });
+      }
+    };
+
+    if (user?.email) {
+      fetchUserData();
+    } else {
+      setUserData(null);
+    }
   }, [user?.email]);
 
   useEffect(() => {
@@ -71,6 +82,7 @@ export const AuthProvider = ({ children }) => {
         draggable: false,
       });
       setUser(null);
+      setUserData(null);
     },
     userData,
   };
