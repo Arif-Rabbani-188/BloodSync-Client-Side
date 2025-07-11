@@ -214,7 +214,7 @@ const AllDonationRequests = () => {
                         className="text-blue-600 underline mr-2"
                         onClick={() =>
                           navigate(
-                            `/dashboard/edit-donation-request/${req._id}`
+                            `/dashboard/donation-requests/edit/${req._id}`
                           )
                         }
                       >
