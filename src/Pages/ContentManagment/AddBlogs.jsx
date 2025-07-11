@@ -61,7 +61,7 @@ const AddBlogs = () => {
         authorEmail: user?.email,
       };
 
-      const response = await axios.post('http://localhost:3000/blogs', blogData);
+      const response = await axios.post('https://blood-sync-server-side.vercel.app/blogs', blogData);
       if (response.data.insertedId || response.data.acknowledged) {
         Swal.fire('Success!', 'Blog created in draft status.', 'success');
         setFormData({ title: '', thumbnail: '', content: '' });

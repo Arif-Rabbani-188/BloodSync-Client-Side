@@ -85,7 +85,7 @@ const DonorCreateReq = () => {
     try {
       await new Promise((res) => setTimeout(res, 1000)); 
 
-      axios.post("http://localhost:3000/donationRequest", {
+      axios.post("https://blood-sync-server-side.vercel.app/donationRequest", {
         ...form,
         requesterId: user?.uid,
         recipientDistrict: form.recipientDistrict,

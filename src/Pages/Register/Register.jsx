@@ -125,7 +125,7 @@ const Register = () => {
                 createdAt: new Date().toISOString(),
             };
 
-            const checkRes = await axios.get("http://localhost:3000/users");
+            const checkRes = await axios.get("https://blood-sync-server-side.vercel.app/users");
             const userExists = checkRes.data.some(user => user.email === formData.email);
             if (userExists) {
                 import('sweetalert2').then(Swal => {
@@ -144,7 +144,7 @@ const Register = () => {
                         ...userData,
                         email: formData.email.toLowerCase(),
                     };
-                    const response = axios.post("http://localhost:3000/users", updatedUser);
+                    const response = axios.post("https://blood-sync-server-side.vercel.app/users", updatedUser);
             console.log("Registration successful:", response.data);
             import('sweetalert2').then(Swal => {
                 Swal.default.fire({

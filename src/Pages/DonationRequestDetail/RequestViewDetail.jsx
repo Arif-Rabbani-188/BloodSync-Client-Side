@@ -16,7 +16,7 @@ const RequestViewDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/donationRequestById/${id}`)
+      .get(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`)
       .then((res) => setFormData(res.data))
       .catch((err) => {
         console.error("Error fetching request:", err);
@@ -67,7 +67,7 @@ const RequestViewDetail = () => {
       setLoading(true);
       try {
         const { _id, ...updatedData } = formData;
-        await axios.put(`http://localhost:3000/donationRequestById/${id}`, updatedData);
+        await axios.put(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`, updatedData);
         Swal.fire('Updated!', 'The request has been updated.', 'success');
       } catch (err) {
         console.error("Update failed", err);
@@ -91,7 +91,7 @@ const RequestViewDetail = () => {
     if (result.isConfirmed) {
       setLoading(true);
       try {
-        await axios.delete(`http://localhost:3000/donationRequestById/${id}`);
+        await axios.delete(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`);
         Swal.fire('Deleted!', 'The request has been deleted.', 'success');
         navigate('/my-requests');
       } catch (err) {

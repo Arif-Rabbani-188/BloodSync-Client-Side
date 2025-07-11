@@ -11,7 +11,7 @@ const SingleBlog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/blogs/${id}`);
+        const res = await axios.get(`https://blood-sync-server-side.vercel.app/blogs/${id}`);
         setBlog(res.data);
         setLoading(false);
       } catch (err) {

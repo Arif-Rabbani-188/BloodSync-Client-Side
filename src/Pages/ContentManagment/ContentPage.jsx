@@ -14,7 +14,7 @@ const ContentPage = () => {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    axios.get('http://localhost:3000/blogs')
+    axios.get('https://blood-sync-server-side.vercel.app/blogs')
       .then(res => setBlogs(res.data))
       .catch(err => console.error('Failed to fetch blogs:', err));
   }, []);
@@ -34,7 +34,7 @@ const ContentPage = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/blogs/${id}`);
+        await axios.delete(`https://blood-sync-server-side.vercel.app/blogs/${id}`);
         setBlogs(prev => prev.filter(blog => blog._id !== id));
         Swal.fire('Deleted!', 'Blog has been deleted.', 'success');
       } catch (error) {
@@ -54,7 +54,7 @@ const ContentPage = () => {
 
     if (confirm.isConfirmed) {
       try {
-        const updated = await axios.patch(`http://localhost:3000/blogs/${id}`, { status: newStatus });
+        const updated = await axios.patch(`https://blood-sync-server-side.vercel.app/blogs/${id}`, { status: newStatus });
         setBlogs(prev => prev.map(blog => blog._id === id ? { ...blog, status: newStatus } : blog));
         Swal.fire('Success', `Blog status updated to ${newStatus}.`, 'success');
       } catch (error) {

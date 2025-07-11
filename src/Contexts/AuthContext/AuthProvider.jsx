@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/users");
+        const response = await axios.get("https://blood-sync-server-side.vercel.app/users");
         const currentUser = response.data.find((u) => u.email === user?.email);
 
         console.log("Current User Data:", response.data);

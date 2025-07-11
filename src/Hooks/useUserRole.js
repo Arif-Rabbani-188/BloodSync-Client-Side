@@ -6,7 +6,7 @@ import { AuthContext } from '../Contexts/AuthContext/AuthContext';
 
 
 const fetchUserRole = async (email) => {
-  const res = await fetch(`http://localhost:3000/users/role?email=${email}`);
+  const res = await fetch(`https://blood-sync-server-side.vercel.app/users/role?email=${email}`);
   if (!res.ok) {
     throw new Error('Failed to fetch user role');
   }

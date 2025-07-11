@@ -11,7 +11,7 @@ function DonorHero({ user }) {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:3000/donationRequest/${user.email}`)
+        .get(`https://blood-sync-server-side.vercel.app/donationRequest/${user.email}`)
         .then((res) => setDonations(res.data || []))
         .catch(() => setDonations([]));
     }
@@ -81,7 +81,7 @@ function RecentDonationRequests({ userId }) {
     if (user?.email) {
       setLoading(true);
       axios
-        .get(`http://localhost:3000/donationRequest/${user.email}`)
+        .get(`https://blood-sync-server-side.vercel.app/donationRequest/${user.email}`)
         .then((res) => setRequests(res.data || []))
         .catch(() => setRequests([]))
         .finally(() => setLoading(false));
@@ -100,7 +100,7 @@ function RecentDonationRequests({ userId }) {
   }
 
   function confirmDelete() {
-    fetch(`http://localhost:3000/donationRequestById/${deleteId}`, {
+    fetch(`https://blood-sync-server-side.vercel.app/donationRequestById/${deleteId}`, {
       method: "DELETE",
     }).then(() => {
       setRequests((reqs) => reqs.filter((r) => r._id !== deleteId));

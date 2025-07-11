@@ -28,7 +28,7 @@ const PublickDonation = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:3000/donationRequest')
+        axios.get('https://blood-sync-server-side.vercel.app/donationRequest')
             .then((response) => {
                 const pendingRequests = (response.data || []).filter(req => req.status === 'pending');
                 setRequests(pendingRequests);

@@ -44,7 +44,7 @@ const AllUsers = () => {
   const totalPages = Math.max(1, Math.ceil(filteredUsers.length / PAGE_SIZE));
 
 const handleBlock = (email) => {
-    axios.patch(`http://localhost:3000/users/${email}`, {
+    axios.patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
         status: "blocked"
     }).then(() => {
         Swal.fire("Blocked!", "User has been blocked.", "success");
@@ -53,7 +53,7 @@ const handleBlock = (email) => {
 };
 
 const handleUnblock = (email) => {
-    axios.patch(`http://localhost:3000/users/${email}`, {
+    axios.patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
         status: "active"
     }).then(() => {
         Swal.fire("Unblocked!", "User has been unblocked.", "success");
@@ -72,7 +72,7 @@ const handleMakeVolunteer = (email) => {
         confirmButtonText: "Yes, make volunteer!"
     }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:3000/users/${email}`, {
+            axios.patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
                 role: "volunteer"
             }).then(() => {
                 Swal.fire("Updated!", "User has been made a volunteer.", "success");
@@ -93,7 +93,7 @@ const handleMakeAdmin = (email) => {
         confirmButtonText: "Yes, make admin!"
     }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:3000/users/${email}`, {
+            axios.patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
                 role: "admin"
             }).then(() => {
                 Swal.fire("Updated!", "User has been made an admin.", "success");
@@ -114,7 +114,7 @@ const handleMakeDonor = (email) => {
         confirmButtonText: "Yes, make donor!"
     }).then((result) => {
         if (result.isConfirmed) {
-            axios.patch(`http://localhost:3000/users/${email}`, {
+            axios.patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
                 role: "donor"
             }).then(() => {
                 Swal.fire("Updated!", "User has been made a donor.", "success");

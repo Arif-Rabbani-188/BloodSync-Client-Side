@@ -12,14 +12,14 @@ const DashboardHome = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:3000/donationRequest/${user.email}`)
+        .get(`https://blood-sync-server-side.vercel.app/donationRequest/${user.email}`)
         .then((res) => setRequests(res.data || []))
         .catch(() => setRequests([]));
     }
   }, [user]);
 
   const handleStatusChange = async (id, newStatus) => {
-    await axios.patch(`http://localhost:3000/donationRequestById/${id}`, {
+    await axios.patch(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`, {
       status: newStatus,
     });
     setRequests((prev) =>
@@ -39,7 +39,7 @@ const DashboardHome = () => {
     });
 
     if (result.isConfirmed) {
-      await axios.delete(`http://localhost:3000/donationRequestById/${id}`);
+      await axios.delete(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`);
       setRequests((prev) => prev.filter((req) => req._id !== id));
       Swal.fire("Deleted!", "Your request has been deleted.", "success");
     }

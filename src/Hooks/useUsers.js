@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 const fetchUsers = async () => {
-  const res = await axios.get('http://localhost:3000/users');
+  const res = await axios.get('https://blood-sync-server-side.vercel.app/users');
   return res.data;
 };
 

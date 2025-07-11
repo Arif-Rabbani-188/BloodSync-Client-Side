@@ -7,7 +7,7 @@ const AdminDashboardHome = () => {
     const{data: users} = useUsers();
     const [requests, setRequests] = useState([]);
     useEffect(() => {
-      axios.get('http://localhost:3000/donationRequest')
+      axios.get('https://blood-sync-server-side.vercel.app/donationRequest')
       .then(response => {
         console.log("Donation Requests:", response.data);
         setRequests(response?.data.length);

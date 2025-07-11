@@ -20,7 +20,7 @@ const AllDonationRequests = () => {
     const fetchRequests = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:3000/donationRequest`);
+        const res = await axios.get(`https://blood-sync-server-side.vercel.app/donationRequest`);
         setRequests(res.data || []);
         setError("");
       } catch {
@@ -47,7 +47,7 @@ const AllDonationRequests = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.patch(`http://localhost:3000/donationRequestById/${id}`, {
+      await axios.patch(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`, {
         status: newStatus,
       });
       setRequests((prev) =>
@@ -73,7 +73,7 @@ const AllDonationRequests = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.delete(`http://localhost:3000/donationRequestById/${id}`);
+      await axios.delete(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`);
       setRequests((prev) => prev.filter((req) => req._id !== id));
       Swal.fire("Deleted!", "The request has been deleted.", "success");
     } catch {

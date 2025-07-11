@@ -14,7 +14,7 @@ const ViewDetailRequest = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/donationRequestById/${id}`)
+      .get(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`)
       .then((res) => setRequest(res.data))
       .catch((err) => {
         console.error("Error fetching request:", err);
@@ -34,7 +34,7 @@ const ViewDetailRequest = () => {
         donorEmail: email,
       };
 
-      await axios.patch(`http://localhost:3000/donationRequestById/${id}`, updated);
+      await axios.patch(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`, updated);
 
       setRequest((prev) => ({ ...prev, ...updated }));
       setShowModal(false);
