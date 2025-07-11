@@ -103,7 +103,7 @@ const router = createBrowserRouter([
       },
       {
         path: "all-donation-requests",
-        element: <PrivateRoute><AllUsers></AllUsers></PrivateRoute>,
+        element: <PrivateRoute><AllDonationRequests></AllDonationRequests></PrivateRoute>,
       },
       {
         path: "my-donation",
