@@ -27,6 +27,8 @@ import AllBlogs from "./Pages/Blogs/AllBlogs";
 import SingleBlog from "./Pages/Blogs/SingleBlog";
 import DashboardHome from "./Pages/Dashboard/DashboardHome/DashboardHome";
 import Error from "./Pages/Error/Error";
+import AllFunding from "./Pages/Funding/AllFunding";
+import GiveFund from "./Pages/Funding/GiveFund";
 
 const queryClient = new QueryClient();
 
@@ -51,7 +53,11 @@ const router = createBrowserRouter([
       },
       {
         path: "funding",
-        element: <div>This is the Complaint Page of BloodSync.</div>,
+        element: <AllFunding></AllFunding>,
+      },
+      {
+        path: "give-fund",
+        element: <PrivateRoute><GiveFund></GiveFund></PrivateRoute>
       },
       {
         path: "login",

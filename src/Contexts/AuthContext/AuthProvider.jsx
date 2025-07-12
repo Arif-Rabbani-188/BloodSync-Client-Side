@@ -16,10 +16,6 @@ export const AuthProvider = ({ children }) => {
       try {
         const response = await axios.get("https://blood-sync-server-side.vercel.app/users");
         const currentUser = response.data.find((u) => u.email === user?.email);
-
-        console.log("Current User Data:", response.data);
-        console.log("Current User:", user?.email);
-        console.log("Found User:", currentUser);
         if (currentUser) {
           setUserData(currentUser);
         } else {

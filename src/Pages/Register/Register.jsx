@@ -56,7 +56,7 @@ const Register = () => {
             const formDataImg = new FormData();
             formDataImg.append("image", file);
 
-            const apiKey = "3f697030e4d83e5c4e100377a41b3b1b";
+            const apiKey = import.meta.env.IMGBB_API_KEY;
 
             try {
                 const response = await axios.post(
