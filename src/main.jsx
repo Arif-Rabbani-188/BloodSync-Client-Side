@@ -53,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "funding",
-        element: <AllFunding></AllFunding>,
+        element: <PrivateRoute><AllFunding></AllFunding></PrivateRoute>,
       },
       {
         path: "give-fund",

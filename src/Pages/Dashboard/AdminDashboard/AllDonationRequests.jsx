@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 import useUserRole from "../../../Hooks/useUserRole";
+import useUsers from "../../../Hooks/useUsers";
 
 const PAGE_SIZE = 5;
 
@@ -14,13 +15,16 @@ const AllDonationRequests = () => {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-  const { role } = useUserRole();
+  const { role , isLoading : roleLoading} = useUserRole();
+  const {data: users, isLoading} = useUsers();
 
   useEffect(() => {
     const fetchRequests = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`https://blood-sync-server-side.vercel.app/donationRequest`);
+        const res = await axios.get(
+          `https://blood-sync-server-side.vercel.app/donationRequest`
+        );
         setRequests(res.data || []);
         setError("");
       } catch {
@@ -47,9 +51,12 @@ const AllDonationRequests = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.patch(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`, {
-        status: newStatus,
-      });
+      await axios.patch(
+        `https://blood-sync-server-side.vercel.app/donationRequestById/${id}`,
+        {
+          status: newStatus,
+        }
+      );
       setRequests((prev) =>
         prev.map((req) =>
           req._id === id ? { ...req, status: newStatus } : req
@@ -73,7 +80,9 @@ const AllDonationRequests = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.delete(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`);
+      await axios.delete(
+        `https://blood-sync-server-side.vercel.app/donationRequestById/${id}`
+      );
       setRequests((prev) => prev.filter((req) => req._id !== id));
       Swal.fire("Deleted!", "The request has been deleted.", "success");
     } catch {
@@ -109,6 +118,9 @@ const AllDonationRequests = () => {
     );
   }
 
+  if (roleLoading || isLoading || !role || !users) {
+    return <div className="text-center mt-20">Loading...</div>;
+  }
   if (role !== "admin" && role !== "volunteer") {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -208,34 +220,34 @@ const AllDonationRequests = () => {
                         </div>
                       )}
                     </td>
-                    {
-                        role === "admin" && (<td className="py-2 px-4 border-b">
-                      <button
-                        className="text-blue-600 underline mr-2"
-                        onClick={() =>
-                          navigate(
-                            `/dashboard/donation-requests/edit/${req._id}`
-                          )
-                        }
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="text-red-600 underline mr-2"
-                        onClick={() => handleDelete(req._id)}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="text-green-600 underline"
-                        onClick={() =>
-                          navigate(`/dashboard/donation-request/${req._id}`)
-                        }
-                      >
-                        View
-                      </button>
-                    </td>)
-                    }
+                    {role === "admin" && (
+                      <td className="py-2 px-4 border-b">
+                        <button
+                          className="text-blue-600 underline mr-2"
+                          onClick={() =>
+                            navigate(
+                              `/dashboard/donation-requests/edit/${req._id}`
+                            )
+                          }
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="text-red-600 underline mr-2"
+                          onClick={() => handleDelete(req._id)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="text-green-600 underline"
+                          onClick={() =>
+                            navigate(`/dashboard/donation-request/${req._id}`)
+                          }
+                        >
+                          View
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
