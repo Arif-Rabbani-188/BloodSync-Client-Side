@@ -1,9 +1,11 @@
 import React, { use, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
+import { useNavigate } from 'react-router';
 
 const Register = () => {
     const {user, createUserWithEmail} = use(AuthContext);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -163,6 +165,7 @@ const Register = () => {
                 password: '',
                 confirmPassword: ''
             });
+            navigate('/dashboard');
                     
                 })
                 .catch((error) => {
