@@ -10,7 +10,7 @@ const DonateNow = () => {
                 <p className='text-gray-100'>Join our mission to connect donors and recipients through our trusted platform.</p>
             </div>
             <div>
-                <NavLink to="/donation-requests" className="p-2 pl-5 rounded-tr-lg font-bold text-lg bg-white text-black rounded-full shadow-2xl flex items-center gap-5">
+                <NavLink to="/donation-requests" className="md:p-2 pl-5 md:pl-5 rounded-tr-lg font-bold md:text-lg bg-white text-black rounded-full shadow-2xl flex items-center jus gap-5">
             Donate Now{" "}
             <span className="p-2 bg-green-400 text-white rounded-tl-full rounded-bl-full rounded-br-full">
               <FaArrowRight />

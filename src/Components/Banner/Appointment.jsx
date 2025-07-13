@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const Appointment = () => {
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    sweetAlert("Success", "Your appointment has been submitted!", "success").then(() => {
-      // Reset form or redirect user
-      e.target.reset() ;
-    });
+    setLoading(true);
+
+    setTimeout(() => {
+      Swal.fire("Success", "Your appointment has been submitted!", "success");
+      e.target.reset();
+      setLoading(false);
+    }, 1000);
   };
+
   return (
-    <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-tl-[200px] rounded-br-[200px] px-3 md:p-8 flex items-center justify-center font-sans">
+    <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-tl-[200px] rounded-br-[200px] px-3 md:p-8 flex items-center justify-center font-sans relative">
+      {loading && (
+        <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-50">
+          <div className="loader border-8 border-t-8 border-gray-200 h-20 w-20 rounded-full"></div>
+        </div>
+      )}
+
       <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16 md:w-10/12 flex flex-col lg:flex-row gap-12">
-        {/* Left Section: Helpful Information */}
+        {/* Left Section */}
         <div className="flex-1">
           <p className="text-sm text-gray-500 mb-2">Appointment</p>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-8">
@@ -20,75 +32,56 @@ const Appointment = () => {
             <span className="text-green-700">helpful information</span>
           </h1>
           <p className="text-lg text-gray-600 mb-8">
-            Here are some tips to help you prepare for your blood donation
-            appointment and ensure a smooth experience.
+            Prepare for your donation appointment with these helpful tips.
           </p>
           <ul className="space-y-6">
-            {[
-              "Maintain a healthy iron level by eating iron rich foods.",
-              "Drink an extra 16 oz. of water prior to your donation.",
-              "Avoid alcohol consumption before your blood donation.",
-              "Finally, Try to get a good night sound sleep after donation.",
-              "Remember to bring the donor card or national ID/Passport.",
-            ].map((tip, index) => (
+            {["Maintain a healthy iron level by eating iron rich foods.", "Drink an extra 16 oz. of water prior to your donation.", "Avoid alcohol consumption before your blood donation.", "Get a good night of sleep before and after donation.", "Bring your donor card or national ID/Passport.",].map((tip, index) => (
               <li key={index} className="flex items-start">
-                <div className="flex-shrink-0 mr-4 mt-1">
-                  <svg
-                    className="w-6 h-6 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    ></path>
-                  </svg>
-                </div>
+                <div className="mr-4 mt-1 text-green-600">&#10003;</div>
                 <p className="text-lg text-gray-700">{tip}</p>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Right Section: Appointment Form */}
+        {/* Right Section */}
         <div className="flex-1 flex flex-col justify-center">
           <form onSubmit={handleSubmit} className="space-y-6">
             <input
               type="text"
               placeholder="Name"
-              className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
+              className="input-style"
+              required
             />
             <input
               type="email"
               placeholder="Email"
-              className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
+              className="input-style"
+              required
             />
             <input
               type="tel"
               placeholder="Phone"
-              className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
+              className="input-style"
+              required
             />
             <div className="flex flex-col sm:flex-row gap-6">
               <input
                 type="time"
-                placeholder="Time"
-                className="flex-1 p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
+                className="input-style flex-1"
+                required
               />
               <input
                 type="date"
-                placeholder="Date"
-                className="flex-1 p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
+                className="input-style flex-1"
+                required
               />
             </div>
             <button
               type="submit"
               className="w-full bg-green-600 text-white p-4 rounded-xl flex items-center justify-center text-lg font-semibold hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg"
             >
-              Appointment Submit
+              Submit Appointment
               <svg
                 className="w-6 h-6 ml-3"
                 fill="none"
@@ -107,6 +100,30 @@ const Appointment = () => {
           </form>
         </div>
       </div>
+
+      <style>{`
+        .loader {
+          border-top-color: #22c55e;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        .input-style {
+          width: 100%;
+          padding: 1rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.75rem;
+          transition: border-color 0.2s;
+        }
+        .input-style:focus {
+          outline: none;
+          border-color: #22c55e;
+          box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+        }
+      `}</style>
     </div>
   );
 };

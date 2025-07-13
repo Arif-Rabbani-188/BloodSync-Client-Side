@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const AllDonationRequests = () => {
   const [fundings, setFundings] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
@@ -13,12 +14,22 @@ const AllDonationRequests = () => {
       try {
         const res = await axios.get(`https://blood-sync-server-side.vercel.app/fundings`);
         setFundings(res.data || []);
+        setLoading(false);
       } catch {
         setFundings([]);
+        setLoading(false);
       }
     };
     fetchFundings();
   }, []);
+
+  if (loading) { return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-lg text-blue-700 font-semibold">Loading fundings...</p>
+      </div>
+    );
+  };
 
   return (
     <div className="p-4 mt-20 md:mt-30 w-11/12 mx-auto">

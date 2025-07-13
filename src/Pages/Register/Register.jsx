@@ -22,7 +22,7 @@ const Register = () => {
   const [districts, setDistricts] = useState([]);
 
   useEffect(() => {
-    fetch("districts.json")
+    fetch("distric.json")
       .then((response) => response.json())
       .then((data) => {
         setDistricts(data);

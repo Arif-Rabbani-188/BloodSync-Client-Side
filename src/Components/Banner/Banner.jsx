@@ -25,14 +25,14 @@ const Banner = () => {
           </p>
           <div className="flex flex-col md:flex-row gap-5 justify-center items-center">
             {
-              !user && (<NavLink to="/register" className="p-2 pl-5 rounded-tr-lg font-bold text-lg bg-white rounded-full shadow-2xl flex items-center gap-5">
+              !user && (<NavLink to="/register" className="md:p-2 pl-5 md:pl-5 rounded-tr-lg font-bold md:text-lg bg-white rounded-full shadow-2xl flex items-center gap-5">
             Join as a Donor{" "}
             <span className="p-2 bg-green-400 text-white rounded-tl-full rounded-bl-full rounded-br-full">
               <FaArrowRight />
             </span>
           </NavLink>)
             }
-          <NavLink to="/search-donor" className="p-2 pl-5 rounded-tr-lg font-bold text-lg bg-white rounded-full shadow-2xl flex items-center gap-5">
+          <NavLink to="/search-donor" className="md:p-2 pl-5 md:pl-5 rounded-tr-lg font-bold md:text-lg  bg-white rounded-full shadow-2xl flex items-center gap-5">
             Search Donors{" "}
             <span className="p-2 bg-green-400 text-white rounded-tl-full rounded-bl-full rounded-br-full">
               <FaSearch />

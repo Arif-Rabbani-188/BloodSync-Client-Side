@@ -26,15 +26,19 @@ const donationRequests = [
 const PublickDonation = () => {
     const [requests, setRequests] = useState([]);
     const navigate = useNavigate();
+    const [dataLoading, setDataLoading] = useState(true);
 
     useEffect(() => {
+        setDataLoading(true);
         axios.get('https://blood-sync-server-side.vercel.app/donationRequest')
             .then((response) => {
                 const pendingRequests = (response.data || []).filter(req => req.status === 'pending');
                 setRequests(pendingRequests);
+                setDataLoading(false);
             })
             .catch(() => {
                 setRequests([]);
+                setDataLoading(false);
             });
     }, []);
 
@@ -47,6 +51,20 @@ const PublickDonation = () => {
             navigate(`/donation-requests/${id}`);
         }
     };
+
+    
+
+    if (dataLoading) {
+        return (
+            <div className="flex mt-30 flex-col justify-center items-center h-64">
+            <svg className="animate-spin h-10 w-10 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+            </svg>
+            <span className="text-gray-600 text-lg">Data is loading, please wait...</span>
+            </div>
+        );
+    }
 
     if (!requests) {
         return <p className="text-center mt-4 text-gray-500">Loading requests...</p>;

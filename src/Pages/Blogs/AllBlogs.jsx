@@ -22,8 +22,29 @@ const AllBlogs = () => {
     fetchBlogs();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading blogs...</p>;
-  if (error) return <p className="text-center mt-10 text-red-600">{error}</p>;
+  if (loading) {
+    return (
+      <div className="flex flex-col mt-30 items-center justify-center">
+        <svg className="animate-spin h-8 w-8 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+        </svg>
+        <p className="text-lg text-gray-700 font-medium">Fetching the latest blogs for you...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-20">
+        <svg className="h-8 w-8 text-red-500 mb-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01" />
+        </svg>
+        <p className="text-lg text-red-600 font-semibold">{error}</p>
+        <p className="text-gray-500">Please try refreshing the page or check your internet connection.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-11/12 mt-20 md:mt-30 mx-auto px-4 py-8">

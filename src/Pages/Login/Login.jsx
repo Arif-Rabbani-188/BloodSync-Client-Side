@@ -1,28 +1,23 @@
-import React, { use, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 
 const Login = () => {
-  const { signInWithEmail } = use(AuthContext);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const { signInWithEmail } = useContext(AuthContext);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!formData.email || !formData.password) {
       Swal.fire({
         title: "Error",
@@ -33,28 +28,37 @@ const Login = () => {
       return;
     }
 
+    setLoading(true);
+
     signInWithEmail(formData.email, formData.password)
-    .then(() => {
-      Swal.fire({
-        title: "Login Successful",
-        icon: "success",
-        draggable: false,
-      });
+      .then(() => {
+        Swal.fire({
+          title: "Login Successful",
+          icon: "success",
+          draggable: false,
+        });
         navigate(location?.state || "/", { replace: true });
-    })
-    .catch((error) => {
-      console.error("Login Error:", error);
-      Swal.fire({
-        title: "Login Failed",
-        text: error.message,
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    });
+      })
+      .catch((error) => {
+        console.error("Login Error:", error);
+        Swal.fire({
+          title: "Login Failed",
+          text: error.message,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-green-50 p-8 flex items-center justify-center font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 to-green-50 p-8 flex items-center justify-center font-sans relative">
+      {loading && (
+        <div className="absolute inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50">
+          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-20 w-20"></div>
+        </div>
+      )}
+
       <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16 max-w-md w-full flex flex-col gap-8">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-center mb-4">
           Welcome to <span className="text-red-700">BloodSync</span>
@@ -65,7 +69,7 @@ const Login = () => {
             type="email"
             name="email"
             placeholder="Email Address"
-            className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200"
+            className="input-style"
             value={formData.email}
             onChange={handleInputChange}
             required
@@ -75,7 +79,7 @@ const Login = () => {
             type="password"
             name="password"
             placeholder="Password"
-            className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200"
+            className="input-style"
             value={formData.password}
             onChange={handleInputChange}
             required
@@ -104,7 +108,7 @@ const Login = () => {
         </form>
 
         <p className="text-center text-gray-600 text-sm mt-4">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <Link
             to="/register"
             className="text-green-600 hover:underline font-semibold"
@@ -113,6 +117,29 @@ const Login = () => {
           </Link>
         </p>
       </div>
+
+      {/* Loader Spinner Style */}
+      <style>{`
+        .loader {
+          border-top-color: #e3342f;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        .input-style {
+          width: 100%;
+          padding: 1rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.75rem;
+          transition: border-color 0.2s;
+        }
+        .input-style:focus {
+          outline: none;
+          border-color: #ef4444;
+          box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+        }
+      `}</style>
     </div>
   );
 };
