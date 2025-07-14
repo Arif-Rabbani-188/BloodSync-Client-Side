@@ -3,11 +3,13 @@ import axios from "axios";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Register = () => {
   const { user, createUserWithEmail } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -150,8 +152,8 @@ const Register = () => {
         createdAt: new Date().toISOString(),
       };
 
-      const checkRes = await axios.get(
-        "https://blood-sync-server-side.vercel.app/users"
+      const checkRes = await axiosSecure.get(
+        "/users"
       );
       const userExists = checkRes.data.some(
         (user) => user.email === formData.email
@@ -173,8 +175,8 @@ const Register = () => {
         formData.name
       );
 
-      const response = await axios.post(
-        "https://blood-sync-server-side.vercel.app/users",
+      const response = await axiosSecure.post(
+        "/users",
         {
           ...userData,
           email: formData.email.toLowerCase(),
@@ -185,6 +187,9 @@ const Register = () => {
         icon: "success",
         title: "Registration successful!",
         text: "Welcome to BloodSync!",
+      }).then(() => {
+        navigate("/home");
+        window.location.reload();
       });
       setFormData({
         name: "",
@@ -196,7 +201,6 @@ const Register = () => {
         password: "",
         confirmPassword: "",
       });
-      navigate("/home");
     } catch (error) {
       console.error("Registration failed:", error);
       Swal.fire({

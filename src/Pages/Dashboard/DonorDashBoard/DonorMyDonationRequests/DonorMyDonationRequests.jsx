@@ -3,17 +3,19 @@ import { AuthContext } from "../../../../Contexts/AuthContext/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
 const DashboardHome = () => {
   const { user } = useContext(AuthContext);
   const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (user?.email) {
-      axios
+      axiosSecure
         .get(
-          `https://blood-sync-server-side.vercel.app/donationRequest/${user.email}`
+          `/donationRequest/${user.email}`
         )
         .then((res) => setRequests(res.data || []))
         .catch(() => setRequests([]));
@@ -21,8 +23,8 @@ const DashboardHome = () => {
   }, [user]);
 
   const handleStatusChange = async (id, newStatus) => {
-    await axios.patch(
-      `https://blood-sync-server-side.vercel.app/donationRequestById/${id}`,
+    await axiosSecure.patch(
+      `/donationRequestById/${id}`,
       {
         status: newStatus,
       }
@@ -44,8 +46,8 @@ const DashboardHome = () => {
     });
 
     if (result.isConfirmed) {
-      await axios.delete(
-        `https://blood-sync-server-side.vercel.app/donationRequestById/${id}`
+      await axiosSecure.delete(
+        `/donationRequestById/${id}`
       );
       setRequests((prev) => prev.filter((req) => req._id !== id));
       Swal.fire("Deleted!", "Your request has been deleted.", "success");

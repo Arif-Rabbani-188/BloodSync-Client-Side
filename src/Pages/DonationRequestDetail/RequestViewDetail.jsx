@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const RequestViewDetail = () => {
   const { user } = useContext(AuthContext);
@@ -13,10 +14,11 @@ const RequestViewDetail = () => {
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [districts, setDistricts] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    axios
-      .get(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`)
+    axiosSecure
+      .get(`/donationRequestById/${id}`)
       .then((res) => setFormData(res.data))
       .catch((err) => {
         console.error("Error fetching request:", err);
@@ -67,7 +69,7 @@ const RequestViewDetail = () => {
       setLoading(true);
       try {
         const { _id, ...updatedData } = formData;
-        await axios.put(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`, updatedData);
+        await axiosSecure.put(`/donationRequestById/${id}`, updatedData);
         Swal.fire('Updated!', 'The request has been updated.', 'success');
       } catch (err) {
         console.error("Update failed", err);
@@ -91,7 +93,7 @@ const RequestViewDetail = () => {
     if (result.isConfirmed) {
       setLoading(true);
       try {
-        await axios.delete(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`);
+        await axiosSecure.delete(`/donationRequestById/${id}`);
         Swal.fire('Deleted!', 'The request has been deleted.', 'success');
         navigate('/my-requests');
       } catch (err) {

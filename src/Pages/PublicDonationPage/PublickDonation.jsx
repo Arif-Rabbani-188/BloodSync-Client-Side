@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { use, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 // Dummy data for demonstration
 const donationRequests = [
@@ -27,10 +28,11 @@ const PublickDonation = () => {
     const [requests, setRequests] = useState([]);
     const navigate = useNavigate();
     const [dataLoading, setDataLoading] = useState(true);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         setDataLoading(true);
-        axios.get('https://blood-sync-server-side.vercel.app/donationRequest')
+        axiosSecure.get('/donationRequest')
             .then((response) => {
                 const pendingRequests = (response.data || []).filter(req => req.status === 'pending');
                 setRequests(pendingRequests);

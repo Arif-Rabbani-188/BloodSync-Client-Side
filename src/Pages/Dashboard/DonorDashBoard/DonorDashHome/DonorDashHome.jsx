@@ -3,15 +3,17 @@ import { AuthContext } from "../../../../Contexts/AuthContext/AuthContext";
 import axios from "axios";
 import useUserRole from "../../../../Hooks/useUserRole";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
 // Creative section: Donor stats and motivation
 function DonorHero({ user }) {
   const [donations, setDonations] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (user?.email) {
-      axios
-        .get(`https://blood-sync-server-side.vercel.app/donationRequest/${user.email}`)
+      axiosSecure
+        .get(`/donationRequest/${user.email}`)
         .then((res) => setDonations(res.data || []))
         .catch(() => setDonations([]));
     }
@@ -76,12 +78,13 @@ function RecentDonationRequests({ userId }) {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState(null);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (user?.email) {
       setLoading(true);
-      axios
-        .get(`https://blood-sync-server-side.vercel.app/donationRequest/${user.email}`)
+      axiosSecure
+        .get(`/donationRequest/${user.email}`)
         .then((res) => setRequests(res.data || []))
         .catch(() => setRequests([]))
         .finally(() => setLoading(false));
@@ -100,9 +103,7 @@ function RecentDonationRequests({ userId }) {
   }
 
   function confirmDelete() {
-    fetch(`https://blood-sync-server-side.vercel.app/donationRequestById/${deleteId}`, {
-      method: "DELETE",
-    }).then(() => {
+    axiosSecure.delete(`/donationRequestById/${deleteId}`).then(() => {
       setRequests((reqs) => reqs.filter((r) => r._id !== deleteId));
       setDeleteId(null);
     });

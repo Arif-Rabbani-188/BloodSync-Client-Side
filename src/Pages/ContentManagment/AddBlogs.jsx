@@ -4,6 +4,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import auth from '../../../Firebase/firebase.init';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const AddBlogs = () => {
     const {user} = use(AuthContext);
@@ -14,6 +15,8 @@ const AddBlogs = () => {
     content: '',
   });
   const [uploading, setUploading] = useState(false);
+
+  const axiosSecure = useAxiosSecure();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -61,7 +64,7 @@ const AddBlogs = () => {
         authorEmail: user?.email,
       };
 
-      const response = await axios.post('https://blood-sync-server-side.vercel.app/blogs', blogData);
+      const response = await axiosSecure.post('/blogs', blogData);
       if (response.data.insertedId || response.data.acknowledged) {
         Swal.fire('Success!', 'Blog created in draft status.', 'success');
         setFormData({ title: '', thumbnail: '', content: '' });

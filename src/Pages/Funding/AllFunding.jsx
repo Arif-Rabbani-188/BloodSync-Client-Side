@@ -1,18 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 
 const AllDonationRequests = () => {
   const [fundings, setFundings] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
 
     const fetchFundings = async () => {
       try {
-        const res = await axios.get(`https://blood-sync-server-side.vercel.app/fundings`);
+        const res = await axiosSecure.get(`/fundings`);
         setFundings(res.data || []);
         setLoading(false);
       } catch {

@@ -4,7 +4,6 @@ import "./Navbar.css";
 // import Logo from '../Logo/Logo';
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import Logo from "../Logo/Logo";
-import axios from "axios";
 
 const Navbar = () => {
   const { user, logOut, setUser, userData } = useContext(AuthContext);

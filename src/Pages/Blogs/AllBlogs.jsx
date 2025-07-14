@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const axiosSecure = useAxiosSecure();
+
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get('https://blood-sync-server-side.vercel.app/blogs?status=published');
+        const res = await axiosSecure.get('/blogs?status=published');
         setBlogs(res.data);
       } catch (err) {
         setError('Failed to load blogs.');

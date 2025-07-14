@@ -13,6 +13,7 @@ import {
   BarElement,
 } from "chart.js";
 import useUserRole from "../../../Hooks/useUserRole";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -30,11 +31,12 @@ const AdminDashboardHome = () => {
   const [recentRequests, setRecentRequests] = useState([]);
   const [recentFundings, setRecentFundings] = useState([]);
   const [topDonors, setTopDonors] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   // Fetch donation requests and stats
   useEffect(() => {
-    axios
-      .get("https://blood-sync-server-side.vercel.app/donationRequest")
+    axiosSecure
+      .get("/donationRequest")
       .then((res) => {
         const data = res.data || [];
         setRequests(data.length);
@@ -58,7 +60,7 @@ const AdminDashboardHome = () => {
 
   // Fetch fundings, total and recent
   useEffect(() => {
-    axios.get("https://blood-sync-server-side.vercel.app/fundings").then((res) => {
+    axiosSecure.get("/fundings").then((res) => {
       const allFundings = res.data || [];
       const total = allFundings.reduce((sum, item) => sum + item.amount, 0);
       setFunding(total);

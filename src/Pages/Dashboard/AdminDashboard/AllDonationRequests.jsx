@@ -5,6 +5,7 @@ import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 import useUserRole from "../../../Hooks/useUserRole";
 import useUsers from "../../../Hooks/useUsers";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const PAGE_SIZE = 5;
 
@@ -17,13 +18,14 @@ const AllDonationRequests = () => {
   const navigate = useNavigate();
   const { role , isLoading : roleLoading} = useUserRole();
   const {data: users, isLoading} = useUsers();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     const fetchRequests = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(
-          `https://blood-sync-server-side.vercel.app/donationRequest`
+        const res = await axiosSecure.get(
+          `/donationRequest`
         );
         setRequests(res.data || []);
         setError("");
@@ -51,8 +53,8 @@ const AllDonationRequests = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.patch(
-        `https://blood-sync-server-side.vercel.app/donationRequestById/${id}`,
+      await axiosSecure.patch(
+        `/donationRequestById/${id}`,
         {
           status: newStatus,
         }
@@ -80,8 +82,8 @@ const AllDonationRequests = () => {
     if (!isConfirmed) return;
 
     try {
-      await axios.delete(
-        `https://blood-sync-server-side.vercel.app/donationRequestById/${id}`
+      await axiosSecure.delete(
+        `/donationRequestById/${id}`
       );
       setRequests((prev) => prev.filter((req) => req._id !== id));
       Swal.fire("Deleted!", "The request has been deleted.", "success");

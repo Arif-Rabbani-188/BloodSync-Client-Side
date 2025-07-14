@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../Contexts/AuthContext/AuthContext"; // ✅ correct import
 import axios from "axios";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -9,6 +10,7 @@ const DonorCreateReq = () => {
 
   const [districts, setDistricts] = useState([]);
   const [fetchError, setFetchError] = useState(null);
+  const axiosSecure = useAxiosSecure();
 
   // ✅ Fixed fetch
   useEffect(() => {
@@ -85,7 +87,7 @@ const DonorCreateReq = () => {
     try {
       await new Promise((res) => setTimeout(res, 1000)); 
 
-      axios.post("https://blood-sync-server-side.vercel.app/donationRequest", {
+      axiosSecure.post("/donationRequest", {
         ...form,
         requesterId: user?.uid,
         recipientDistrict: form.recipientDistrict,

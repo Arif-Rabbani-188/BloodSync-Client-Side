@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import CheckoutForm from "./CheckoutForm";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 
 const stripePromise = loadStripe(import.meta.env.VITE_payment_key);
@@ -12,11 +13,12 @@ const GiveFund = () => {
   const { user } = useContext(AuthContext);
   const [amount, setAmount] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (amount > 0) {
-      axios
-        .post("https://blood-sync-server-side.vercel.app/create-payment-intent", { amount })
+      axiosSecure
+        .post("/create-payment-intent", { amount })
         .then((res) => {
           setClientSecret(res.data.clientSecret);
         });

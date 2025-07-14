@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const CheckoutForm = ({ amount, user }) => {
   const stripe = useStripe();
@@ -9,14 +10,16 @@ const CheckoutForm = ({ amount, user }) => {
   const [processing, setProcessing] = useState(false);
   const [transactionId, setTransactionId] = useState("");
 
+  const axiosSecure = useAxiosSecure(); 
+
   const [clientSecret, setClientSecret] = useState(""); // ✅ new state
 
   // Get clientSecret from backend
   useEffect(() => {
     if (!amount || amount < 1) return;
 
-    axios
-      .post("https://blood-sync-server-side.vercel.app/create-payment-intent", { amount })
+    axiosSecure
+      .post("/create-payment-intent", { amount })
       .then((res) => {
         setClientSecret(res.data.clientSecret);
       })
@@ -70,7 +73,7 @@ const CheckoutForm = ({ amount, user }) => {
       };
 
       try {
-        await axios.post("https://blood-sync-server-side.vercel.app/fundings", fundData);
+        await axiosSecure.post("/fundings", fundData);
         Swal.fire(
           "Success!",
           "Your fund has been recorded. Thank you!",

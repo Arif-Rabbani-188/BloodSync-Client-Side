@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const ViewDetailRequest = () => {
   const { user } = useContext(AuthContext);
@@ -11,10 +12,11 @@ const ViewDetailRequest = () => {
   const [request, setRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    axios
-      .get(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`)
+    axiosSecure
+      .get(`/donationRequestById/${id}`)
       .then((res) => setRequest(res.data))
       .catch((err) => {
         console.error("Error fetching request:", err);
@@ -34,7 +36,7 @@ const ViewDetailRequest = () => {
         donorEmail: email,
       };
 
-      await axios.patch(`https://blood-sync-server-side.vercel.app/donationRequestById/${id}`, updated);
+      await axiosSecure.patch(`/donationRequestById/${id}`, updated);
 
       setRequest((prev) => ({ ...prev, ...updated }));
       setShowModal(false);

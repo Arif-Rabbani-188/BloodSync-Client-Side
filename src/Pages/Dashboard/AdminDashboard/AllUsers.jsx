@@ -3,6 +3,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import useUsers from "../../../Hooks/useUsers";
 import useUserRole from "../../../Hooks/useUserRole";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const PAGE_SIZE = 5;
 
@@ -11,6 +12,7 @@ const AllUsers = () => {
   const [page, setPage] = useState(1);
   const { data: users, isLoading, refetch } = useUsers();
   const { role, isLoading: roleLoading } = useUserRole();
+  const axiosSecure = useAxiosSecure();
 
   console.log(roleLoading);
 
@@ -50,8 +52,8 @@ if (role !== "admin" && role !== "volunteer") {
   const totalPages = Math.max(1, Math.ceil(filteredUsers.length / PAGE_SIZE));
 
   const handleBlock = (email) => {
-    axios
-      .patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
+    axiosSecure
+      .patch(`/users/${email}`, {
         status: "blocked",
       })
       .then(() => {
@@ -61,8 +63,8 @@ if (role !== "admin" && role !== "volunteer") {
   };
 
   const handleUnblock = (email) => {
-    axios
-      .patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
+    axiosSecure
+      .patch(`/users/${email}`, {
         status: "active",
       })
       .then(() => {
@@ -82,8 +84,8 @@ if (role !== "admin" && role !== "volunteer") {
       confirmButtonText: "Yes, make volunteer!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
+        axiosSecure
+          .patch(`/users/${email}`, {
             role: "volunteer",
           })
           .then(() => {
@@ -105,8 +107,8 @@ if (role !== "admin" && role !== "volunteer") {
       confirmButtonText: "Yes, make admin!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
+        axiosSecure
+          .patch(`/users/${email}`, {
             role: "admin",
           })
           .then(() => {
@@ -128,8 +130,8 @@ if (role !== "admin" && role !== "volunteer") {
       confirmButtonText: "Yes, make donor!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .patch(`https://blood-sync-server-side.vercel.app/users/${email}`, {
+        axiosSecure
+          .patch(`/users/${email}`, {
             role: "donor",
           })
           .then(() => {

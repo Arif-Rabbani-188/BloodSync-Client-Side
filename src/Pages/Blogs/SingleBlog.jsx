@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const SingleBlog = () => {
   const { id } = useParams();
@@ -8,10 +9,12 @@ const SingleBlog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const axiosSecure = useAxiosSecure()
+
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`https://blood-sync-server-side.vercel.app/blogs/${id}`);
+        const res = await axiosSecure.get(`/blogs/${id}`);
         setBlog(res.data);
         setLoading(false);
       } catch (err) {

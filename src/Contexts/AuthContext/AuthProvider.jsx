@@ -5,16 +5,19 @@ import auth from "../../../Firebase/firebase.init.js";
 import Swal from "sweetalert2";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import axios from "axios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure.jsx";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
 
+  const axiosSecure = useAxiosSecure()
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("https://blood-sync-server-side.vercel.app/users");
+        const response = await axiosSecure.get("/users");
         const currentUser = response.data.find((u) => u.email === user?.email);
         if (currentUser) {
           setUserData(currentUser);

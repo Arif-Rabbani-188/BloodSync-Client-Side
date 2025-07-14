@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import useUserRole from "../../Hooks/useUserRole";
 import useUsers from "../../Hooks/useUsers";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ContentPage = () => {
   const { user } = useContext(AuthContext);
@@ -13,6 +14,7 @@ const ContentPage = () => {
   const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
   const [filter, setFilter] = useState("all");
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     axios
@@ -37,8 +39,8 @@ const ContentPage = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axios.delete(
-          `https://blood-sync-server-side.vercel.app/blogs/${id}`
+        await axiosSecure.delete(
+          `/blogs/${id}`
         );
         setBlogs((prev) => prev.filter((blog) => blog._id !== id));
         Swal.fire("Deleted!", "Blog has been deleted.", "success");
@@ -59,8 +61,8 @@ const ContentPage = () => {
 
     if (confirm.isConfirmed) {
       try {
-        const updated = await axios.patch(
-          `https://blood-sync-server-side.vercel.app/blogs/${id}`,
+        const updated = await axiosSecure.patch(
+          `/blogs/${id}`,
           { status: newStatus }
         );
         setBlogs((prev) =>
