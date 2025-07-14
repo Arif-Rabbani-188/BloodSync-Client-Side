@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext/AuthContext';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const ViewDetailRequest = () => {
   const { user } = useContext(AuthContext);
@@ -13,6 +14,8 @@ const ViewDetailRequest = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosSecure
@@ -47,6 +50,21 @@ const ViewDetailRequest = () => {
     }
   };
 
+  const handleEdit = (id) => {
+    navigate(`/dashboard/donation-requests/edit/${id}`);
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      await axiosSecure.delete(`/donationRequestById/${id}`);
+      setRequest(null);
+      Swal.fire('Deleted', 'Donation request deleted successfully', 'success');
+    } catch (err) {
+      console.error("Delete failed", err);
+      Swal.fire('Error', 'Failed to delete donation request', 'error');
+    }
+  };
+
   if (!request) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -56,6 +74,7 @@ const ViewDetailRequest = () => {
   }
 
   const {
+    _id,
     requesterName,
     requesterEmail,
     recipientName,
@@ -109,7 +128,7 @@ const ViewDetailRequest = () => {
         )}
       </div>
 
-      {status === 'pending' && (
+      {status === 'pending' && requesterEmail !== user.email &&(
         <button
           onClick={handleDonate}
           className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
@@ -117,6 +136,14 @@ const ViewDetailRequest = () => {
           Donate
         </button>
       )}
+      {
+        requesterEmail === user.email && 
+        <div onClick={()=>handleEdit(_id)} className='flex mt-4 gap-5'>
+          <button className=" bg-blue-600 text-white py-2 px-2 rounded hover:bg-red-700 transition">Edit</button>
+          <button
+          onClick={()=>handleDelete(_id)} className="bg-red-600 text-white py-2 px-2  rounded hover:bg-red-700 transition">Delete</button>
+        </div>
+      }
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">

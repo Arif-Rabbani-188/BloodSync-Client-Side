@@ -36,9 +36,9 @@ const Login = () => {
           title: "Login Successful",
           icon: "success",
           draggable: false,
-        });
-        navigate(location?.state || "/", { replace: true });
-      })
+        }).then(() => {
+          navigate(location?.state?.from || "/", { replace: true });
+        });      })
       .catch((error) => {
         console.error("Login Error:", error);
         Swal.fire({

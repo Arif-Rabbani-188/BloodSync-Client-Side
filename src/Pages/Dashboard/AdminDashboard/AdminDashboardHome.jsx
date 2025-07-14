@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import useUserRole from "../../../Hooks/useUserRole";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import CountUp from "react-countup";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -87,19 +88,30 @@ const AdminDashboardHome = () => {
   const stats = [
     {
       icon: <FaUsers size={32} className="text-blue-600" />,
-      count: users?.length || 0,
+      count: <CountUp end={users?.length || 0} duration={5} separator="," />,
       title: "Total Donors",
       bg: "bg-blue-50",
     },
     {
       icon: <FaHandHoldingUsd size={32} className="text-green-600" />,
-      count: `$${funding.toLocaleString()}`,
+      count: (
+        <>
+          $
+          <CountUp
+            end={funding}
+            duration={5}
+            separator=","
+            decimals={2}
+            decimal="."
+          />
+        </>
+      ),
       title: "Total Funding",
       bg: "bg-green-50",
     },
     {
       icon: <FaTint size={32} className="text-red-600" />,
-      count: requests,
+      count: <CountUp end={requests} duration={5} separator="," />,
       title: "Blood Requests",
       bg: "bg-red-50",
     },

@@ -29,6 +29,7 @@ import DashboardHome from "./Pages/Dashboard/DashboardHome/DashboardHome";
 import Error from "./Pages/Error/Error";
 import AllFunding from "./Pages/Funding/AllFunding";
 import GiveFund from "./Pages/Funding/GiveFund";
+import ForbiddenPage from "./Pages/Error/ForbiddenPage";
 
 const queryClient = new QueryClient();
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: "/*",
         element: <Error></Error>
+      },
+      {
+        path: "forbidden",
+        element: <ForbiddenPage></ForbiddenPage>
       }
     ],
   },

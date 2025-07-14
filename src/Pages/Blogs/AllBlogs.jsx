@@ -13,7 +13,7 @@ const AllBlogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axiosSecure.get('/blogs?status=published');
+        const res = await axios.get('https://blood-sync-server-side.vercel.app/blogs?status=published');
         setBlogs(res.data);
       } catch (err) {
         setError('Failed to load blogs.');

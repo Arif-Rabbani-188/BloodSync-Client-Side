@@ -14,8 +14,6 @@ const AllUsers = () => {
   const { role, isLoading: roleLoading } = useUserRole();
   const axiosSecure = useAxiosSecure();
 
-  console.log(roleLoading);
-
 if (roleLoading || isLoading || !role || !users) {
     return <div className="text-center mt-20">Loading...</div>;
 }
@@ -198,11 +196,11 @@ if (role !== "admin" && role !== "volunteer") {
                 </td>
               </tr>
             ) : (
-              paginatedUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-slate-100 transition">
+              paginatedUsers.map((user, index) => (
+                <tr key={index || user.id} className="hover:bg-slate-100 transition">
                 <td className="py-3 px-4 border-b border-slate-200">
                   <img
-                    src={user.photoURL}
+                    src={user?.photoURL}
                     alt="avatar"
                     className="rounded-full w-10 h-10 object-cover border-2 border-slate-200"
                   />
@@ -297,9 +295,9 @@ if (role !== "admin" && role !== "volunteer") {
             No users found.
           </div>
         ) : (
-          paginatedUsers.map((user) => (
+          paginatedUsers.map((user, index) => (
             <div
-              key={user.id}
+              key={user.id || index}
               className="bg-slate-50 rounded-lg shadow p-4 flex flex-col gap-2"
             >
               <div className="flex items-center gap-3">

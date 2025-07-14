@@ -243,7 +243,7 @@ const AllDonationRequests = () => {
                         <button
                           className="text-green-600 underline"
                           onClick={() =>
-                            navigate(`/dashboard/donation-request/${req._id}`)
+                            navigate(`/dashboard/donation-requests/${req._id}`)
                           }
                         >
                           View
@@ -342,7 +342,7 @@ const AllDonationRequests = () => {
                   <button
                     className="text-green-600 underline"
                     onClick={() =>
-                      navigate(`/dashboard/donation-request/${req._id}`)
+                      navigate(`/dashboard/donation-requests/${req._id}`)
                     }
                   >
                     View
