@@ -1,6 +1,6 @@
 import React, { use, useState } from "react";
 import Logo from "../../../Components/Logo/Logo";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import useUserRole from "../../../Hooks/useUserRole";
 import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
 
@@ -75,7 +75,7 @@ const Aside = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
+            <Link
             onClick={toggleSidebar}
               to="/dashboard"
               className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
@@ -95,7 +95,7 @@ const Aside = () => {
                 ></path>
               </svg>
               Dashboard Home
-            </NavLink>
+            </Link>
             </li>
           {(role === "admin" || role === "volunteer") && !isLoading && (
             <li>

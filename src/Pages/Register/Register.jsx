@@ -53,9 +53,13 @@ const Register = () => {
   };
 
   const ImgUpload = () => {
+    const [uploading, setUploading] = useState(false); // New uploading state
+
     const handleImageUpload = async (e) => {
       const file = e.target.files[0];
       if (!file) return;
+
+      setUploading(true); // Start loading
 
       const formDataImg = new FormData();
       formDataImg.append("image", file);
@@ -74,6 +78,8 @@ const Register = () => {
         }));
       } catch (error) {
         console.error("Upload failed", error);
+      } finally {
+        setUploading(false); // Stop loading
       }
     };
 
@@ -92,7 +98,16 @@ const Register = () => {
           className="w-full text-gray-700 p-2 btn bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
           accept="image/*"
         />
-        {formData.photoURL && (
+
+        {/* Loading text */}
+        {uploading && (
+          <p className="text-blue-500 text-sm mt-2 text-center">
+            Uploading image...
+          </p>
+        )}
+
+        {/* Show uploaded image */}
+        {formData.photoURL && !uploading && (
           <div className="mt-4 flex justify-center">
             <img
               src={formData.photoURL}
