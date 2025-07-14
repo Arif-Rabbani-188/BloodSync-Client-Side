@@ -9,7 +9,7 @@ const Appointment = () => {
     setLoading(true);
 
     setTimeout(() => {
-      Swal.fire("Success", "Your appointment has been submitted!", "success");
+      Swal.fire("Success", "Your message has been sent!", "success");
       e.target.reset();
       setLoading(false);
     }, 1000);
@@ -26,25 +26,22 @@ const Appointment = () => {
       <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16 md:w-10/12 flex flex-col lg:flex-row gap-12">
         {/* Left Section */}
         <div className="flex-1">
-          <p className="text-sm text-gray-500 mb-2">Appointment</p>
+          <p className="text-sm text-gray-500 mb-2">Contact Us</p>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-8">
-            Good to know <br />
-            <span className="text-green-700">helpful information</span>
+            Reach out <br />
+            <span className="text-green-700">we're here to help</span>
           </h1>
           <p className="text-lg text-gray-600 mb-8">
-            Prepare for your donation appointment with these helpful tips.
+            Have questions or feedback? Send us a message and we’ll get back to you shortly.
           </p>
-          <ul className="space-y-6">
-            {["Maintain a healthy iron level by eating iron rich foods.", "Drink an extra 16 oz. of water prior to your donation.", "Avoid alcohol consumption before your blood donation.", "Get a good night of sleep before and after donation.", "Bring your donor card or national ID/Passport.",].map((tip, index) => (
-              <li key={index} className="flex items-start">
-                <div className="mr-4 mt-1 text-green-600">&#10003;</div>
-                <p className="text-lg text-gray-700">{tip}</p>
-              </li>
-            ))}
+          <ul className="space-y-4 text-gray-700">
+            <li>Email: arif.rabbani.dev@gmail.com</li>
+            <li>Phone: +880 1884-481000</li>
+            <li>Address: Dhaka, Bangladesh</li>
           </ul>
         </div>
 
-        {/* Right Section */}
+        {/* Right Section - Contact Form */}
         <div className="flex-1 flex flex-col justify-center">
           <form onSubmit={handleSubmit} className="space-y-6">
             <input
@@ -65,23 +62,16 @@ const Appointment = () => {
               className="input-style"
               required
             />
-            <div className="flex flex-col sm:flex-row gap-6">
-              <input
-                type="time"
-                className="input-style flex-1"
-                required
-              />
-              <input
-                type="date"
-                className="input-style flex-1"
-                required
-              />
-            </div>
+            <textarea
+              placeholder="Your Message"
+              className="input-style h-32 resize-none"
+              required
+            ></textarea>
             <button
               type="submit"
               className="w-full bg-green-600 text-white p-4 rounded-xl flex items-center justify-center text-lg font-semibold hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg"
             >
-              Submit Appointment
+              Send Message
               <svg
                 className="w-6 h-6 ml-3"
                 fill="none"
