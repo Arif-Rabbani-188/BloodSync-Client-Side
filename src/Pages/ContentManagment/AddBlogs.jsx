@@ -31,7 +31,7 @@ const AddBlogs = () => {
     const imageForm = new FormData();
     imageForm.append('image', file);
 
-    const imgbbKey = '3f697030e4d83e5c4e100377a41b3b1b';
+    const imgbbKey = import.meta.env.VITE_IMGBB_API_KEY;
     try {
       const res = await axios.post(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, imageForm);
       const imageUrl = res.data.data.display_url;
