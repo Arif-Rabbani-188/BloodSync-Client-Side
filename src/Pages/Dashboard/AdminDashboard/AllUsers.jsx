@@ -32,7 +32,12 @@ const AllUsers = () => {
   
 
 if (roleLoading || isLoading || !role || !users) {
-    return <div className="text-center mt-20">Loading...</div>;
+ 
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600"></div>
+      </div>
+    )
 }
 if (role !== "admin" && role !== "volunteer") {
     return (

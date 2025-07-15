@@ -92,7 +92,7 @@ const ViewDetailRequest = () => {
   } = request;
 
   return (
-    <div className="max-w-3xl mx-auto my-10 md:mt-30 mt-10 bg-white shadow-xl rounded-lg p-6 space-y-4">
+    <div className="max-w-3xl mx-auto my-20 md:mt-30 mt-20 bg-white shadow-xl rounded-lg p-6 space-y-4">
       <h2 className="text-2xl font-semibold text-center text-red-600">Donation Request Details</h2>
       <div className="space-y-2 text-gray-700">
         <p><strong>Requester Name:</strong> {requesterName}</p>

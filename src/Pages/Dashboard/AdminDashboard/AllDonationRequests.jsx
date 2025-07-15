@@ -104,10 +104,18 @@ const AllDonationRequests = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // if (loading) {
+  //   return (
+  //     <div className="p-4 md:ml-80 mt-20 md:mt-10 w-10/12 mx-auto text-center text-lg text-gray-600">
+  //       Loading donation requests...
+  //     </div>
+  //   );
+  // }
+
   if (loading) {
     return (
-      <div className="p-4 md:ml-80 mt-20 md:mt-10 w-10/12 mx-auto text-center text-lg text-gray-600">
-        Loading donation requests...
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600"></div>
       </div>
     );
   }
@@ -121,7 +129,12 @@ const AllDonationRequests = () => {
   }
 
   if (roleLoading || isLoading || !role || !users) {
-    return <div className="text-center mt-20">Loading...</div>;
+   
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600"></div>
+      </div>
+    );
   }
   if (role !== "admin" && role !== "volunteer") {
     return (

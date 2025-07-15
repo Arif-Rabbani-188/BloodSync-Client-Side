@@ -78,7 +78,12 @@ const ContentPage = () => {
   };
 
   if (roleLoading || isLoading || !role || !users) {
-    return <div className="text-center mt-20">Loading...</div>;
+    
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600"></div>
+      </div>
+    );
   }
   if (role !== "admin" && role !== "volunteer") {
     return (
@@ -96,6 +101,7 @@ const ContentPage = () => {
       </div>
     );
   }
+  
 
   return (
     <div className="p-6 w-full md:w-10/12 md:ml-80 mx-auto mt-20 md:mt-0">

@@ -107,7 +107,7 @@ const RequestViewDetail = () => {
   if (!formData) return <div className="text-center py-10">Loading...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto my-10 bg-white shadow-lg rounded-lg p-6">
+    <div className="max-w-3xl mx-auto my-20 bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-2xl font-semibold text-red-600 text-center mb-4">Update Donation Request</h2>
       <form className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

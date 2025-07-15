@@ -10,12 +10,16 @@ const DashboardHome = () => {
   const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const[loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user?.email) {
       axiosSecure
         .get(`/donationRequest/${user.email}`)
-        .then((res) => setRequests(res.data || []))
+        .then((res) => {
+          setRequests(res.data || []);
+          setLoading(false);
+        })
         .catch(() => setRequests([]));
     }
   }, [user]);
@@ -46,6 +50,14 @@ const DashboardHome = () => {
       Swal.fire("Deleted!", "Your request has been deleted.", "success");
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600"></div>
+      </div>
+    );
+  }
 
   const recentRequests = requests
     .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))
@@ -241,7 +253,7 @@ const DashboardHome = () => {
                       <button
                         className="text-blue-600 underline"
                         onClick={() =>
-                          navigate(`/dashboard/edit-donation-request/${req._id}`)
+                          navigate(`/dashboard/donation-requests/edit/${req._id}`)
                         }
                       >
                         Edit
@@ -255,7 +267,7 @@ const DashboardHome = () => {
                       <button
                         className="text-green-600 underline"
                         onClick={() =>
-                          navigate(`/dashboard/donation-request/${req._id}`)
+                          navigate(`/dashboard/donation-requests/${req._id}`)
                         }
                       >
                         View
