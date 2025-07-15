@@ -142,7 +142,7 @@ const Register = () => {
 
       const userData = {
         name: formData.name,
-        email: formData.email,
+        email: formData.email.toLowerCase(),
         photoURL: formData.photoURL,
         bloodGroup: formData.bloodGroup,
         district: districtName,
@@ -152,22 +152,7 @@ const Register = () => {
         createdAt: new Date().toISOString(),
       };
 
-      const checkRes = await axios.get(
-        "https://blood-sync-server-side.vercel.app/users"
-      );
-      const userExists = checkRes.data.some(
-        (user) => user.email === formData.email
-      );
-      if (userExists) {
-        setLoading(false);
-        Swal.fire({
-          icon: "warning",
-          title: "User already exists!",
-          text: "An account with this email already exists.",
-        });
-        return;
-      }
-
+      // Create user with email
       await createUserWithEmail(
         formData.email,
         formData.password,
@@ -175,12 +160,10 @@ const Register = () => {
         formData.name
       );
 
-      const response = await axios.post(
+      // Save user to database
+      await axios.post(
         "https://blood-sync-server-side.vercel.app/users",
-        {
-          ...userData,
-          email: formData.email.toLowerCase(),
-        }
+        userData
       );
 
       Swal.fire({
@@ -191,6 +174,7 @@ const Register = () => {
         navigate("/home");
         window.location.reload();
       });
+
       setFormData({
         name: "",
         email: "",
