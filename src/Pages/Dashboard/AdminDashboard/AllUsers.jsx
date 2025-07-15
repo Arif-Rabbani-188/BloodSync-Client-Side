@@ -4,15 +4,32 @@ import Swal from "sweetalert2";
 import useUsers from "../../../Hooks/useUsers";
 import useUserRole from "../../../Hooks/useUserRole";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const PAGE_SIZE = 5;
 
 const AllUsers = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(1);
-  const { data: users, isLoading, refetch } = useUsers();
+  // const { data: users, isLoading, refetch } = useUsers();
   const { role, isLoading: roleLoading } = useUserRole();
   const axiosSecure = useAxiosSecure();
+
+  const {
+    data: users = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["users", statusFilter, page],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users");
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+  
 
 if (roleLoading || isLoading || !role || !users) {
     return <div className="text-center mt-20">Loading...</div>;

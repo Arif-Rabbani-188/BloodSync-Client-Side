@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FaUsers, FaHandHoldingUsd, FaTint, FaClock, FaUserAlt } from "react-icons/fa";
+import {
+  FaUsers,
+  FaHandHoldingUsd,
+  FaTint,
+  FaClock,
+  FaUserAlt,
+} from "react-icons/fa";
 import useUsers from "../../../Hooks/useUsers";
 import axios from "axios";
 import { Pie, Bar } from "react-chartjs-2";
@@ -15,11 +21,18 @@ import {
 import useUserRole from "../../../Hooks/useUserRole";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import CountUp from "react-countup";
+import { useQuery } from "@tanstack/react-query";
 
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement
+);
 
 const AdminDashboardHome = () => {
-  const { data: users } = useUsers();
   const [requests, setRequests] = useState([]);
   const [funding, setFunding] = useState(0);
   const [donationStatusCount, setDonationStatusCount] = useState({
@@ -36,29 +49,37 @@ const AdminDashboardHome = () => {
 
   const axiosSecure = useAxiosSecure();
 
+  const { data: users = [] } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/users');
+      return res.data;
+    },
+  });
+
+  
+
   // Fetch donation requests and stats
   useEffect(() => {
-    axiosSecure
-      .get("/donationRequest")
-      .then((res) => {
-        const data = res.data || [];
-        setRequests(data.length);
-        const statusCounts = data.reduce((acc, req) => {
-          acc[req.status] = (acc[req.status] || 0) + 1;
-          return acc;
-        }, {});
-        setDonationStatusCount({
-          pending: statusCounts.pending || 0,
-          inprogress: statusCounts.inprogress || 0,
-          done: statusCounts.done || 0,
-          canceled: statusCounts.canceled || 0,
-        });
-        // Sort by newest and take last 5 for recent requests
-        const sortedRequests = data
-          .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))
-          .slice(0, 5);
-        setRecentRequests(sortedRequests);
+    axiosSecure.get("/donationRequest").then((res) => {
+      const data = res.data || [];
+      setRequests(data.length);
+      const statusCounts = data.reduce((acc, req) => {
+        acc[req.status] = (acc[req.status] || 0) + 1;
+        return acc;
+      }, {});
+      setDonationStatusCount({
+        pending: statusCounts.pending || 0,
+        inprogress: statusCounts.inprogress || 0,
+        done: statusCounts.done || 0,
+        canceled: statusCounts.canceled || 0,
       });
+      // Sort by newest and take last 5 for recent requests
+      const sortedRequests = data
+        .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))
+        .slice(0, 5);
+      setRecentRequests(sortedRequests);
+    });
   }, [axiosSecure]);
 
   // Fetch fundings, total and recent
@@ -171,7 +192,8 @@ const AdminDashboardHome = () => {
         <div>
           <h2 className="text-2xl font-bold">
             Welcome to{" "}
-            {role === "admin" ? <span>Admin</span> : <span>Volunteer</span>} Dashboard
+            {role === "admin" ? <span>Admin</span> : <span>Volunteer</span>}{" "}
+            Dashboard
           </h2>
           <p className="text-gray-600">
             Manage donors, funding, and blood requests efficiently.
@@ -196,7 +218,9 @@ const AdminDashboardHome = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
         <div className="bg-white rounded-lg shadow p-6 mx-auto">
-          <h3 className="text-lg font-semibold mb-4">Donation Request Status</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            Donation Request Status
+          </h3>
           <div className="max-h-96">
             <Pie data={pieData} />
           </div>
@@ -293,16 +317,46 @@ const AdminDashboardHome = () => {
                   <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
                     Date
                   </th>
+                  <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
+                    Reply
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {recentMessages.map((msg) => (
-                  <tr key={msg._id} className="border-b hover:bg-gray-50 align-top">
-                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{msg.name}</td>
-                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{msg.email}</td>
-                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{msg.phone}</td>
-                    <td className="py-2 px-3 md:px-4 whitespace-normal max-w-xs text-sm md:text-base">{msg.message}</td>
-                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{new Date(msg.createdAt).toLocaleDateString()}</td>
+                  <tr
+                    key={msg._id}
+                    className="border-b hover:bg-gray-50 align-top"
+                  >
+                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
+                      {msg.name}
+                    </td>
+                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
+                      {msg.email}
+                    </td>
+                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
+                      {msg.phone}
+                    </td>
+                    <td className="py-2 px-3 md:px-4 whitespace-normal max-w-xs text-sm md:text-base">
+                      {msg.message}
+                    </td>
+                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
+                      {new Date(msg.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
+                      <a
+                        href={`mailto:${
+                          msg.email
+                        }?subject=Reply to your message&body=${encodeURIComponent(
+                          msg.message
+                        )}`}
+                        className="text-blue-600 underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Reply
+                      </a>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -310,8 +364,6 @@ const AdminDashboardHome = () => {
           </div>
         )}
       </div>
-
-      {/* Recent Fundings */}
       <div className="bg-white rounded-lg shadow p-4 md:p-6 mb-10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <FaHandHoldingUsd /> Recent Fundings
@@ -323,17 +375,29 @@ const AdminDashboardHome = () => {
             <table className="min-w-full text-left border rounded table-auto">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">Donor</th>
-                  <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">Amount (USD)</th>
-                  <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">Date</th>
+                  <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
+                    Donor
+                  </th>
+                  <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
+                    Amount (USD)
+                  </th>
+                  <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
+                    Date
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {recentFundings.map((fund) => (
                   <tr key={fund._id} className="border-b hover:bg-gray-50">
-                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{fund.name}</td>
-                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">${fund.amount.toFixed(2)}</td>
-                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{new Date(fund.date).toLocaleDateString()}</td>
+                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
+                      {fund.name}
+                    </td>
+                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
+                      ${fund.amount.toFixed(2)}
+                    </td>
+                    <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
+                      {new Date(fund.date).toLocaleDateString()}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -353,7 +417,8 @@ const AdminDashboardHome = () => {
           <ol className="list-decimal list-inside space-y-1 text-gray-700 text-sm md:text-base">
             {topDonors.map(([name, total], i) => (
               <li key={i}>
-                <span className="font-semibold">{name}</span>: ${total.toFixed(2)}
+                <span className="font-semibold">{name}</span>: $
+                {total.toFixed(2)}
               </li>
             ))}
           </ol>

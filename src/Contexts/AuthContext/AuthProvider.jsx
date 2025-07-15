@@ -16,18 +16,38 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
 
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://blood-sync-server-side.vercel.app/users"
+  //       );
+  //       const currentUser = response.data.find((u) => u.email === user?.email);
+  //       if (currentUser) {
+  //         setUserData(currentUser);
+  //       } else {
+  //         setUserData(null);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //       setUserData(null);
+  //     }
+  //   };
+
+  //   if (user?.email) {
+  //     fetchUserData();
+  //   } else {
+  //     setUserData(null);
+  //   }
+  // }, [user?.email]);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "https://blood-sync-server-side.vercel.app/users"
+          `https://blood-sync-server-side.vercel.app/users/${user?.email}`
         );
-        const currentUser = response.data.find((u) => u.email === user?.email);
-        if (currentUser) {
-          setUserData(currentUser);
-        } else {
-          setUserData(null);
-        }
+        setUserData(response.data || null);
       } catch (error) {
         console.error("Error fetching user data:", error);
         setUserData(null);
