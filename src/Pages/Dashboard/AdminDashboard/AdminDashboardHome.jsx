@@ -287,7 +287,7 @@ const AdminDashboardHome = () => {
                   <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
                     Phone
                   </th>
-                  <th className="py-2 px-3 md:px-4 border-b whitespace-normal text-sm md:text-base max-w-xs whitespace-pre-line border-b">
+                  <th className="py-2 px-3 md:px-4 border-b whitespace-normal text-sm md:text-base max-w-xs ">
                     Message
                   </th>
                   <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
@@ -301,7 +301,7 @@ const AdminDashboardHome = () => {
                     <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{msg.name}</td>
                     <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{msg.email}</td>
                     <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{msg.phone}</td>
-                    <td className="py-2 px-3 md:px-4 whitespace-normal max-w-xs whitespace-pre-line text-sm md:text-base">{msg.message}</td>
+                    <td className="py-2 px-3 md:px-4 whitespace-normal max-w-xs text-sm md:text-base">{msg.message}</td>
                     <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">{new Date(msg.createdAt).toLocaleDateString()}</td>
                   </tr>
                 ))}

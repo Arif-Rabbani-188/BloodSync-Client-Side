@@ -14,21 +14,16 @@ const DashboardHome = () => {
   useEffect(() => {
     if (user?.email) {
       axiosSecure
-        .get(
-          `/donationRequest/${user.email}`
-        )
+        .get(`/donationRequest/${user.email}`)
         .then((res) => setRequests(res.data || []))
         .catch(() => setRequests([]));
     }
   }, [user]);
 
   const handleStatusChange = async (id, newStatus) => {
-    await axiosSecure.patch(
-      `/donationRequestById/${id}`,
-      {
-        status: newStatus,
-      }
-    );
+    await axiosSecure.patch(`/donationRequestById/${id}`, {
+      status: newStatus,
+    });
     setRequests((prev) =>
       prev.map((req) => (req._id === id ? { ...req, status: newStatus } : req))
     );
@@ -46,9 +41,7 @@ const DashboardHome = () => {
     });
 
     if (result.isConfirmed) {
-      await axiosSecure.delete(
-        `/donationRequestById/${id}`
-      );
+      await axiosSecure.delete(`/donationRequestById/${id}`);
       setRequests((prev) => prev.filter((req) => req._id !== id));
       Swal.fire("Deleted!", "Your request has been deleted.", "success");
     }
@@ -63,11 +56,13 @@ const DashboardHome = () => {
       <h2 className="text-2xl font-bold mb-4 text-center">
         Welcome, {user?.displayName || user?.email}!
       </h2>
-      {recentRequests.length > 0 && (
+
+      {recentRequests.length > 0 ? (
         <>
           <h3 className="text-lg font-semibold mb-2">
             Recent Donation Requests
           </h3>
+
           {/* Table for md+ screens */}
           <div className="overflow-x-auto hidden md:block">
             <table className="min-w-full bg-white border rounded shadow">
@@ -91,9 +86,7 @@ const DashboardHome = () => {
                   )
                   .map((req) => (
                     <tr key={req._id} className="hover:bg-gray-50 text-center">
-                      <td className="py-2 px-4 border-b">
-                        {req.recipientName}
-                      </td>
+                      <td className="py-2 px-4 border-b">{req.recipientName}</td>
                       <td className="py-2 px-4 border-b">
                         {req.recipientDistrict}, {req.recipientUpazila}
                       </td>
@@ -115,20 +108,16 @@ const DashboardHome = () => {
                           {req.status}
                         </span>
                         {req.status === "inprogress" && (
-                          <div className="flex gap-1 mt-1">
+                          <div className="flex gap-1 mt-1 justify-center">
                             <button
                               className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded"
-                              onClick={() =>
-                                handleStatusChange(req._id, "done")
-                              }
+                              onClick={() => handleStatusChange(req._id, "done")}
                             >
                               Done
                             </button>
                             <button
                               className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded"
-                              onClick={() =>
-                                handleStatusChange(req._id, "canceled")
-                              }
+                              onClick={() => handleStatusChange(req._id, "canceled")}
                             >
                               Cancel
                             </button>
@@ -136,8 +125,7 @@ const DashboardHome = () => {
                         )}
                       </td>
                       <td className="py-2 px-4 border-b">
-                        {(req.status === "inprogress" ||
-                          req.status === "done") &&
+                        {(req.status === "inprogress" || req.status === "done") &&
                           req.donorName && (
                             <div>
                               <div>{req.donorName}</div>
@@ -152,9 +140,7 @@ const DashboardHome = () => {
                           <button
                             className="text-blue-600 underline mr-2"
                             onClick={() =>
-                              navigate(
-                                `/dashboard/donation-requests/edit/${req._id}`
-                              )
+                              navigate(`/dashboard/donation-requests/edit/${req._id}`)
                             }
                           >
                             Edit
@@ -180,12 +166,11 @@ const DashboardHome = () => {
               </tbody>
             </table>
           </div>
+
           {/* Cards for mobile screens */}
           <div className="md:hidden flex flex-col gap-4">
             {requests
-              .sort(
-                (a, b) => new Date(b.donationDate) - new Date(a.donationDate)
-              )
+              .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))
               .map((req) => (
                 <div
                   key={req._id}
@@ -256,9 +241,7 @@ const DashboardHome = () => {
                       <button
                         className="text-blue-600 underline"
                         onClick={() =>
-                          navigate(
-                            `/dashboard/edit-donation-request/${req._id}`
-                          )
+                          navigate(`/dashboard/edit-donation-request/${req._id}`)
                         }
                       >
                         Edit
@@ -283,6 +266,20 @@ const DashboardHome = () => {
               ))}
           </div>
         </>
+      ) : (
+        <div className="flex flex-col items-center justify-center bg-white shadow rounded-lg p-8 text-center max-w-lg mx-auto mt-10">
+          <div className="text-6xl mb-4">🩸</div>
+          <h3 className="text-2xl font-bold text-gray-800 mb-2">No Donation Requests Yet</h3>
+          <p className="text-gray-600 mb-4">
+            You haven't created any donation requests. When you do, they will appear here.
+          </p>
+          <button
+            onClick={() => navigate("/dashboard/create-donation")}
+            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded transition duration-200"
+          >
+            Create a Request
+          </button>
+        </div>
       )}
     </div>
   );

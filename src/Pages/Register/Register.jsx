@@ -152,8 +152,8 @@ const Register = () => {
         createdAt: new Date().toISOString(),
       };
 
-      const checkRes = await axiosSecure.get(
-        "/users"
+      const checkRes = await axios.get(
+        "https://blood-sync-server-side.vercel.app/users"
       );
       const userExists = checkRes.data.some(
         (user) => user.email === formData.email
@@ -175,8 +175,8 @@ const Register = () => {
         formData.name
       );
 
-      const response = await axiosSecure.post(
-        "/users",
+      const response = await axios.post(
+        "https://blood-sync-server-side.vercel.app/users",
         {
           ...userData,
           email: formData.email.toLowerCase(),
