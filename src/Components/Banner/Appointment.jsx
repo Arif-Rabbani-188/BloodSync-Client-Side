@@ -1,18 +1,49 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Appointment = () => {
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    setTimeout(() => {
+    const formData = {
+      name: e.target.name.value.trim(),
+      email: e.target.email.value.trim(),
+      phone: e.target.phone.value.trim(),
+      message: e.target.message.value.trim(),
+      createdAt: new Date().toISOString(),
+    };
+
+    // Verify Bangladeshi phone number (starts with +8801 or 01, 11 digits after country code or 10 digits after 0)
+    const bdPhoneRegex = /^(?:\+8801|01)[3-9]\d{8}$/;
+    if (!bdPhoneRegex.test(formData.phone)) {
+      setLoading(false);
+      Swal.fire(
+      "Invalid Phone Number",
+      "Please enter a valid Bangladeshi phone number.",
+      "error"
+      );
+      return;
+    }
+
+    try {
+      // Replace with your backend URL
+      await axios.post("https://blood-sync-server-side.vercel.app/api/messages", formData);
       Swal.fire("Success", "Your message has been sent!", "success");
       e.target.reset();
+    } catch (error) {
+      console.error("Error sending message:", error);
+      Swal.fire(
+        "Error",
+        "Failed to send your message. Please try again later.",
+        "error"
+      );
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -43,33 +74,44 @@ const Appointment = () => {
 
         {/* Right Section - Contact Form */}
         <div className="flex-1 flex flex-col justify-center">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" name="contactForm">
             <input
+              name="name"
               type="text"
               placeholder="Name"
               className="input-style"
               required
+              disabled={loading}
             />
             <input
+              name="email"
               type="email"
               placeholder="Email"
               className="input-style"
               required
+              disabled={loading}
             />
             <input
+              name="phone"
               type="tel"
+              inputMode="numeric"
+              pattern="[0-9]*"
               placeholder="Phone"
               className="input-style"
               required
+              disabled={loading}
             />
             <textarea
+              name="message"
               placeholder="Your Message"
               className="input-style h-32 resize-none"
               required
+              disabled={loading}
             ></textarea>
             <button
               type="submit"
-              className="w-full bg-green-600 text-white p-4 rounded-xl flex items-center justify-center text-lg font-semibold hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg"
+              disabled={loading}
+              className="w-full bg-green-600 text-white p-4 rounded-xl flex items-center justify-center text-lg font-semibold hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Send Message
               <svg
