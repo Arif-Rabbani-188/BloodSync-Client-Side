@@ -11,18 +11,6 @@
 	--color-muted: #6b7280; /* gray-500 */
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--color-bg: #0b1220; /* near slate-950 */
-		--color-text: #e5e7eb; /* gray-200 */
-		--color-surface: #111827; /* gray-900 */
-		--color-border: #374151; /* gray-700 */
-		--color-primary: #ef4444; /* red-500 a bit brighter on dark */
-		--color-accent: #22c55e; /* green-500 */
-		--color-muted: #9ca3af; /* gray-400 */
-	}
-}
-
 /* Manual theme overrides via attribute on <html> */
 html[data-theme="light"] {
 	--color-bg: #ffffff;
@@ -98,9 +86,6 @@ a { color: inherit; }
 /* Hover surface helper with light/dark aware backgrounds */
 .hover-surface { transition: background-color .2s ease; }
 .hover-surface:hover { background: rgba(0,0,0,0.05); }
-@media (prefers-color-scheme: dark) {
-	.hover-surface:hover { background: rgba(255,255,255,0.08); }
-}
 html[data-theme="dark"] .hover-surface:hover { background: rgba(255,255,255,0.08); }
 
 /* Global mapping for common utilities to theme tokens */
@@ -108,7 +93,4 @@ html[data-theme="dark"] .hover-surface:hover { background: rgba(255,255,255,0.08
 .border-gray-200, .border-gray-100 { border-color: var(--color-border) !important; }
 .text-black { color: var(--color-text) !important; }
 .hover\:bg-gray-100:hover { background: rgba(0,0,0,0.05) !important; }
-@media (prefers-color-scheme: dark) {
-	.hover\:bg-gray-100:hover { background: rgba(255,255,255,0.08) !important; }
-}
 html[data-theme="dark"] .hover\:bg-gray-100:hover { background: rgba(255,255,255,0.08) !important; }
