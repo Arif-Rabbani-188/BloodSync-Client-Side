@@ -1,6 +1,7 @@
 import axios from "axios";
-import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
+import auth from "../../Firebase/firebase.init.js";
+import { getIdToken } from "firebase/auth";
 
 const axiosSecure = axios.create({
   baseURL: 'https://blood-sync-server-side.vercel.app',
@@ -9,15 +10,27 @@ const axiosSecure = axios.create({
 
 const useAxiosSecure = () => {
   const navigate = useNavigate();
-  const { user, logOut } = useAuth();
+
   axiosSecure.interceptors.request.use(
-    (config) => {
-      config.headers.Authorization = `Bearer ${user.accessToken || ""}`;
+    async (config) => {
+      try {
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+          const token = await getIdToken(currentUser, /* forceRefresh */ false);
+          if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+          } else {
+            delete config.headers.Authorization;
+          }
+        } else {
+          delete config.headers.Authorization;
+        }
+      } catch (e) {
+        delete config.headers.Authorization;
+      }
       return config;
     },
-    (error) => {
-      return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
   );
 
   axiosSecure.interceptors.response.use(

@@ -9,7 +9,17 @@ const Navbar = () => {
   const { user, logOut, setUser, userData } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState("light"); // light | dark
+  // Derive initial theme synchronously from localStorage or existing html attribute
+  const [theme, setTheme] = useState(() => {
+    try {
+      const saved = localStorage.getItem("theme");
+      if (saved === "light" || saved === "dark") return saved;
+      const attr = document.documentElement.getAttribute("data-theme");
+      return attr === "dark" ? "dark" : "light"; // default light
+    } catch {
+      return "light";
+    }
+  }); // light | dark
 
   const handleMenuToggle = () => setMobileMenuOpen((prev) => !prev);
 
@@ -17,19 +27,6 @@ const Navbar = () => {
     logOut();
     setProfileMenuOpen(false);
   };
-
-  // Initialize theme from localStorage or system preference
-  useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved === "light" || saved === "dark") {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    } else {
-  // Default to light theme if no saved preference
-  setTheme("light");
-  document.documentElement.setAttribute("data-theme", "light");
-    }
-  }, []);
 
   // Apply theme on change
   useEffect(() => {

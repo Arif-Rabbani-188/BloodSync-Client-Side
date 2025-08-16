@@ -37,14 +37,14 @@ const Banner = () => {
             {!user && (
               <NavLink to="/register" className="btn btn-primary">
                 Join as a Donor
-                <span className="p-2 bg-green-500 text-white rounded-full">
+                <span className="p-2 text-white rounded-full" style={{background:"var(--color-accent)"}}>
                   <FaArrowRight />
                 </span>
               </NavLink>
             )}
             <NavLink to="/search-donor" className="btn btn-outline">
               Search Donors
-              <span className="p-2 bg-green-500 text-white rounded-full">
+              <span className="p-2 text-white rounded-full" style={{background:"var(--color-accent)"}}>
                 <FaSearch />
               </span>
             </NavLink>

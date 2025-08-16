@@ -1,9 +1,8 @@
-import React, { use } from "react";
+import React from "react";
 import Banner from "../../Components/Banner/Banner";
 import DonateNow from "../../Components/Banner/DonateNow";
 import DonationPoccess from "../../Components/Banner/DonationPoccess";
 import Appointment from "../../Components/Banner/Appointment";
-import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import Feature from "../Features/Feature";
 import HomeBlogs from "../Blogs/HomeBlogs";
 import BloodDonationCampaign from "../Features/BloodDonationCampaign";
@@ -16,7 +15,7 @@ import Newsletter from "../Features/Newsletter";
 const Home = () => {
 
   return (
-    <div>
+    <div className="relative" style={{ background: "var(--color-bg)" }}>
   {/* 1. Hero */}
   <Banner />
   {/* 2. Stats */}

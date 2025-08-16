@@ -26,10 +26,10 @@ const items = [
 
 const FeaturedCampaigns = () => {
   return (
-    <section className="py-12 px-4">
+  <section className="py-12 px-4" style={{background:"var(--color-bg)", color:"var(--color-text)"}}>
       <div className="w-11/12 md:w-10/12 mx-auto">
-        <h2 className="text-3xl font-bold text-red-700 mb-2">Featured Campaigns</h2>
-        <p className="text-gray-600 mb-8">Discover highlighted donation events near you.</p>
+    <h2 className="text-3xl font-bold mb-2" style={{color:"var(--color-primary)"}}>Featured Campaigns</h2>
+    <p className="text-muted mb-8">Discover highlighted donation events near you.</p>
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
       <div key={item.id} className="card flex flex-col overflow-hidden">
@@ -39,7 +39,7 @@ const FeaturedCampaigns = () => {
               <div className="p-5 flex flex-col flex-1">
         <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
         <p className="text-sm text-muted mb-4 flex-1">{item.description}</p>
-                <a href={item.link} className="inline-block self-start bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded-full">See more</a>
+                <a href={item.link} className="inline-block self-start btn btn-primary text-sm">See more</a>
               </div>
             </div>
           ))}
