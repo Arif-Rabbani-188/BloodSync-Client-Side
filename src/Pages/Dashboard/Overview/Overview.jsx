@@ -126,9 +126,10 @@ const Overview = () => {
   }, [myRequests]);
 
   return (
-    <div className="p-4 md:ml-80 mt-20 md:mt-10 w-11/12 md:w-10/12 mx-auto">
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Dashboard Overview</h1>
-      <p className="text-gray-600">A quick look at the activity across donation requests.</p>
+    <div className="section-y">
+      <div className="container-x">
+      <h1 className="text-2xl md:text-3xl font-bold">Dashboard Overview</h1>
+      <p className="text-muted">A quick look at the activity across donation requests.</p>
 
       {loading ? (
         <div className="flex justify-center items-center h-40">
@@ -147,7 +148,7 @@ const Overview = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                <div className="bg-white rounded-2xl shadow p-6">
+                <div className="card r-xl p-6">
                   <h2 className="text-lg font-semibold mb-4">Status Breakdown (All)</h2>
                   <div className="flex items-center gap-6">
                     <DonutChart data={donutData} />
@@ -163,14 +164,14 @@ const Overview = () => {
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow p-6">
+                <div className="card r-xl p-6">
                   <h2 className="text-lg font-semibold mb-4">Activity (All - Last 6)</h2>
                   <BarChart data={monthly} />
                 </div>
               </div>
 
               {role === "admin" && (
-                <div className="mt-8 bg-white rounded-2xl shadow p-6">
+                <div className="mt-8 card r-xl p-6">
                   <h2 className="text-lg font-semibold mb-2">Admin Notes</h2>
                   <p className="text-gray-600 text-sm">Add more detailed analytics here (users, approvals, etc.).</p>
                 </div>
@@ -186,7 +187,7 @@ const Overview = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                <div className="bg-white rounded-2xl shadow p-6">
+                <div className="card r-xl p-6">
                   <h2 className="text-lg font-semibold mb-4">My Status Breakdown</h2>
                   <div className="flex items-center gap-6">
                     <DonutChart data={donutMyData} />
@@ -202,7 +203,7 @@ const Overview = () => {
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow p-6">
+                <div className="card r-xl p-6">
                   <h2 className="text-lg font-semibold mb-4">My Activity (Last 6)</h2>
                   <BarChart data={monthlyMy} />
                 </div>
@@ -211,6 +212,7 @@ const Overview = () => {
           )}
         </>
       )}
+      </div>
     </div>
   );
 };

@@ -23,16 +23,22 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-12 px-4 bg-gradient-to-br from-white to-red-50">
+    <section
+      className="py-12 px-4"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(239,68,68,0.05), rgba(255,255,255,0.0)), var(--color-bg)'
+      }}
+    >
       <div className="w-11/12 md:w-10/12 mx-auto">
-        <h2 className="text-3xl font-bold text-red-700 mb-2">What People Say</h2>
-        <p className="text-gray-600 mb-8">Stories from our donors and recipients.</p>
+        <h2 className="text-3xl font-bold mb-2" style={{ color: 'var(--color-primary)' }}>What People Say</h2>
+        <p className="text-muted mb-8">Stories from our donors and recipients.</p>
         <div className="grid gap-6 md:grid-cols-3">
           {testimonials.map((t) => (
-            <div key={t.id} className="bg-white rounded-xl shadow p-6 flex flex-col justify-between min-h-[200px]">
-              <p className="text-gray-700 mb-4">“{t.text}”</p>
-              <div className="text-sm text-gray-600">
-                <div className="font-semibold text-gray-900">{t.name}</div>
+            <div key={t.id} className="card p-6 flex flex-col justify-between min-h-[200px]">
+              <p className="mb-4">“{t.text}”</p>
+              <div className="text-sm text-muted">
+                <div className="font-semibold">{t.name}</div>
                 <div>{t.role}</div>
               </div>
             </div>

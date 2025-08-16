@@ -92,7 +92,7 @@ const ViewDetailRequest = () => {
   } = request;
 
   return (
-    <div className="max-w-3xl mx-auto my-20 md:mt-30 mt-20 bg-white shadow-xl rounded-lg p-6 space-y-4">
+  <div className="max-w-3xl mx-auto my-20 md:mt-30 mt-20 card p-6 space-y-4">
       <h2 className="text-2xl font-semibold text-center text-red-600">Donation Request Details</h2>
       <div className="space-y-2 text-gray-700">
         <p><strong>Requester Name:</strong> {requesterName}</p>
@@ -147,7 +147,7 @@ const ViewDetailRequest = () => {
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+          <div className="card p-6 w-full max-w-md">
             <h3 className="text-xl font-semibold mb-4 text-center">Confirm Donation</h3>
             <div className="space-y-4">
               <div>

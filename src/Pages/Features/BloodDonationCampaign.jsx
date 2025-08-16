@@ -43,17 +43,17 @@ const BloodDonationCampaign = () => {
   const currentEvent = events[index];
 
 return (
-    <section className="py-16 px-4 bg-gray-50">
+    <section className="py-16 px-4" style={{background:"var(--color-bg)", color:"var(--color-text)"}}>
         <div className="max-w-6xl mx-auto text-center mb-10">
             <h2 className="text-4xl font-bold text-red-600 mb-2">
                 Upcoming Blood Donation Campaigns
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-muted text-lg">
                 Join one of our scheduled events and be a real-life hero.
             </p>
         </div>
 
-        <div className=" w-11/12 mx-auto bg-white shadow-xl rounded-xl overflow-hidden flex justify-center" style={{ width: "100%", height: "350px" }}>
+        <div className=" w-11/12 mx-auto card overflow-hidden flex justify-center" style={{ width: "100%", height: "350px" }}>
             <div className="md:flex h-full">
                 <img
                     src={currentEvent.image}
@@ -86,13 +86,15 @@ return (
             {/* Controls */}
             <button
                 onClick={prevSlide}
-                className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white border border-gray-200 p-2 rounded-full shadow hover:bg-gray-100"
+                className="absolute top-1/2 -left-4 transform -translate-y-1/2 p-2 rounded-full shadow hover-surface border"
+                style={{ background:"var(--color-surface)", borderColor:"var(--color-border)" }}
             >
                 <FaArrowLeft />
             </button>
             <button
                 onClick={nextSlide}
-                className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white border border-gray-200 p-2 rounded-full shadow hover:bg-gray-100"
+                className="absolute top-1/2 -right-4 transform -translate-y-1/2 p-2 rounded-full shadow hover-surface border"
+                style={{ background:"var(--color-surface)", borderColor:"var(--color-border)" }}
             >
                 <FaArrowRight />
             </button>

@@ -33,12 +33,12 @@ const HomeBlogs = () => {
   }
 
   return (
-    <section className="bg-white py-12 px-4 md:px-8">
-      <div className="max-w-11/12 mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-red-700">
+  <section className="py-12 px-4 md:px-8" style={{background:"var(--color-bg)", color:"var(--color-text)"}}>
+      <div className="w-11/12 md:w-10/12 mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{color:"var(--color-primary)"}}>
           Recent Blog Posts
         </h2>
-        <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
+        <p className="text-muted mb-10 max-w-2xl mx-auto">
           Explore tips, stories, and updates about blood donation and how you
           can help save lives.
         </p>
@@ -47,7 +47,7 @@ const HomeBlogs = () => {
           {blogs.map((blog) => (
             <div
               key={blog._id}
-        className="bg-red-50 hover:bg-red-100 transition p-6 rounded-xl shadow-md border border-red-100 flex flex-col justify-between min-h-[380px]"
+              className="card transition p-6 flex flex-col justify-between min-h-[380px] hover-surface"
             >
               <img
                 src={blog.thumbnail}
@@ -55,23 +55,24 @@ const HomeBlogs = () => {
                 className="w-full h-40 object-cover rounded mb-4"
               />
               <div>
-                <h3 className="text-xl font-bold text-red-800 mb-2 line-clamp-2">
+                <h3 className="text-xl font-bold mb-2 line-clamp-2">
                   {blog.title}
                 </h3>
-                <p className="text-gray-700 text-sm mb-4 line-clamp-3">
+                <p className="text-muted text-sm mb-4 line-clamp-3">
                   {blog.content}
                 </p>
               </div>
               <div className="mt-4 flex items-center justify-between">
-                <p className="text-sm text-gray-500 flex items-center gap-2">
-                  <FaRegCalendarAlt className="text-red-600" />
+                <p className="text-sm text-muted flex items-center gap-2">
+                  <FaRegCalendarAlt style={{color:"var(--color-primary)"}} />
                   {new Date(blog.createdAt).toLocaleDateString()}
                 </p>
                 <Link
                   to={`/blogs/${blog._id}`}
-          className="text-sm text-red-600 hover:underline font-semibold"
+                  className="text-sm font-semibold hover:underline"
+                  style={{color:"var(--color-primary)"}}
                 >
-          See more →
+                  See more →
                 </Link>
               </div>
             </div>
@@ -81,7 +82,7 @@ const HomeBlogs = () => {
         <div className="mt-10">
           <Link
             to="/blogs"
-            className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition shadow"
+            className="btn btn-primary"
           >
             View All Blogs
           </Link>

@@ -46,7 +46,7 @@ if (role !== "admin" && role !== "volunteer") {
                 <h1 className="text-3xl font-bold text-red-500 mb-2">
                     Access Denied
                 </h1>
-                <p className="text-lg text-slate-600">
+                <p className="text-lg text-muted">
                     You do not have the necessary permissions to view this page.
                     <br />
                     Please contact your administrator if you believe this is a mistake.
@@ -163,14 +163,14 @@ if (role !== "admin" && role !== "volunteer") {
   };
 
   return (
-    <div className="md:ml-80 w-11/12 md:w-10/12 mx-auto p-2 md:p-6 mt-20">
+  <div className="w-11/12 md:w-10/12 mx-auto p-2 md:p-6 mt-20">
       <div className="flex items-center justify-between mb-4">
-        <label htmlFor="status-filter" className="font-medium text-slate-700">
+        <label htmlFor="status-filter" className="font-medium">
           Filter by Status:
         </label>
         <select
           id="status-filter"
-          className="p-2 rounded-md border border-slate-300 text-base"
+          className="p-2 rounded-md border border-token bg-transparent text-base"
           value={statusFilter}
           onChange={(e) => {
             setStatusFilter(e.target.value);
@@ -184,25 +184,25 @@ if (role !== "admin" && role !== "volunteer") {
       </div>
     {/* Table for md+ screens */}
         <div className="overflow-x-auto rounded-lg mb-6 hidden md:block">
-          <table className="w-full bg-slate-50 rounded-lg">
+          <table className="min-w-full card">
             <thead>
             <tr>
-              <th className="bg-slate-100 text-slate-700 font-semibold py-3 px-4 border-b-2 border-slate-200 text-left">
+              <th className="font-semibold py-3 px-4 border-b border-token text-left">
                 Avatar
               </th>
-              <th className="bg-slate-100 text-slate-700 font-semibold py-3 px-4 border-b-2 border-slate-200 text-left">
+              <th className="font-semibold py-3 px-4 border-b border-token text-left">
                 Email
               </th>
-              <th className="bg-slate-100 text-slate-700 font-semibold py-3 px-4 border-b-2 border-slate-200 text-left">
+              <th className="font-semibold py-3 px-4 border-b border-token text-left">
                 Name
               </th>
-              <th className="bg-slate-100 text-slate-700 font-semibold py-3 px-4 border-b-2 border-slate-200 text-left">
+              <th className="font-semibold py-3 px-4 border-b border-token text-left">
                 Role
               </th>
-              <th className="bg-slate-100 text-slate-700 font-semibold py-3 px-4 border-b-2 border-slate-200 text-left">
+              <th className="font-semibold py-3 px-4 border-b border-token text-left">
                 Status
               </th>
-              <th className="bg-slate-100 text-slate-700 font-semibold py-3 px-4 border-b-2 border-slate-200 text-left">
+              <th className="font-semibold py-3 px-4 border-b border-token text-left">
                 Actions
               </th>
             </tr>
@@ -212,57 +212,58 @@ if (role !== "admin" && role !== "volunteer") {
               <tr>
                 <td
                 colSpan={6}
-                className="py-4 px-4 text-center text-slate-400"
+                className="py-4 px-4 text-center text-muted"
                 >
                 No users found.
                 </td>
               </tr>
             ) : (
               paginatedUsers.map((user, index) => (
-                <tr key={index || user.id} className="hover:bg-slate-100 transition">
-                <td className="py-3 px-4 border-b border-slate-200">
+                <tr key={index || user.id} className="hover-surface transition">
+                <td className="py-3 px-4 border-b border-token">
                   <img
                     src={user?.photoURL}
                     alt="avatar"
-                    className="rounded-full w-10 h-10 object-cover border-2 border-slate-200"
+                    className="rounded-full w-10 h-10 object-cover border-2 border-token"
                   />
                 </td>
-                <td className="py-3 px-4 border-b border-slate-200">
+                <td className="py-3 px-4 border-b border-token">
                   {user.email}
                 </td>
-                <td className="py-3 px-4 border-b border-slate-200">
+                <td className="py-3 px-4 border-b border-token">
                   {user.name}
                 </td>
-                <td className="py-3 px-4 border-b border-slate-200">
-                  <span
-                    className={`px-3 py-1 rounded font-medium text-sm ${
-                    user.role === "admin"
-                      ? "bg-indigo-100 text-indigo-800"
-                      : user.role === "volunteer"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-slate-200 text-slate-700"
-                    }`}
-                  >
+                <td className="py-3 px-4 border-b border-token">
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-token font-medium text-sm">
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        user.role === "admin"
+                          ? "bg-indigo-500"
+                          : user.role === "volunteer"
+                          ? "bg-yellow-500"
+                          : user.role === "donor"
+                          ? "bg-emerald-500"
+                          : "bg-slate-400"
+                      }`}
+                    />
                     {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                   </span>
                 </td>
-                <td className="py-3 px-4 border-b border-slate-200">
-                  <span
-                    className={`px-3 py-1 rounded font-medium text-sm ${
-                    user.status === "active"
-                      ? "bg-emerald-100 text-emerald-700"
-                      : "bg-rose-100 text-rose-700"
-                    }`}
-                  >
-                    {user.status.charAt(0).toUpperCase() +
-                    user.status.slice(1)}
+                <td className="py-3 px-4 border-b border-token">
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-token font-medium text-sm">
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        user.status === "active" ? "bg-emerald-500" : "bg-rose-500"
+                      }`}
+                    />
+                    {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
                   </span>
                 </td>
-                <td className="py-3 px-4 border-b border-slate-200">
+                <td className="py-3 px-4 border-b border-token">
                   <div className="flex gap-2 flex-wrap">
                     {user.status === "active" && user.role !== "admin" && (
                     <button
-                      className="px-3 py-1 rounded bg-rose-100 text-rose-700 font-medium text-sm hover:bg-rose-200 transition"
+                      className="btn btn-outline px-3 py-1 text-sm"
                       onClick={() => handleBlock(user.email)}
                     >
                       Block
@@ -270,7 +271,7 @@ if (role !== "admin" && role !== "volunteer") {
                     )}
                     {user.status === "blocked" && (
                     <button
-                      className="px-3 py-1 rounded bg-emerald-100 text-emerald-700 font-medium text-sm hover:bg-emerald-200 transition"
+                      className="btn btn-outline px-3 py-1 text-sm"
                       onClick={() => handleUnblock(user.email)}
                     >
                       Unblock
@@ -279,7 +280,7 @@ if (role !== "admin" && role !== "volunteer") {
                     {role === "admin" &&(<div className="flex gap-2">
                     {user.role !== "volunteer" && (
                     <button
-                      className="px-3 py-1 rounded bg-yellow-100 text-yellow-700 font-medium text-sm hover:bg-yellow-200 transition"
+                      className="btn btn-outline px-3 py-1 text-sm"
                       onClick={() => handleMakeVolunteer(user.email)}
                     >
                       Make Volunteer
@@ -287,7 +288,7 @@ if (role !== "admin" && role !== "volunteer") {
                     )}
                     {user.role !== "admin" && (
                     <button
-                      className="px-3 py-1 rounded bg-indigo-100 text-indigo-800 font-medium text-sm hover:bg-indigo-200 transition"
+                      className="btn btn-outline px-3 py-1 text-sm"
                       onClick={() => handleMakeAdmin(user.email)}
                     >
                       Make Admin
@@ -295,7 +296,7 @@ if (role !== "admin" && role !== "volunteer") {
                     )}
                     {user.role !== "donor" && (
                     <button
-                      className="px-3 py-1 rounded bg-slate-200 text-slate-700 font-medium text-sm hover:bg-slate-300 transition"
+                      className="btn btn-outline px-3 py-1 text-sm"
                       onClick={() => handleMakeDonor(user.email)}
                     >
                       Make Donor
@@ -313,54 +314,56 @@ if (role !== "admin" && role !== "volunteer") {
         {/* Cards for mobile screens */}
       <div className="md:hidden space-y-4 mb-6">
         {paginatedUsers.length === 0 ? (
-          <div className="text-center text-slate-400 py-8 bg-slate-50 rounded-lg">
+          <div className="text-center text-muted py-8 card">
             No users found.
           </div>
         ) : (
           paginatedUsers.map((user, index) => (
             <div
               key={user.id || index}
-              className="bg-slate-50 rounded-lg shadow p-4 flex flex-col gap-2"
+              className="card p-4 flex flex-col gap-2"
             >
               <div className="flex items-center gap-3">
                 <img
                   src={user.photoURL}
                   alt="avatar"
-                  className="rounded-full w-12 h-12 object-cover border-2 border-slate-200"
+                  className="rounded-full w-12 h-12 object-cover border-2 border-token"
                 />
                 <div>
-                  <div className="font-semibold text-slate-700">
+                  <div className="font-semibold">
                     {user.name}
                   </div>
-                  <div className="text-xs text-slate-500">{user.email}</div>
+                  <div className="text-xs text-muted">{user.email}</div>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
-                <span
-                  className={`px-3 py-1 rounded font-medium text-xs ${
-                    user.role === "admin"
-                      ? "bg-indigo-100 text-indigo-800"
-                      : user.role === "volunteer"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-slate-200 text-slate-700"
-                  }`}
-                >
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-token font-medium text-xs">
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      user.role === "admin"
+                        ? "bg-indigo-500"
+                        : user.role === "volunteer"
+                        ? "bg-yellow-500"
+                        : user.role === "donor"
+                        ? "bg-emerald-500"
+                        : "bg-slate-400"
+                    }`}
+                  />
                   {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                 </span>
-                <span
-                  className={`px-3 py-1 rounded font-medium text-xs ${
-                    user.status === "active"
-                      ? "bg-emerald-100 text-emerald-700"
-                      : "bg-rose-100 text-rose-700"
-                  }`}
-                >
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-token font-medium text-xs">
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      user.status === "active" ? "bg-emerald-500" : "bg-rose-500"
+                    }`}
+                  />
                   {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
                 </span>
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
                 {user.status === "active" && user.role !== "admin" && (
                   <button
-                    className="px-3 py-1 rounded bg-rose-100 text-rose-700 font-medium text-xs hover:bg-rose-200 transition"
+                    className="btn btn-outline text-xs px-3 py-1"
                     onClick={() => handleBlock(user.email)}
                   >
                     Block
@@ -368,7 +371,7 @@ if (role !== "admin" && role !== "volunteer") {
                 )}
                 {user.status === "blocked" && (
                   <button
-                    className="px-3 py-1 rounded bg-emerald-100 text-emerald-700 font-medium text-xs hover:bg-emerald-200 transition"
+                    className="btn btn-outline text-xs px-3 py-1"
                     onClick={() => handleUnblock(user.email)}
                   >
                     Unblock
@@ -378,7 +381,7 @@ if (role !== "admin" && role !== "volunteer") {
                     role === "admin" && (<div>
                     {user.role !== "volunteer" && (
                   <button
-                    className="px-3 py-1 rounded bg-yellow-100 text-yellow-700 font-medium text-xs hover:bg-yellow-200 transition"
+                    className="btn btn-outline text-xs px-3 py-1"
                     onClick={() => handleMakeVolunteer(user.email)}
                   >
                     Make Volunteer
@@ -386,7 +389,7 @@ if (role !== "admin" && role !== "volunteer") {
                 )}
                 {user.role !== "admin" && (
                   <button
-                    className="px-3 py-1 rounded bg-indigo-100 text-indigo-800 font-medium text-xs hover:bg-indigo-200 transition"
+                    className="btn btn-outline text-xs px-3 py-1"
                     onClick={() => handleMakeAdmin(user.email)}
                   >
                     Make Admin
@@ -394,7 +397,7 @@ if (role !== "admin" && role !== "volunteer") {
                 )}
                 {user.role !== "donor" && (
                   <button
-                    className="px-3 py-1 rounded bg-slate-200 text-slate-700 font-medium text-xs hover:bg-slate-300 transition"
+                    className="btn btn-outline text-xs px-3 py-1"
                     onClick={() => handleMakeDonor(user.email)}
                   >
                     Make Donor
@@ -409,22 +412,20 @@ if (role !== "admin" && role !== "volunteer") {
       </div>
       <div className="flex items-center justify-center gap-4 mt-4">
         <button
-          className={`px-4 py-1 rounded bg-slate-200 text-slate-700 font-medium text-base transition ${
-            page === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-slate-300"
+          className={`btn btn-outline px-4 py-1 font-medium text-base transition ${
+            page === 1 ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
         >
           Prev
         </button>
-        <span className="font-medium text-slate-700">
+        <span className="font-medium">
           Page {page} of {totalPages}
         </span>
         <button
-          className={`px-4 py-1 rounded bg-slate-200 text-slate-700 font-medium text-base transition ${
-            page === totalPages
-              ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-slate-300"
+          className={`btn btn-outline px-4 py-1 font-medium text-base transition ${
+            page === totalPages ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={page === totalPages}
           onClick={() => setPage(page + 1)}

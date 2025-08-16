@@ -35,7 +35,7 @@ const processData = [
 return (
     <div className="md:px-30 py-10 px-4">
         <h1 className="text-3xl font-extrabold text-red-700 mb-2  drop-shadow">Donation Process</h1>
-        <p className="text-gray-600 mb-8">
+        <p className="text-muted mb-8">
             We have been saving lives for 10 years. Join our mission to connect
             donors and recipients through our trusted platform.
         </p>
@@ -43,11 +43,11 @@ return (
             {processData.map((process) => (
                 <div
                     key={process.id}
-                    className="bg-white rounded-xl shadow-lg border-t-4 border-red-600 hover:border-green-500 transition-all duration-300 flex flex-col items-center p-6 hover:scale-105"
+                    className="card border-t-4 border-red-600 transition-all duration-300 flex flex-col items-center p-6 hover:scale-105"
                 >
-                    <span className="text-4xl mb-4 bg-red-100 rounded-full p-4 border-2 border-green-400 shadow">{process.icon}</span>
-                    <h2 className="text-lg font-bold text-green-700 mb-2">{process.title}</h2>
-                    <p className="text-gray-700 text-center">{process.description}</p>
+                    <span className="text-4xl mb-4 rounded-full p-4 border-2" style={{background:"rgba(239,68,68,0.1)", borderColor:"var(--color-border)"}}>{process.icon}</span>
+                    <h2 className="text-lg font-bold mb-2">{process.title}</h2>
+                    <p className="text-center text-muted">{process.description}</p>
                 </div>
             ))}
         </div>

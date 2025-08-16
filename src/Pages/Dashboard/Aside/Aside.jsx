@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "../../../Components/Logo/Logo";
 import { Link, NavLink } from "react-router";
 import useUserRole from "../../../Hooks/useUserRole";
@@ -7,7 +7,7 @@ import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
 const Aside = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const {userData} = use(AuthContext);
+  const { userData } = useContext(AuthContext);
 
   const { role, isLoading } = useUserRole();
 
@@ -30,7 +30,7 @@ const Aside = () => {
         <Logo />
         <button
           onClick={toggleSidebar}
-          className="lg:hidden p-2 rounded-full text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          className="lg:hidden p-2 rounded-full text-gray-600 hover-surface focus:outline-none focus:ring-2"
           aria-label="Close sidebar"
         >
           <svg
@@ -55,7 +55,7 @@ const Aside = () => {
             <NavLink
             onClick={toggleSidebar}
               to="/home"
-              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
             >
               <svg
                 className="w-6 h-6 mr-3"
@@ -78,7 +78,7 @@ const Aside = () => {
             <NavLink
             onClick={toggleSidebar}
               to="/dashboard/overview"
-              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition duration-200"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
             >
               <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 3v18m-7-7h18"/></svg>
               Overview
@@ -88,7 +88,7 @@ const Aside = () => {
             <NavLink
             onClick={toggleSidebar}
               to="/dashboard/profile"
-              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition duration-200"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
             >
               <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               Profile
@@ -98,7 +98,7 @@ const Aside = () => {
             <Link
             onClick={toggleSidebar}
               to="/dashboard"
-              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
             >
               <svg
                 className="w-6 h-6 mr-3"
@@ -122,7 +122,7 @@ const Aside = () => {
               <NavLink
               onClick={toggleSidebar}
                 to="/dashboard/all-users"
-                className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-blue-100 hover:text-blue-700 transition duration-200"
+                className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
               >
                 <svg
                   className="w-6 h-6 mr-3"
@@ -147,7 +147,7 @@ const Aside = () => {
               <NavLink
               onClick={toggleSidebar}
                 to="/dashboard/all-donation-requests"
-                className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition duration-200"
+                className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
               >
                 <svg
                   className="w-6 h-6 mr-3"
@@ -171,7 +171,7 @@ const Aside = () => {
             <NavLink
             onClick={toggleSidebar}
               to="/dashboard/my-donation"
-              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-green-100 hover:text-green-700 transition duration-200"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
             >
               <svg
                 className="w-6 h-6 mr-3"
@@ -194,7 +194,7 @@ const Aside = () => {
             <NavLink
             onClick={toggleSidebar}
               to="/dashboard/create-donation"
-              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-red-100 hover:text-red-700 transition duration-200"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
             >
               <svg
                 className="w-6 h-6 mr-3"
@@ -218,7 +218,7 @@ const Aside = () => {
               <NavLink
               onClick={toggleSidebar}
                 to="/dashboard/content-management"
-                className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-purple-100 hover:text-purple-700 transition duration-200"
+                className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
               >
                 <svg
                   className="w-6 h-6 mr-3"
@@ -245,61 +245,45 @@ const Aside = () => {
 
   return (
     <>
-      {/* Mobile Navbar */}
+      {/* Mobile sidebar toggle + drawer (below global navbar) */}
       <div className="lg:hidden">
-        <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md flex items-center justify-between px-4 py-5">
-          <div className="flex items-center">
-            <Logo />
-          </div>
-          <button
-            onClick={toggleSidebar}
-            className="p-2 rounded-lg  text-black focus:outline-none focus:ring-2 focus:ring-red-500"
-            aria-label="Toggle sidebar"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {isOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              )}
-            </svg>
-          </button>
-        </nav>
+        <button
+          onClick={toggleSidebar}
+          className="fixed top-20 left-4 z-40 btn btn-outline px-3 py-1"
+          aria-label="Open sidebar"
+        >
+          Menu
+        </button>
         {isOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            className="fixed inset-0 top-16 bg-black/40 z-40"
             onClick={toggleSidebar}
-          ></div>
+          />
         )}
         <aside
-          className={`fixed inset-0 left-0 z-50 w-full h-full bg-white shadow-lg flex flex-col p-6 font-sans
-                        transform transition-transform duration-300 ease-in-out
-                        ${isOpen ? "translate-x-0" : "-translate-x-full"}
-                        `}
+          className={`fixed left-0 top-16 h-[calc(100vh-4rem)] w-4/5 max-w-[18rem] z-50 shadow-lg flex flex-col p-6 font-sans overflow-y-auto transform transition-transform duration-300 ease-in-out ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+          style={{ background: "var(--color-surface)", color: "var(--color-text)", borderRight: "1px solid var(--color-border)" }}
         >
+          <div className="flex items-center justify-between mb-6">
+            <Logo />
+            <button onClick={toggleSidebar} className="p-2 rounded hover-surface" aria-label="Close sidebar">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
           {sidebarContent}
         </aside>
       </div>
 
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
-        <aside className="fixed left-0 top-0 h-full w-72 bg-white shadow-lg flex flex-col p-6 font-sans z-50">
+        <aside
+          className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-80 shadow-lg flex flex-col p-6 font-sans overflow-y-auto"
+          style={{ background: "var(--color-surface)", color: "var(--color-text)", borderRight: "1px solid var(--color-border)" }}
+        >
           {sidebarContent}
         </aside>
       </div>

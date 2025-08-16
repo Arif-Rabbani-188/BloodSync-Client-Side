@@ -34,8 +34,8 @@ const GiveFund = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 py-12 px-6">
-      <div className="max-w-lg w-full bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+  <div className="max-w-lg w-full card rounded-3xl p-8 md:p-12 lg:p-16">
+  <h2 className="text-3xl font-bold mb-6 text-center">
           Make a Donation 💖
         </h2>
 

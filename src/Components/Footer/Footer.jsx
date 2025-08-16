@@ -3,12 +3,15 @@ import Logo from "../Logo/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-red-50 to-green-100 text-gray-800 pt-10 pb-6 shadow-inner mt-16 border-t">
+    <footer
+      className="pt-10 pb-6 shadow-inner mt-16 border-t"
+      style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.06), rgba(34,197,94,0.05)), var(--color-bg)', color: 'var(--color-text)', borderColor: 'var(--color-border)' }}
+    >
       <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
         {/* Logo and About */}
         <div className="space-y-3">
           <Logo />
-          <p className="text-sm text-start text-gray-600">
+          <p className="text-sm text-start text-muted">
             BloodSync is a platform that connects blood donors and recipients, promotes community support, and saves lives with every drop.
           </p>
           
@@ -16,22 +19,22 @@ const Footer = () => {
 
         {/* Location and Contact */}
         <div className="space-y-4 text-sm">
-          <h3 className="text-lg text-start font-semibold text-red-700 mb-2">Contact Us</h3>
+          <h3 className="text-lg text-start font-semibold mb-2" style={{ color: 'var(--color-primary)' }}>Contact Us</h3>
           <div className="flex items-center justify-start gap-2">
-            <FaPhoneAlt className="text-red-500" /> <span>+880 1884481000</span>
+            <FaPhoneAlt style={{ color: 'var(--color-primary)' }} /> <span>+880 1884481000</span>
           </div>
           <div className="flex items-center justify-start gap-2">
-            <FaEnvelope className="text-red-500" /> <span>arif.rabbani.dev@gmail.com</span>
+            <FaEnvelope style={{ color: 'var(--color-primary)' }} /> <span>arif.rabbani.dev@gmail.com</span>
           </div>
           <div className="flex items-center justify-start gap-2">
-            <FaMapMarkerAlt className="text-red-500" /> <span>Dhaka, Bangladesh</span>
+            <FaMapMarkerAlt style={{ color: 'var(--color-primary)' }} /> <span>Dhaka, Bangladesh</span>
           </div>
         </div>
 
         {/* Highlight / Call to Action */}
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold text-start text-red-700 mb-2">Follow us</h3>
-          <div className="flex justify-start gap-4 text-red-600 mt-4">
+          <h3 className="text-lg font-semibold text-start mb-2" style={{ color: 'var(--color-primary)' }}>Follow us</h3>
+          <div className="flex justify-start gap-4 mt-4" style={{ color: 'var(--color-primary)' }}>
             <a href="https://facebook.com" target="_blank" rel="noreferrer">
               <FaFacebookF className="hover:text-red-700 transition" />
             </a>
@@ -46,7 +49,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Note */}
-      <div className="mt-8 border-t border-gray-300 pt-4 text-center text-xs text-gray-500">
+  <div className="mt-8 border-t pt-4 text-center text-xs text-muted" style={{ borderColor: 'var(--color-border)' }}>
         &copy; {new Date().getFullYear()} BloodSync. All rights reserved.
       </div>
     </footer>

@@ -47,25 +47,25 @@ const Appointment = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-tl-[200px] rounded-br-[200px] px-3 md:p-8 flex items-center justify-center font-sans relative">
+  <div className="rounded-tl-[200px] rounded-br-[200px] px-3 md:p-8 flex items-center justify-center font-sans relative" style={{background:"linear-gradient(135deg, rgba(34,197,94,0.10), rgba(220,38,38,0.08)), var(--color-bg)"}}>
       {loading && (
-        <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-50">
+  <div className="absolute inset-0 flex items-center justify-center z-50" style={{background:"rgba(0,0,0,0.05)"}}>
           <div className="loader border-8 border-t-8 border-gray-200 h-20 w-20 rounded-full"></div>
         </div>
       )}
 
-      <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16 md:w-10/12 flex flex-col lg:flex-row gap-12">
+  <div className="card rounded-3xl p-8 md:p-12 lg:p-16 md:w-10/12 flex flex-col lg:flex-row gap-12">
         {/* Left Section */}
         <div className="flex-1">
-          <p className="text-sm text-gray-500 mb-2">Contact Us</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-8">
+          <p className="text-sm text-muted mb-2">Contact Us</p>
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-8">
             Reach out <br />
             <span className="text-green-700">we're here to help</span>
           </h1>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-lg text-muted mb-8">
             Have questions or feedback? Send us a message and we’ll get back to you shortly.
           </p>
-          <ul className="space-y-4 text-gray-700">
+          <ul className="space-y-4">
             <li>Email: arif.rabbani.dev@gmail.com</li>
             <li>Phone: +880 1884-481000</li>
             <li>Address: Dhaka, Bangladesh</li>
@@ -143,13 +143,7 @@ const Appointment = () => {
             transform: rotate(360deg);
           }
         }
-        .input-style {
-          width: 100%;
-          padding: 1rem;
-          border: 1px solid #e5e7eb;
-          border-radius: 0.75rem;
-          transition: border-color 0.2s;
-        }
+        .input-style { width: 100%; padding: 1rem; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); border-radius: 0.75rem; transition: border-color 0.2s; }
         .input-style:focus {
           outline: none;
           border-color: #22c55e;

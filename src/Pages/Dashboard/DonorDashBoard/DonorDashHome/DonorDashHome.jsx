@@ -49,7 +49,7 @@ const DonorDashHome = () => {
   const { user, loading } = useContext(AuthContext);
 
   return (
-    <div className="md:ml-80 mt-20 md:mt-5 p-4 bg-[#f4f8fb] min-h-screen">
+    <div className="mt-20 md:mt-5 p-4 min-h-screen">
       {loading ? (
         <div className="text-center mt-16">Loading...</div>
       ) : (
@@ -58,12 +58,12 @@ const DonorDashHome = () => {
           <RecentDonationRequests userId={user?._id || user?.id} />
           <div className="mt-8 text-center">
             <Link to="/dashboard/my-donation">
-              <button className="bg-blue-700 text-white rounded-lg px-6 py-2 font-semibold text-base shadow-md hover:bg-blue-800 transition">
+              <button className="btn btn-primary px-6 py-2 text-base">
                 View My All Requests
               </button>
             </Link>
           </div>
-          <div className="mt-10 bg-white rounded-xl p-6 shadow-md text-center text-blue-700 text-xl italic">
+          <div className="mt-10 card p-6 text-center text-xl italic">
             "A single pint can save three lives, a single gesture can create a
             million smiles."
           </div>
@@ -135,8 +135,8 @@ function RecentDonationRequests({ userId }) {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-md mb-6">
-      <h3 className="mb-4 text-blue-700 font-bold text-xl">
+    <div className="card p-6 mb-6">
+      <h3 className="mb-4 font-bold text-xl">
         My Recent Donation Requests
       </h3>
       {/* Table for desktop, cards for mobile */}
@@ -145,7 +145,7 @@ function RecentDonationRequests({ userId }) {
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full min-w-[800px] border-collapse">
             <thead>
-              <tr className="bg-blue-100">
+              <tr className="border-b border-token">
                 <th className={thClass}>Recipient Name</th>
                 <th className={thClass}>Location</th>
                 <th className={thClass}>Date</th>
@@ -160,20 +160,18 @@ function RecentDonationRequests({ userId }) {
               {requests
                 .slice(0, 3)
                 .map((req) => (
-                  <tr key={req._id} className="border-b border-gray-100">
+                  <tr key={req._id} className="border-b border-token hover-surface">
                     <td className={tdClass}>{req.recipientName}</td>
                     <td className={tdClass}>
                       {req.recipientDistrict}, {req.recipientUpazila}
                     </td>
                     <td className={tdClass}>{req.donationDate}</td>
                     <td className={tdClass}>{req.donationTime}</td>
-                    <td className="font-bold text-blue-700 px-2 py-2 text-sm">
+                    <td className="font-bold px-2 py-2 text-sm">
                       {req.bloodGroup}
                     </td>
                     <td
-                      className={`${tdClass} font-semibold ${
-                        statusColors[req.status] || "text-gray-500"
-                      }`}
+                      className={`${tdClass} font-semibold ${statusColors[req.status] || "text-muted"}`}
                     >
                       {req.status.charAt(0).toUpperCase() + req.status.slice(1)}
                     </td>
@@ -181,12 +179,12 @@ function RecentDonationRequests({ userId }) {
                       {req.status !== "cancelled" && req.donorEmail ? (
                         <div>
                           <div className="font-semibold">{req.donorName}</div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-muted">
                             {req.donorEmail}
                           </div>
                         </div>
                       ) : (
-                        <span className="text-gray-300">-</span>
+                        <span className="text-muted">-</span>
                       )}
                     </td>
                     {req.status === "pending" ? (
@@ -206,13 +204,13 @@ function RecentDonationRequests({ userId }) {
                         {req.status === "inprogress" && (
                           <>
                             <button
-                              className={`${actionBtnClass} bg-green-700 text-white hover:bg-green-800`}
+                              className={`${actionBtnClass} btn btn-primary`}
                               onClick={() => handleStatusChange(req._id, "done")}
                             >
                               Done
                             </button>
                             <button
-                              className={`${actionBtnClass} bg-red-600 text-white hover:bg-red-700`}
+                              className={`${actionBtnClass} btn btn-outline`}
                               onClick={() =>
                                 handleStatusChange(req._id, "canceled")
                               }
@@ -224,7 +222,7 @@ function RecentDonationRequests({ userId }) {
                       </td>
                     ) : (
                       <td className={tdClass}>
-                        <span className="text-gray-300">-</span>
+                        <span className="text-muted">-</span>
                       </td>
                     )}
                   </tr>
@@ -237,16 +235,14 @@ function RecentDonationRequests({ userId }) {
           {requests.slice(0, 3).map((req) => (
             <div
               key={req._id}
-              className="border rounded-lg shadow p-4 bg-blue-50"
+              className="card p-4"
             >
               <div className="flex justify-between items-center mb-2">
-                <div className="font-bold text-blue-700 text-lg">
+                <div className="font-bold text-lg">
                   {req.recipientName}
                 </div>
                 <div
-                  className={`font-semibold text-sm ${
-                    statusColors[req.status] || "text-gray-500"
-                  }`}
+                  className={`font-semibold text-sm ${statusColors[req.status] || "text-muted"}`}
                 >
                   {req.status.charAt(0).toUpperCase() + req.status.slice(1)}
                 </div>
@@ -263,7 +259,7 @@ function RecentDonationRequests({ userId }) {
               </div>
               <div className="text-sm mb-1">
                 <span className="font-semibold">Blood Group:</span>{" "}
-                <span className="font-bold text-blue-700">
+                <span className="font-bold">
                   {req.bloodGroup}
                 </span>
               </div>
@@ -272,12 +268,12 @@ function RecentDonationRequests({ userId }) {
                 {req.status !== "canceled" && req.donorEmail ? (
                   <span>
                     <span className="font-semibold">{req.donorName}</span>
-                    <span className="block text-xs text-gray-500">
+                    <span className="block text-xs text-muted">
                       {req.donorEmail}
                     </span>
                   </span>
                 ) : (
-                  <span className="text-gray-300">-</span>
+                  <span className="text-muted">-</span>
                 )}
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
@@ -300,13 +296,13 @@ function RecentDonationRequests({ userId }) {
                 {req.status === "inprogress" && (
                   <>
                     <button
-                      className={`${actionBtnClass} bg-green-700 text-white hover:bg-green-800`}
+                      className={`${actionBtnClass} btn btn-primary`}
                       onClick={() => handleStatusChange(req._id, "done")}
                     >
                       Done
                     </button>
                     <button
-                      className={`${actionBtnClass} bg-red-600 text-white hover:bg-red-700`}
+                      className={`${actionBtnClass} btn btn-outline`}
                       onClick={() => handleStatusChange(req._id, "canceled")}
                     >
                       Cancel
@@ -321,18 +317,18 @@ function RecentDonationRequests({ userId }) {
       {/* Confirmation Modal */}
       {deleteId && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-[1000]">
-          <div className="bg-white rounded-lg p-8 min-w-[320px] shadow-xl text-center">
+          <div className="card p-8 min-w-[320px] text-center">
             <div className="mb-4 text-lg">
               Are you sure you want to delete this request?
             </div>
             <button
-              className="mr-2 px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700"
+              className="mr-2 px-4 py-2 btn btn-primary"
               onClick={confirmDelete}
             >
               Yes, Delete
             </button>
             <button
-              className="px-4 py-2 rounded bg-blue-100 text-blue-700 font-semibold hover:bg-blue-200"
+              className="px-4 py-2 btn btn-outline"
               onClick={cancelDelete}
             >
               Cancel
@@ -345,9 +341,9 @@ function RecentDonationRequests({ userId }) {
 }
 
 const thClass =
-  "px-3 py-2 text-left font-bold text-blue-700 text-sm border-b-2 border-blue-200";
-const tdClass = "px-2 py-2 text-sm text-gray-800 align-top";
+  "px-3 py-2 text-left font-bold text-sm border-b-2 border-token";
+const tdClass = "px-2 py-2 text-sm align-top";
 const actionBtnClass =
-  "mr-1 mb-1 px-3 py-1 rounded bg-blue-100 text-blue-700 font-semibold text-xs hover:bg-blue-200 transition";
+  "mr-1 mb-1 px-3 py-1 rounded btn btn-outline text-xs";
 
 export default DonorDashHome;

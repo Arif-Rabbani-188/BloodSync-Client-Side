@@ -30,15 +30,15 @@ const FeaturedCampaigns = () => {
       <div className="w-11/12 md:w-10/12 mx-auto">
         <h2 className="text-3xl font-bold text-red-700 mb-2">Featured Campaigns</h2>
         <p className="text-gray-600 mb-8">Discover highlighted donation events near you.</p>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
-            <div key={item.id} className="bg-white rounded-xl shadow border border-red-100 flex flex-col overflow-hidden">
+      <div key={item.id} className="card flex flex-col overflow-hidden">
               <div className="w-full h-48 overflow-hidden">
                 <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
               </div>
               <div className="p-5 flex flex-col flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-600 mb-4 flex-1">{item.description}</p>
+        <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+        <p className="text-sm text-muted mb-4 flex-1">{item.description}</p>
                 <a href={item.link} className="inline-block self-start bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded-full">See more</a>
               </div>
             </div>

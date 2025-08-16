@@ -64,7 +64,7 @@ const DashboardHome = () => {
     .slice(0, 3);
 
   return (
-    <div className="p-4 md:ml-80 mt-20 md:mt-10 w-10/12 mx-auto">
+    <div className="p-4 mt-20 md:mt-10 w-10/12 mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-center">
         Welcome, {user?.displayName || user?.email}!
       </h2>
@@ -77,9 +77,9 @@ const DashboardHome = () => {
 
           {/* Table for md+ screens */}
           <div className="overflow-x-auto hidden md:block">
-            <table className="min-w-full bg-white border rounded shadow">
+            <table className="min-w-full card">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="border-b border-token">
                   <th className="py-2 px-4 border-b">Recipient Name</th>
                   <th className="py-2 px-4 border-b">Location</th>
                   <th className="py-2 px-4 border-b">Date</th>
@@ -97,7 +97,7 @@ const DashboardHome = () => {
                       new Date(b.donationDate) - new Date(a.donationDate)
                   )
                   .map((req) => (
-                    <tr key={req._id} className="hover:bg-gray-50 text-center">
+                    <tr key={req._id} className="hover-surface text-center">
                       <td className="py-2 px-4 border-b">{req.recipientName}</td>
                       <td className="py-2 px-4 border-b">
                         {req.recipientDistrict}, {req.recipientUpazila}
@@ -106,29 +106,30 @@ const DashboardHome = () => {
                       <td className="py-2 px-4 border-b">{req.donationTime}</td>
                       <td className="py-2 px-4 border-b">{req.bloodGroup}</td>
                       <td className="py-2 px-4 border-b capitalize">
-                        <span
-                          className={
-                            req.status === "pending"
-                              ? "text-yellow-600 font-semibold"
-                              : req.status === "inprogress"
-                              ? "text-blue-600 font-semibold"
-                              : req.status === "done"
-                              ? "text-green-600 font-semibold"
-                              : "text-red-600 font-semibold"
-                          }
-                        >
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-token font-medium text-sm">
+                          <span
+                            className={`w-2 h-2 rounded-full ${
+                              req.status === "pending"
+                                ? "bg-yellow-500"
+                                : req.status === "inprogress"
+                                ? "bg-blue-500"
+                                : req.status === "done"
+                                ? "bg-emerald-500"
+                                : "bg-rose-500"
+                            }`}
+                          />
                           {req.status}
                         </span>
                         {req.status === "inprogress" && (
                           <div className="flex gap-1 mt-1 justify-center">
                             <button
-                              className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded"
+                              className="btn btn-outline text-xs px-2 py-1"
                               onClick={() => handleStatusChange(req._id, "done")}
                             >
                               Done
                             </button>
                             <button
-                              className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded"
+                              className="btn btn-outline text-xs px-2 py-1"
                               onClick={() => handleStatusChange(req._id, "canceled")}
                             >
                               Cancel
@@ -141,7 +142,7 @@ const DashboardHome = () => {
                           req.donorName && (
                             <div>
                               <div>{req.donorName}</div>
-                              <div className="text-xs text-gray-500">
+                              <div className="text-xs text-muted">
                                 {req.donorEmail}
                               </div>
                             </div>
@@ -150,7 +151,7 @@ const DashboardHome = () => {
                       {req.status === "pending" && (
                         <td className="py-2 px-4 border-b">
                           <button
-                            className="text-blue-600 underline mr-2"
+                            className="btn btn-outline text-xs px-3 py-1 mr-2"
                             onClick={() =>
                               navigate(`/dashboard/donation-requests/edit/${req._id}`)
                             }
@@ -158,13 +159,13 @@ const DashboardHome = () => {
                             Edit
                           </button>
                           <button
-                            className="text-red-600 underline mr-2"
+                            className="btn btn-outline text-xs px-3 py-1 mr-2"
                             onClick={() => handleDelete(req._id)}
                           >
                             Delete
                           </button>
                           <button
-                            className="text-green-600 underline"
+                            className="btn btn-outline text-xs px-3 py-1"
                             onClick={() =>
                               navigate(`/dashboard/donation-requests/${req._id}`)
                             }
@@ -186,7 +187,7 @@ const DashboardHome = () => {
               .map((req) => (
                 <div
                   key={req._id}
-                  className="bg-white rounded shadow p-4 border"
+                  className="card p-4"
                 >
                   <div className="font-semibold text-lg mb-2">
                     {req.recipientName}
@@ -209,30 +210,31 @@ const DashboardHome = () => {
                   </div>
                   <div className="text-sm mb-1">
                     <span className="font-medium">Status:</span>{" "}
-                    <span
-                      className={
-                        req.status === "pending"
-                          ? "text-yellow-600 font-semibold"
-                          : req.status === "inprogress"
-                          ? "text-blue-600 font-semibold"
-                          : req.status === "done"
-                          ? "text-green-600 font-semibold"
-                          : "text-red-600 font-semibold"
-                      }
-                    >
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-token font-medium text-xs">
+                      <span
+                        className={`w-2 h-2 rounded-full ${
+                          req.status === "pending"
+                            ? "bg-yellow-500"
+                            : req.status === "inprogress"
+                            ? "bg-blue-500"
+                            : req.status === "done"
+                            ? "bg-emerald-500"
+                            : "bg-rose-500"
+                        }`}
+                      />
                       {req.status}
                     </span>
                   </div>
                   {req.status === "inprogress" && (
                     <div className="flex gap-2 mt-2">
                       <button
-                        className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded"
+                        className="btn btn-outline text-xs px-2 py-1"
                         onClick={() => handleStatusChange(req._id, "done")}
                       >
                         Done
                       </button>
                       <button
-                        className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded"
+                        className="btn btn-outline text-xs px-2 py-1"
                         onClick={() => handleStatusChange(req._id, "canceled")}
                       >
                         Cancel
@@ -243,7 +245,7 @@ const DashboardHome = () => {
                     <div className="mt-2">
                       <div className="font-medium">Donor Info:</div>
                       <div>{req.donorName}</div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-muted">
                         {req.donorEmail}
                       </div>
                     </div>
@@ -251,7 +253,7 @@ const DashboardHome = () => {
                   {req.status === "pending" && (
                     <div className="flex gap-2 mt-3">
                       <button
-                        className="text-blue-600 underline"
+                        className="btn btn-outline text-xs px-3 py-1"
                         onClick={() =>
                           navigate(`/dashboard/donation-requests/edit/${req._id}`)
                         }
@@ -259,13 +261,13 @@ const DashboardHome = () => {
                         Edit
                       </button>
                       <button
-                        className="text-red-600 underline"
+                        className="btn btn-outline text-xs px-3 py-1"
                         onClick={() => handleDelete(req._id)}
                       >
                         Delete
                       </button>
                       <button
-                        className="text-green-600 underline"
+                        className="btn btn-outline text-xs px-3 py-1"
                         onClick={() =>
                           navigate(`/dashboard/donation-requests/${req._id}`)
                         }
@@ -279,15 +281,15 @@ const DashboardHome = () => {
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center bg-white shadow rounded-lg p-8 text-center max-w-lg mx-auto mt-10">
+        <div className="flex flex-col items-center justify-center card p-8 text-center max-w-lg mx-auto mt-10">
           <div className="text-6xl mb-4">🩸</div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">No Donation Requests Yet</h3>
-          <p className="text-gray-600 mb-4">
+          <h3 className="text-2xl font-bold mb-2">No Donation Requests Yet</h3>
+          <p className="text-muted mb-4">
             You haven't created any donation requests. When you do, they will appear here.
           </p>
           <button
             onClick={() => navigate("/dashboard/create-donation")}
-            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded transition duration-200"
+            className="btn btn-primary px-5"
           >
             Create a Request
           </button>

@@ -53,7 +53,7 @@ const AllDonationRequests = () => {
 
         {/* Table for desktop */}
         <div className="overflow-x-auto hidden md:block">
-          <table className="min-w-full bg-white border rounded shadow">
+          <table className="min-w-full rounded shadow" style={{background:"var(--color-surface)", color:"var(--color-text)", border:"1px solid var(--color-border)"}}>
             <thead>
               <tr className="bg-gray-100">
                 <th className="py-2 px-4 border-b">Donor Name</th>

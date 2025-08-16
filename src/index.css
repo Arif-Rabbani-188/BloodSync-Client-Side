@@ -1,2 +1,114 @@
 @import "tailwindcss";
-@plugin "daisyui";
+
+/* Design tokens */
+:root {
+	--color-bg: #ffffff;
+	--color-text: #0f172a; /* slate-900 */
+	--color-surface: #ffffff;
+	--color-border: #e5e7eb; /* gray-200 */
+	--color-primary: #dc2626; /* red-600 */
+	--color-accent: #16a34a; /* green-600 */
+	--color-muted: #6b7280; /* gray-500 */
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-bg: #0b1220; /* near slate-950 */
+		--color-text: #e5e7eb; /* gray-200 */
+		--color-surface: #111827; /* gray-900 */
+		--color-border: #374151; /* gray-700 */
+		--color-primary: #ef4444; /* red-500 a bit brighter on dark */
+		--color-accent: #22c55e; /* green-500 */
+		--color-muted: #9ca3af; /* gray-400 */
+	}
+}
+
+/* Manual theme overrides via attribute on <html> */
+html[data-theme="light"] {
+	--color-bg: #ffffff;
+	--color-text: #0f172a;
+	--color-surface: #ffffff;
+	--color-border: #e5e7eb;
+	--color-primary: #dc2626;
+	--color-accent: #16a34a;
+	--color-muted: #6b7280;
+}
+html[data-theme="dark"] {
+	--color-bg: #0b1220;
+	--color-text: #e5e7eb;
+	--color-surface: #111827;
+	--color-border: #374151;
+	--color-primary: #ef4444;
+	--color-accent: #22c55e;
+	--color-muted: #9ca3af;
+}
+
+html, body, #root {
+	background: var(--color-bg);
+	color: var(--color-text);
+	min-height: 100%;
+}
+
+/* Typography defaults */
+body { color: var(--color-text); }
+h1, h2, h3, h4, h5, h6 { color: var(--color-text); }
+a { color: inherit; }
+
+/* Containers and sections */
+.container-x {
+	width: 91.666667%; /* 11/12 */
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.section-y { padding-top: 3rem; padding-bottom: 3rem; }
+@media (min-width: 768px) { .section-y { padding-top: 4rem; padding-bottom: 4rem; } }
+
+/* Cards */
+.card {
+	background: var(--color-surface);
+	border-radius: 0.75rem; /* rounded-xl */
+	border: 1px solid var(--color-border);
+	box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Buttons */
+.btn { 
+	display: inline-flex; align-items: center; justify-content: center;
+	gap: 0.5rem; font-weight: 700; border-radius: 9999px; 
+	padding: 0.5rem 1rem; transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.btn-primary { background: var(--color-primary); color: #fff; }
+.btn-primary:hover { filter: brightness(0.9); }
+.btn-outline { border: 2px solid var(--color-primary); color: var(--color-primary); background: transparent; }
+.btn-outline:hover { background: var(--color-primary); color: #fff; }
+
+/* Helpers */
+.text-muted { color: var(--color-muted); }
+.border-token { border-color: var(--color-border); }
+.r-xl { border-radius: 0.75rem; }
+
+/* Map common Tailwind gray text utilities to tokens for cross-theme readability */
+.text-gray-900, .text-gray-800, .text-gray-700 { color: var(--color-text) !important; }
+.text-gray-600, .text-gray-500, .text-gray-400 { color: var(--color-muted) !important; }
+
+/* Hover surface helper with light/dark aware backgrounds */
+.hover-surface { transition: background-color .2s ease; }
+.hover-surface:hover { background: rgba(0,0,0,0.05); }
+@media (prefers-color-scheme: dark) {
+	.hover-surface:hover { background: rgba(255,255,255,0.08); }
+}
+html[data-theme="dark"] .hover-surface:hover { background: rgba(255,255,255,0.08); }
+
+/* Global mapping for common utilities to theme tokens */
+.bg-white { background: var(--color-surface) !important; }
+.border-gray-200, .border-gray-100 { border-color: var(--color-border) !important; }
+.text-black { color: var(--color-text) !important; }
+.hover\:bg-gray-100:hover { background: rgba(0,0,0,0.05) !important; }
+@media (prefers-color-scheme: dark) {
+	.hover\:bg-gray-100:hover { background: rgba(255,255,255,0.08) !important; }
+}
+html[data-theme="dark"] .hover\:bg-gray-100:hover { background: rgba(255,255,255,0.08) !important; }

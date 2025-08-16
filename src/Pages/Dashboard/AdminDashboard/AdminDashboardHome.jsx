@@ -186,8 +186,8 @@ const AdminDashboardHome = () => {
   };
 
   return (
-    <div className="p-6 md:ml-80 mt-20 md:mt-10 mx-auto max-w-screen-xl">
-      <div className="mb-8 bg-white rounded-lg shadow p-6 flex items-center gap-4">
+  <div className="p-6 mt-20 md:mt-10 mx-auto max-w-screen-xl">
+      <div className="mb-8 card p-6 flex items-center gap-4">
         <div className="text-4xl">🏠</div>
         <div>
           <h2 className="text-2xl font-bold">
@@ -195,7 +195,7 @@ const AdminDashboardHome = () => {
             {role === "admin" ? <span>Admin</span> : <span>Volunteer</span>}{" "}
             Dashboard
           </h2>
-          <p className="text-gray-600">
+          <p className="text-muted">
             Manage donors, funding, and blood requests efficiently.
           </p>
         </div>
@@ -206,18 +206,18 @@ const AdminDashboardHome = () => {
         {stats.map((stat, i) => (
           <div
             key={i}
-            className={`rounded-lg shadow ${stat.bg} p-6 flex flex-col items-center`}
+            className={`card p-6 flex flex-col items-center`}
           >
             <div className="mb-3">{stat.icon}</div>
             <div className="text-3xl font-bold mb-1">{stat.count}</div>
-            <div className="text-gray-700 font-medium">{stat.title}</div>
+            <div className="font-medium text-muted">{stat.title}</div>
           </div>
         ))}
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-        <div className="bg-white rounded-lg shadow p-6 mx-auto">
+        <div className="card p-6 mx-auto">
           <h3 className="text-lg font-semibold mb-4">
             Donation Request Status
           </h3>
@@ -225,24 +225,24 @@ const AdminDashboardHome = () => {
             <Pie data={pieData} />
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="card p-6">
           <h3 className="text-lg font-semibold mb-4">System Overview</h3>
           <Bar data={barData} />
         </div>
       </div>
 
       {/* Recent Donation Requests */}
-      <div className="bg-white rounded-lg shadow p-4 md:p-6 mb-10">
+      <div className="card p-4 md:p-6 mb-10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <FaClock /> Recent Donation Requests
         </h3>
         {recentRequests.length === 0 ? (
-          <p className="text-gray-500">No recent requests.</p>
+          <p className="text-muted">No recent requests.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full text-left border rounded table-auto">
+            <table className="min-w-full text-left table-auto">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="border-b border-token">
                   <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
                     Recipient
                   </th>
@@ -259,7 +259,7 @@ const AdminDashboardHome = () => {
               </thead>
               <tbody>
                 {recentRequests.map((req) => (
-                  <tr key={req._id} className="border-b hover:bg-gray-50">
+                  <tr key={req._id} className="border-b border-token hover-surface">
                     <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
                       {req.recipientName}
                     </td>
@@ -291,17 +291,17 @@ const AdminDashboardHome = () => {
       </div>
 
       {/* Recent Messages */}
-      <div className="bg-white rounded-lg shadow p-4 md:p-6 mb-10">
+      <div className="card p-4 md:p-6 mb-10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
           📩 Recent Messages from Home contact
         </h3>
         {recentMessages.length === 0 ? (
-          <p className="text-gray-500">No recent messages.</p>
+          <p className="text-muted">No recent messages.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full text-left border rounded table-auto">
+            <table className="min-w-full text-left table-auto">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="border-b border-token">
                   <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
                     Name
                   </th>
@@ -326,7 +326,7 @@ const AdminDashboardHome = () => {
                 {recentMessages.map((msg) => (
                   <tr
                     key={msg._id}
-                    className="border-b hover:bg-gray-50 align-top"
+                    className="border-b border-token hover-surface align-top"
                   >
                     <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
                       {msg.name}
@@ -350,7 +350,7 @@ const AdminDashboardHome = () => {
                         }?subject=Reply to your message&body=${encodeURIComponent(
                           msg.message
                         )}`}
-                        className="text-blue-600 underline"
+                        className="underline"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -364,17 +364,17 @@ const AdminDashboardHome = () => {
           </div>
         )}
       </div>
-      <div className="bg-white rounded-lg shadow p-4 md:p-6 mb-10">
+      <div className="card p-4 md:p-6 mb-10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <FaHandHoldingUsd /> Recent Fundings
         </h3>
         {recentFundings.length === 0 ? (
-          <p className="text-gray-500">No recent fundings.</p>
+          <p className="text-muted">No recent fundings.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full text-left border rounded table-auto">
+            <table className="min-w-full text-left table-auto">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="border-b border-token">
                   <th className="py-2 px-3 md:px-4 border-b whitespace-nowrap text-sm md:text-base">
                     Donor
                   </th>
@@ -388,7 +388,7 @@ const AdminDashboardHome = () => {
               </thead>
               <tbody>
                 {recentFundings.map((fund) => (
-                  <tr key={fund._id} className="border-b hover:bg-gray-50">
+                  <tr key={fund._id} className="border-b border-token hover-surface">
                     <td className="py-2 px-3 md:px-4 whitespace-nowrap text-sm md:text-base">
                       {fund.name}
                     </td>
@@ -407,14 +407,14 @@ const AdminDashboardHome = () => {
       </div>
 
       {/* Top Donors */}
-      <div className="bg-white rounded-lg shadow p-4 md:p-6 mb-10">
+      <div className="card p-4 md:p-6 mb-10">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <FaUserAlt /> Top Donors
         </h3>
         {topDonors.length === 0 ? (
-          <p className="text-gray-500">No donors yet.</p>
+          <p className="text-muted">No donors yet.</p>
         ) : (
-          <ol className="list-decimal list-inside space-y-1 text-gray-700 text-sm md:text-base">
+          <ol className="list-decimal list-inside space-y-1 text-sm md:text-base">
             {topDonors.map(([name, total], i) => (
               <li key={i}>
                 <span className="font-semibold">{name}</span>: $

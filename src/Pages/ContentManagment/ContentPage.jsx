@@ -104,7 +104,7 @@ const ContentPage = () => {
   
 
   return (
-    <div className="p-6 w-full md:w-10/12 md:ml-80 mx-auto mt-20 md:mt-0">
+  <div className="p-6 w-full md:w-10/12 mx-auto mt-20 md:mt-0">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Content Management</h1>
         <button

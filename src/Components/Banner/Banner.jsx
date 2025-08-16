@@ -7,7 +7,13 @@ import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 const Banner = () => {
   const {user} = useContext(AuthContext);
   return (
-    <div className="hero pt-30 pb-10 bg-gradient-to-br from-green-100 to-white min-h-[600px] rounded-tl-[100px]">
+    <div
+      className="hero pt-30 pb-10 min-h-[600px] rounded-tl-[100px]"
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(34,197,94,0.10), rgba(220,38,38,0.08)), var(--color-bg)",
+      }}
+    >
       <div className="flex flex-col lg:flex-row-reverse w-11/12 mx-auto items-center justify-between">
         <div className="flex-1 w-full flex items-center justify-center">
           <img
@@ -28,20 +34,20 @@ const Banner = () => {
             Your contribution can make a difference!
           </p>
           <div className="flex flex-col md:flex-row gap-5 justify-center items-center">
-            {
-              !user && (<NavLink to="/register" className="md:p-2 pl-5 md:pl-5 rounded-tr-lg font-bold md:text-lg bg-white rounded-full shadow-2xl flex items-center gap-5">
-            Join as a Donor{" "}
-            <span className="p-2 bg-green-400 text-white rounded-tl-full rounded-bl-full rounded-br-full">
-              <FaArrowRight />
-            </span>
-          </NavLink>)
-            }
-          <NavLink to="/search-donor" className="md:p-2 pl-5 md:pl-5 rounded-tr-lg font-bold md:text-lg  bg-white rounded-full shadow-2xl flex items-center gap-5">
-            Search Donors{" "}
-            <span className="p-2 bg-green-400 text-white rounded-tl-full rounded-bl-full rounded-br-full">
-              <FaSearch />
-            </span>
-          </NavLink>
+            {!user && (
+              <NavLink to="/register" className="btn btn-primary">
+                Join as a Donor
+                <span className="p-2 bg-green-500 text-white rounded-full">
+                  <FaArrowRight />
+                </span>
+              </NavLink>
+            )}
+            <NavLink to="/search-donor" className="btn btn-outline">
+              Search Donors
+              <span className="p-2 bg-green-500 text-white rounded-full">
+                <FaSearch />
+              </span>
+            </NavLink>
           </div>
         </div>
       </div>

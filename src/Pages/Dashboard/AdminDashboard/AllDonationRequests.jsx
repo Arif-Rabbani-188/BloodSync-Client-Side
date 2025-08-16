@@ -122,7 +122,7 @@ const AllDonationRequests = () => {
 
   if (error) {
     return (
-      <div className="p-4 md:ml-80 mt-20 md:mt-10 w-10/12 mx-auto text-center text-red-600">
+  <div className="p-4 md:ml-80 mt-20 md:mt-10 w-10/12 mx-auto text-center text-red-600">
         {error}
       </div>
     );
@@ -143,7 +143,7 @@ const AllDonationRequests = () => {
           <h1 className="text-3xl font-bold text-red-500 mb-2">
             Access Denied
           </h1>
-          <p className="text-lg text-slate-600">
+          <p className="text-lg text-muted">
             You do not have the necessary permissions to view this page.
             <br />
             Please contact your administrator if you believe this is a mistake.
@@ -154,13 +154,13 @@ const AllDonationRequests = () => {
   }
 
   return (
-    <div className="p-4 md:ml-80 mt-20 md:mt-10 w-10/12 mx-auto">
+  <div className="p-4 mt-20 md:mt-10 w-10/12 mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-center">
         Welcome, {user?.displayName || user?.email}!
       </h2>
 
       {requests.length === 0 ? (
-        <p className="text-center text-gray-600">No donation requests found.</p>
+        <p className="text-center text-muted">No donation requests found.</p>
       ) : (
         <>
           <h3 className="text-lg font-semibold mb-4">
@@ -169,9 +169,9 @@ const AllDonationRequests = () => {
 
           {/* Table for md+ screens */}
           <div className="overflow-x-auto hidden md:block">
-            <table className="min-w-full bg-white border rounded shadow">
+            <table className="min-w-full card">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="border-b border-token">
                   <th className="py-2 px-4 border-b">Recipient Name</th>
                   <th className="py-2 px-4 border-b">Location</th>
                   <th className="py-2 px-4 border-b">Date</th>
@@ -184,7 +184,7 @@ const AllDonationRequests = () => {
               </thead>
               <tbody>
                 {currentRequests.map((req) => (
-                  <tr key={req._id} className="hover:bg-gray-50 text-center">
+                  <tr key={req._id} className="hover-surface text-center">
                     <td className="py-2 px-4 border-b">{req.recipientName}</td>
                     <td className="py-2 px-4 border-b">
                       {req.recipientDistrict}, {req.recipientUpazila}
@@ -193,29 +193,30 @@ const AllDonationRequests = () => {
                     <td className="py-2 px-4 border-b">{req.donationTime}</td>
                     <td className="py-2 px-4 border-b">{req.bloodGroup}</td>
                     <td className="py-2 px-4 border-b capitalize">
-                      <span
-                        className={
-                          req.status === "pending"
-                            ? "text-yellow-600 font-semibold"
-                            : req.status === "inprogress"
-                            ? "text-blue-600 font-semibold"
-                            : req.status === "done"
-                            ? "text-green-600 font-semibold"
-                            : "text-red-600 font-semibold"
-                        }
-                      >
+                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-token font-medium text-sm">
+                        <span
+                          className={`w-2 h-2 rounded-full ${
+                            req.status === "pending"
+                              ? "bg-yellow-500"
+                              : req.status === "inprogress"
+                              ? "bg-blue-500"
+                              : req.status === "done"
+                              ? "bg-emerald-500"
+                              : "bg-rose-500"
+                          }`}
+                        />
                         {req.status}
                       </span>
                       {req.status === "inprogress" && (
                         <div className="flex gap-1 mt-1 justify-center">
                           <button
-                            className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded"
+                            className="btn btn-outline text-xs px-2 py-1"
                             onClick={() => handleStatusChange(req._id, "done")}
                           >
                             Done
                           </button>
                           <button
-                            className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded"
+                            className="btn btn-outline text-xs px-2 py-1"
                             onClick={() =>
                               handleStatusChange(req._id, "canceled")
                             }
@@ -229,7 +230,7 @@ const AllDonationRequests = () => {
                       {req.status === "inprogress" && req.donorName && (
                         <div>
                           <div>{req.donorName}</div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-muted">
                             {req.donorEmail}
                           </div>
                         </div>
@@ -238,7 +239,7 @@ const AllDonationRequests = () => {
                     {role === "admin" && (
                       <td className="py-2 px-4 border-b">
                         <button
-                          className="text-blue-600 underline mr-2"
+                          className="btn btn-outline text-xs px-3 py-1 mr-2"
                           onClick={() =>
                             navigate(
                               `/dashboard/donation-requests/edit/${req._id}`
@@ -248,13 +249,13 @@ const AllDonationRequests = () => {
                           Edit
                         </button>
                         <button
-                          className="text-red-600 underline mr-2"
+                          className="btn btn-outline text-xs px-3 py-1 mr-2"
                           onClick={() => handleDelete(req._id)}
                         >
                           Delete
                         </button>
                         <button
-                          className="text-green-600 underline"
+                          className="btn btn-outline text-xs px-3 py-1"
                           onClick={() =>
                             navigate(`/dashboard/donation-requests/${req._id}`)
                           }
@@ -274,7 +275,7 @@ const AllDonationRequests = () => {
             {currentRequests.map((req) => (
               <div
                 key={req._id}
-                className="bg-white rounded shadow border p-4 flex flex-col gap-2"
+                className="card p-4 flex flex-col gap-2"
               >
                 <div>
                   <span className="font-semibold">Recipient Name: </span>
@@ -298,29 +299,30 @@ const AllDonationRequests = () => {
                 </div>
                 <div>
                   <span className="font-semibold">Status: </span>
-                  <span
-                    className={
-                      req.status === "pending"
-                        ? "text-yellow-600 font-semibold"
-                        : req.status === "inprogress"
-                        ? "text-blue-600 font-semibold"
-                        : req.status === "done"
-                        ? "text-green-600 font-semibold"
-                        : "text-red-600 font-semibold"
-                    }
-                  >
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-token font-medium text-xs">
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        req.status === "pending"
+                          ? "bg-yellow-500"
+                          : req.status === "inprogress"
+                          ? "bg-blue-500"
+                          : req.status === "done"
+                          ? "bg-emerald-500"
+                          : "bg-rose-500"
+                      }`}
+                    />
                     {req.status}
                   </span>
                   {req.status === "inprogress" && (
                     <div className="flex gap-2 mt-1">
                       <button
-                        className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded"
+                        className="btn btn-outline text-xs px-2 py-1"
                         onClick={() => handleStatusChange(req._id, "done")}
                       >
                         Done
                       </button>
                       <button
-                        className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded"
+                        className="btn btn-outline text-xs px-2 py-1"
                         onClick={() => handleStatusChange(req._id, "canceled")}
                       >
                         Cancel
@@ -332,14 +334,14 @@ const AllDonationRequests = () => {
                   <div>
                     <span className="font-semibold">Donor Info: </span>
                     <div>{req.donorName}</div>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-muted">
                       {req.donorEmail}
                     </div>
                   </div>
                 )}
                 <div className="flex gap-2 mt-2">
                   <button
-                    className="text-blue-600 underline"
+                    className="btn btn-outline text-xs px-3 py-1"
                     onClick={() =>
                       navigate(`/dashboard/edit-donation-request/${req._id}`)
                     }
@@ -347,13 +349,13 @@ const AllDonationRequests = () => {
                     Edit
                   </button>
                   <button
-                    className="text-red-600 underline"
+                    className="btn btn-outline text-xs px-3 py-1"
                     onClick={() => handleDelete(req._id)}
                   >
                     Delete
                   </button>
                   <button
-                    className="text-green-600 underline"
+                    className="btn btn-outline text-xs px-3 py-1"
                     onClick={() =>
                       navigate(`/dashboard/donation-requests/${req._id}`)
                     }
@@ -371,7 +373,7 @@ const AllDonationRequests = () => {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="px-3 py-1 rounded border bg-white hover:bg-gray-100 disabled:opacity-50"
+                className="btn btn-outline px-3 py-1 disabled:opacity-50"
               >
                 Previous
               </button>
@@ -383,8 +385,8 @@ const AllDonationRequests = () => {
                     onClick={() => handlePageChange(pageNum)}
                     className={`px-3 py-1 rounded border ${
                       pageNum === currentPage
-                        ? "bg-blue-600 text-white"
-                        : "bg-white hover:bg-gray-100"
+                        ? "bg-[var(--color-primary)] text-white border-transparent"
+                        : "border-token hover-surface"
                     }`}
                   >
                     {pageNum}
@@ -394,7 +396,7 @@ const AllDonationRequests = () => {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded border bg-white hover:bg-gray-100 disabled:opacity-50"
+                className="btn btn-outline px-3 py-1 disabled:opacity-50"
               >
                 Next
               </button>

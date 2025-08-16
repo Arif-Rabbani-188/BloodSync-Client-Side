@@ -53,12 +53,9 @@ const DonorCreateReq = () => {
   if (!userData || userData.status !== "active") {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="bg-red-100 text-red-700 px-6 py-4 rounded shadow">
+        <div className="card px-6 py-4">
           <h2 className="text-xl font-semibold mb-2">Access Denied</h2>
-          <p>
-            Your account is blocked or inactive. You cannot create a donation
-            request.
-          </p>
+          <p className="text-muted">Your account is blocked or inactive. You cannot create a donation request.</p>
         </div>
       </div>
     );
@@ -120,13 +117,13 @@ const DonorCreateReq = () => {
   const isBlocked = !userData || userData.status !== "active";
 
   return (
-    <div className="max-w-2xl mx-auto mt-20 bg-white rounded-lg shadow-lg p-8">
-      <h2 className="text-2xl font-bold mb-6 text-center text-red-600">
+    <div className="max-w-2xl mx-auto mt-20 card p-8">
+      <h2 className="text-2xl font-bold mb-6 text-center">
         Create Donation Request
       </h2>
 
       {fetchError && (
-        <div className="bg-red-100 text-red-700 p-4 rounded mb-4">
+        <div className="card p-4 mb-4">
           {fetchError}
         </div>
       )}
@@ -141,7 +138,7 @@ const DonorCreateReq = () => {
               name="requesterName"
               value={form.requesterName}
               readOnly
-              className="w-full px-3 py-2 border rounded bg-gray-100"
+              className="w-full px-3 py-2 border border-token rounded bg-transparent"
               disabled={isBlocked}
             />
           </div>
@@ -152,7 +149,7 @@ const DonorCreateReq = () => {
               name="requesterEmail"
               value={form.requesterEmail}
               readOnly
-              className="w-full px-3 py-2 border rounded bg-gray-100"
+              className="w-full px-3 py-2 border border-token rounded bg-transparent"
               disabled={isBlocked}
             />
           </div>
@@ -167,7 +164,7 @@ const DonorCreateReq = () => {
             value={form.recipientName}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border border-token rounded bg-transparent"
             disabled={isBlocked}
           />
         </div>
@@ -178,7 +175,7 @@ const DonorCreateReq = () => {
             <label className="block font-medium mb-1">Recipient District</label>
             <select
               name="recipientDistrict"
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border border-token rounded bg-transparent"
               value={form.recipientDistrict}
               onChange={handleChange}
               required
@@ -196,7 +193,7 @@ const DonorCreateReq = () => {
             <label className="block font-medium mb-1">Recipient Upazila</label>
             <select
               name="recipientUpazila"
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border border-token rounded bg-transparent"
               value={form.recipientUpazila}
               onChange={handleChange}
               required
@@ -221,7 +218,7 @@ const DonorCreateReq = () => {
             value={form.hospitalName}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border border-token rounded bg-transparent"
             disabled={isBlocked}
           />
         </div>
@@ -233,7 +230,7 @@ const DonorCreateReq = () => {
             value={form.address}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border border-token rounded bg-transparent"
             disabled={isBlocked}
           />
         </div>
@@ -247,7 +244,7 @@ const DonorCreateReq = () => {
               value={form.bloodGroup}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border border-token rounded bg-transparent"
               disabled={isBlocked}
             >
               <option value="">Select group</option>
@@ -266,7 +263,7 @@ const DonorCreateReq = () => {
               value={form.donationDate}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border border-token rounded bg-transparent"
               disabled={isBlocked}
             />
           </div>
@@ -278,7 +275,7 @@ const DonorCreateReq = () => {
               value={form.donationTime}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border border-token rounded bg-transparent"
               disabled={isBlocked}
             />
           </div>
@@ -293,7 +290,7 @@ const DonorCreateReq = () => {
             onChange={handleChange}
             required
             rows={4}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border border-token rounded bg-transparent"
             placeholder="Explain your situation"
             disabled={isBlocked}
           />
@@ -309,7 +306,7 @@ const DonorCreateReq = () => {
         <button
           type="submit"
           disabled={loading || isBlocked}
-          className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full btn btn-primary font-bold py-2 px-4"
         >
           {loading ? "Requesting..." : isBlocked ? "Request (Blocked)" : "Request"}
         </button>

@@ -54,13 +54,13 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-green-50 p-8 flex items-center justify-center font-sans relative">
       {loading && (
-        <div className="absolute inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50">
+  <div className="absolute inset-0 flex items-center justify-center z-50" style={{background:"var(--color-surface)", opacity:0.6}}>
           <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-20 w-20"></div>
         </div>
       )}
 
-      <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16 max-w-md w-full flex flex-col gap-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-center mb-4">
+  <div className="card rounded-3xl p-8 md:p-12 lg:p-16 max-w-md w-full flex flex-col gap-8">
+  <h1 className="text-4xl md:text-5xl font-bold leading-tight text-center mb-4">
           Welcome to <span className="text-red-700">BloodSync</span>
         </h1>
 

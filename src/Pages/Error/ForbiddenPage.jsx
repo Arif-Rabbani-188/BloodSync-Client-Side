@@ -17,7 +17,7 @@ const ForbiddenPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-red-50 px-4 text-center">
       <h1 className="text-6xl font-bold text-red-600">403</h1>
-      <p className="text-2xl mt-4 text-gray-800">Access Forbidden</p>
+  <p className="text-2xl mt-4">Access Forbidden</p>
       <p className="text-gray-600 mt-2">
         {role
           ? `You are logged in as "${role}" and do not have permission to view this page.`

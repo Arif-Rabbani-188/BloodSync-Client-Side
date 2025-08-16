@@ -9,12 +9,36 @@ const Navbar = () => {
   const { user, logOut, setUser, userData } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("light"); // light | dark
 
   const handleMenuToggle = () => setMobileMenuOpen((prev) => !prev);
 
   const handleLogOut = () => {
     logOut();
     setProfileMenuOpen(false);
+  };
+
+  // Initialize theme from localStorage or system preference
+  useEffect(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") {
+      setTheme(saved);
+      document.documentElement.setAttribute("data-theme", saved);
+    } else {
+  // Default to light theme if no saved preference
+  setTheme("light");
+  document.documentElement.setAttribute("data-theme", "light");
+    }
+  }, []);
+
+  // Apply theme on change
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
   return (
@@ -83,6 +107,17 @@ const Navbar = () => {
                 </li>
               )}
 
+              {/* Theme toggle */}
+              <li>
+                <button
+                  onClick={toggleTheme}
+                  className="px-3 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition flex items-center gap-2"
+                  title={`Theme: ${theme}`}
+                >
+                  {theme === "dark" ? <span aria-hidden>🌙</span> : <span aria-hidden>☀️</span>}
+                </button>
+              </li>
+
               {/* Profile dropdown when logged-in */}
               {user && (
                 <li className="relative">
@@ -109,7 +144,10 @@ const Navbar = () => {
                     </div>
                   </button>
                   {profileMenuOpen && (
-                    <div className="absolute right-0 mt-3 w-80 bg-white text-gray-800 rounded-lg shadow-lg z-50 py-4 px-5">
+                    <div
+                      className="absolute right-0 mt-3 w-80 rounded-lg shadow-lg z-50 py-4 px-5 border"
+                      style={{ background: "var(--color-surface)", color: "var(--color-text)", borderColor: "var(--color-border)" }}
+                    >
                       <div className="flex items-center space-x-3 mb-4">
                         <img
                           src={user?.photoURL || "https://ui-avatars.com/api/?name=User"}
@@ -140,7 +178,7 @@ const Navbar = () => {
                       <div className="space-y-2 mb-3">
                         <NavLink
                           to="/dashboard"
-                          className="block py-2 px-3 rounded hover:bg-gray-100"
+                          className="block py-2 px-3 rounded hover-surface"
                           onClick={() => setProfileMenuOpen(false)}
                         >
                           Dashboard Home
@@ -149,7 +187,7 @@ const Navbar = () => {
                         {userData?.role === "admin" ? (
                           <NavLink
                             to="/dashboard/admin-home"
-                            className="block py-2 px-3 rounded hover:bg-gray-100"
+                            className="block py-2 px-3 rounded hover-surface"
                             onClick={() => setProfileMenuOpen(false)}
                           >
                             Admin Home
@@ -157,7 +195,7 @@ const Navbar = () => {
                         ) : (
                           <NavLink
                             to="/dashboard/donor-home"
-                            className="block py-2 px-3 rounded hover:bg-gray-100"
+                            className="block py-2 px-3 rounded hover-surface"
                             onClick={() => setProfileMenuOpen(false)}
                           >
                             Donor Home
@@ -165,14 +203,14 @@ const Navbar = () => {
                         )}
                         <NavLink
                           to="/dashboard/my-donation"
-                          className="block py-2 px-3 rounded hover:bg-gray-100"
+                          className="block py-2 px-3 rounded hover-surface"
                           onClick={() => setProfileMenuOpen(false)}
                         >
                           My Donation Requests
                         </NavLink>
                         <NavLink
                           to="/dashboard/create-donation"
-                          className="block py-2 px-3 rounded hover:bg-gray-100"
+                          className="block py-2 px-3 rounded hover-surface"
                           onClick={() => setProfileMenuOpen(false)}
                         >
                           Create Donation Request
@@ -180,14 +218,14 @@ const Navbar = () => {
                         {/* Always visible protected links */}
                         <NavLink
                           to="/funding"
-                          className="block py-2 px-3 rounded hover:bg-gray-100"
+                          className="block py-2 px-3 rounded hover-surface"
                           onClick={() => setProfileMenuOpen(false)}
                         >
                           Funding
                         </NavLink>
                         <NavLink
                           to="/give-fund"
-                          className="block py-2 px-3 rounded hover:bg-gray-100"
+                          className="block py-2 px-3 rounded hover-surface"
                           onClick={() => setProfileMenuOpen(false)}
                         >
                           Give Fund
@@ -197,28 +235,28 @@ const Navbar = () => {
                           <>
                             <NavLink
                               to="/dashboard/all-users"
-                              className="block py-2 px-3 rounded hover:bg-gray-100"
+                              className="block py-2 px-3 rounded hover-surface"
                               onClick={() => setProfileMenuOpen(false)}
                             >
                               Manage Users
                             </NavLink>
                             <NavLink
                               to="/dashboard/all-donation-requests"
-                              className="block py-2 px-3 rounded hover:bg-gray-100"
+                              className="block py-2 px-3 rounded hover-surface"
                               onClick={() => setProfileMenuOpen(false)}
                             >
                               All Donation Requests
                             </NavLink>
                             <NavLink
                               to="/dashboard/content-management"
-                              className="block py-2 px-3 rounded hover:bg-gray-100"
+                              className="block py-2 px-3 rounded hover-surface"
                               onClick={() => setProfileMenuOpen(false)}
                             >
                               Content Management
                             </NavLink>
                             <NavLink
                               to="/dashboard/content-management/add-blog"
-                              className="block py-2 px-3 rounded hover:bg-gray-100"
+                              className="block py-2 px-3 rounded hover-surface"
                               onClick={() => setProfileMenuOpen(false)}
                             >
                               Add Blog
@@ -239,7 +277,15 @@ const Navbar = () => {
               )}
             </ul>
 
-            {/* Mobile hamburger */}
+            {/* Mobile theme toggle + hamburger */}
+            <button
+              onClick={toggleTheme}
+              className="md:hidden mr-3 px-3 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition"
+              aria-label="Toggle theme"
+              title={`Theme: ${theme}`}
+            >
+              {theme === "dark" ? "🌙" : "☀️"}
+            </button>
             <button
               className="md:hidden flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
               onClick={handleMenuToggle}
@@ -266,13 +312,25 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <ul
-          className={`md:hidden flex flex-col bg-white text-gray-800 shadow-lg px-5 py-4 absolute left-0 right-0 transition-all duration-300 ease-in-out ${
+          className={`md:hidden flex flex-col shadow-lg px-5 py-4 absolute left-0 right-0 transition-all duration-300 ease-in-out ${
             mobileMenuOpen
               ? "opacity-100 translate-y-0 pointer-events-auto"
               : "opacity-0 -translate-y-2 pointer-events-none"
           }`}
-          style={{ top: "64px" }}
+          style={{ top: "64px", background: "var(--color-surface)", color: "var(--color-text)", borderTop: "1px solid var(--color-border)" }}
         >
+          {/* Theme toggle in mobile menu */}
+      <li className="mb-2">
+            <button
+              onClick={() => {
+                toggleTheme();
+              }}
+              className="w-full py-2 px-3 rounded hover-surface text-left"
+        title={`Theme: ${theme}`}
+            >
+        Theme: {theme === "dark" ? "Dark" : "Light"}
+            </button>
+          </li>
           {/* Profile section */}
           <div className="py-3">
             {user ? (

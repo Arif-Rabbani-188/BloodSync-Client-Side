@@ -87,7 +87,7 @@ const PublickDonation = () => {
         {requests.map((req) => (
           <div
             key={req.id}
-            className="bg-white max-w-xs w-full rounded-xl shadow-md border border-gray-200 p-6 flex flex-col"
+            className="card max-w-xs w-full p-6 flex flex-col"
           >
             <div className="mb-2">
               <span className="font-semibold text-gray-600 mr-2">

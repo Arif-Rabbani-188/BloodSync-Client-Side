@@ -26,21 +26,27 @@ const features = [
 
 const Feature = () => {
   return (
-    <section className="py-12 px-4 bg-gradient-to-br from-red-50 to-white">
+    <section
+      className="py-12 px-4"
+      style={{
+        background:
+          'linear-gradient(135deg, rgba(239,68,68,0.06), rgba(34,197,94,0.05)), var(--color-bg)'
+      }}
+    >
       <div className="w-11/12 md:w-10/12 mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-red-700">Why Choose BloodSync?</h2>
-        <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>Why Choose BloodSync?</h2>
+        <p className="text-muted mb-10 max-w-2xl mx-auto">
           BloodSync helps save lives by making blood donation accessible, fast, and reliable for everyone.
         </p>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-      className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300 text-center flex flex-col items-center min-h-[220px] justify-center"
+              className="card p-6 hover:shadow-xl transition duration-300 text-center flex flex-col items-center min-h-[220px] justify-center"
             >
               {feature.icon}
-              <h3 className="text-xl font-semibold mb-2 text-gray-800">{feature.title}</h3>
-              <p className="text-gray-600 text-sm">{feature.description}</p>
+              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <p className="text-muted text-sm">{feature.description}</p>
             </div>
           ))}
         </div>
