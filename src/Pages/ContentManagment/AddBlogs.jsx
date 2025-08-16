@@ -35,6 +35,11 @@ const AddBlogs = () => {
     imageForm.append('image', file);
 
     const imgbbKey = import.meta.env.VITE_IMGBB_API_KEY;
+    if (!imgbbKey) {
+      console.error('IMGBB API key is missing. Set VITE_IMGBB_API_KEY in your .env file.');
+      setUploading(false);
+      return;
+    }
     try {
       const res = await axios.post(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, imageForm);
       const imageUrl = res.data.data.display_url;
