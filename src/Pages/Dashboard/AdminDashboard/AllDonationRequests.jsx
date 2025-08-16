@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 import useUserRole from "../../../Hooks/useUserRole";
-import useUsers from "../../../Hooks/useUsers";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Loader from "../../../Components/Loader/Loader";
 
@@ -18,7 +17,6 @@ const AllDonationRequests = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const { role , isLoading : roleLoading} = useUserRole();
-  const {data: users, isLoading} = useUsers();
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
@@ -123,7 +121,7 @@ const AllDonationRequests = () => {
     );
   }
 
-  if (roleLoading || isLoading || !role || !users) return <div className="h-screen flex items-center justify-center"><Loader size="lg" /></div>;
+  if (roleLoading) return <div className="h-screen flex items-center justify-center"><Loader size="lg" /></div>;
   if (role !== "admin" && role !== "volunteer") {
     return (
       <div className="flex justify-center items-center min-h-screen">
