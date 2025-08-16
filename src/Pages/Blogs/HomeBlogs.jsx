@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import Loader from "../../Components/Loader/Loader";
 
 const HomeBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -24,13 +25,7 @@ const HomeBlogs = () => {
     });
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center py-16">
-        <div className="loader border-8 border-t-8 border-red-200 h-16 w-16 rounded-full animate-spin border-t-red-600"></div>
-      </div>
-    );
-  }
+  if (loading) return <div className="py-16"><Loader size="lg" /></div>;
 
   return (
   <section className="py-12 px-4 md:px-8" style={{background:"var(--color-bg)", color:"var(--color-text)"}}>

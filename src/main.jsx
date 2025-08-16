@@ -32,6 +32,7 @@ import Error from "./Pages/Error/Error";
 import AllFunding from "./Pages/Funding/AllFunding";
 import GiveFund from "./Pages/Funding/GiveFund";
 import ForbiddenPage from "./Pages/Error/ForbiddenPage";
+import CompleteProfile from "./Pages/Auth/CompleteProfile";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <Home></Home>,
+      },
+      {
+        path: "complete-profile",
+        element: <CompleteProfile />,
       },
       {
         path: "donation-requests",

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import Loader from '../../Components/Loader/Loader';
 
 const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -25,17 +26,7 @@ const AllBlogs = () => {
     fetchBlogs();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex flex-col mt-30 items-center justify-center">
-        <svg className="animate-spin h-8 w-8 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-        </svg>
-        <p className="text-lg text-gray-700 font-medium">Fetching the latest blogs for you...</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="mt-20"><Loader size="lg" message="Fetching the latest blogs for you..." /></div>;
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center mt-20">

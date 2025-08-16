@@ -5,6 +5,7 @@ import useUsers from "../../../Hooks/useUsers";
 import useUserRole from "../../../Hooks/useUserRole";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../../../Components/Loader/Loader";
 
 const PAGE_SIZE = 5;
 
@@ -32,12 +33,7 @@ const AllUsers = () => {
   
 
 if (roleLoading || isLoading || !role || !users) {
- 
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600"></div>
-      </div>
-    )
+  return <div className="h-screen flex items-center justify-center"><Loader size="lg" /></div>
 }
 if (role !== "admin" && role !== "volunteer") {
     return (

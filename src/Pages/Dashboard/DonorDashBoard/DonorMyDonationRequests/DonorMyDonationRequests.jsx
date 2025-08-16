@@ -51,13 +51,7 @@ const DashboardHome = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600"></div>
-      </div>
-    );
-  }
+  if (loading) return <div className="h-screen flex items-center justify-center"><div className="rounded-full h-16 w-16 border-4 animate-spin" style={{borderColor:"var(--color-border)", borderTopColor:"var(--color-primary)"}} /></div>;
 
   const recentRequests = requests
     .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))

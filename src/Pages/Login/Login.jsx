@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import Loader from "../../Components/Loader/Loader";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 
 const Login = () => {
-  const { signInWithEmail } = useContext(AuthContext);
+  const { signInWithEmail, signInWithGoogle } = useContext(AuthContext);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const location = useLocation();
@@ -51,13 +52,30 @@ const Login = () => {
       .finally(() => setLoading(false));
   };
 
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const res = await signInWithGoogle();
+      if (res?.needsProfile) {
+        Swal.fire({ title: "Welcome!", text: "Please complete your profile.", icon: "info" }).then(() => {
+          navigate("/complete-profile", { replace: true, state: { from: location?.state?.from } });
+        });
+      } else {
+        Swal.fire({ title: "Login Successful", icon: "success", draggable: false }).then(() => {
+          navigate(location?.state?.from || "/", { replace: true });
+        });
+      }
+    } catch (err) {
+      console.error("Google Sign-In Error:", err);
+      Swal.fire({ title: "Login Failed", text: err.message, icon: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-green-50 p-8 flex items-center justify-center font-sans relative">
-      {loading && (
-  <div className="absolute inset-0 flex items-center justify-center z-50" style={{background:"var(--color-surface)", opacity:0.6}}>
-          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-20 w-20"></div>
-        </div>
-      )}
+  {loading && <Loader overlay size="xl" />}
 
   <div className="card rounded-3xl p-8 md:p-12 lg:p-16 max-w-md w-full flex flex-col gap-8">
   <h1 className="text-4xl md:text-5xl font-bold leading-tight text-center mb-4">
@@ -107,6 +125,21 @@ const Login = () => {
           </button>
         </form>
 
+        <div className="flex items-center gap-3 my-2">
+          <div className="h-px flex-1 bg-[var(--color-border)]" />
+          <span className="text-sm text-[var(--color-muted)]">or</span>
+          <div className="h-px flex-1 bg-[var(--color-border)]" />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="btn-outline w-full p-3 rounded-xl flex items-center justify-center gap-3"
+        >
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
+          <span>Sign in with Google</span>
+        </button>
+
         <p className="text-center text-gray-600 text-sm mt-4">
           Don't have an account?{' '}
           <Link
@@ -118,15 +151,7 @@ const Login = () => {
         </p>
       </div>
 
-      {/* Loader Spinner Style */}
       <style>{`
-        .loader {
-          border-top-color: #e3342f;
-          animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
         .input-style {
           width: 100%;
           padding: 1rem;

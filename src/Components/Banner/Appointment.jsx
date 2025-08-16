@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Loader from "../Loader/Loader";
 
 const Appointment = () => {
   const [loading, setLoading] = useState(false);
@@ -48,11 +49,7 @@ const Appointment = () => {
 
   return (
   <div className="rounded-tl-[200px] rounded-br-[200px] px-3 md:p-8 flex items-center justify-center font-sans relative" style={{background:"linear-gradient(135deg, rgba(34,197,94,0.10), rgba(220,38,38,0.08)), var(--color-bg)"}}>
-      {loading && (
-  <div className="absolute inset-0 flex items-center justify-center z-50" style={{background:"rgba(0,0,0,0.05)"}}>
-          <div className="loader border-8 border-t-8 border-gray-200 h-20 w-20 rounded-full"></div>
-        </div>
-      )}
+  {loading && <Loader overlay size="xl" />}
 
   <div className="card rounded-3xl p-8 md:p-12 lg:p-16 md:w-10/12 flex flex-col lg:flex-row gap-12">
         {/* Left Section */}
@@ -134,15 +131,6 @@ const Appointment = () => {
       </div>
 
       <style>{`
-        .loader {
-          border-top-color: #22c55e;
-          animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
         .input-style { width: 100%; padding: 1rem; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); border-radius: 0.75rem; transition: border-color 0.2s; }
         .input-style:focus {
           outline: none;

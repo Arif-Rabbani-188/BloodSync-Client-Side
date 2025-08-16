@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import Loader from "../../Components/Loader/Loader";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Register = () => {
-  const { user, createUserWithEmail } = useContext(AuthContext);
+  const { user, createUserWithEmail, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
@@ -202,13 +203,33 @@ const Register = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const res = await signInWithGoogle();
+      if (res?.needsProfile) {
+        Swal.fire({ icon: "info", title: "Almost there", text: "Complete your profile to continue" }).then(() => {
+          navigate("/complete-profile", { replace: true });
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "Signed in with Google",
+        }).then(() => {
+          navigate("/home");
+        });
+      }
+    } catch (err) {
+      console.error("Google sign-in failed:", err);
+      Swal.fire({ icon: "error", title: "Google sign-in failed", text: err.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen pt-20 md:pt-30 bg-gradient-to-br from-blue-50 to-blue-100 p-8 flex items-center justify-center font-sans relative">
-      {loading && (
-        <div className="absolute inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50">
-          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-20 w-20"></div>
-        </div>
-      )}
+  {loading && <Loader overlay size="xl" />}
 
       <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16 max-w-xl w-full flex flex-col gap-8">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-center mb-4">
@@ -334,17 +355,31 @@ const Register = () => {
             </svg>
           </button>
         </form>
+
+        <div className="flex items-center gap-3 my-2">
+          <div className="h-px flex-1 bg-[var(--color-border)]" />
+          <span className="text-sm text-[var(--color-muted)]">or</span>
+          <div className="h-px flex-1 bg-[var(--color-border)]" />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="btn-outline w-full p-3 rounded-xl flex items-center justify-center gap-3"
+        >
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
+          <span>Continue with Google</span>
+        </button>
+
+        <p className="text-center text-gray-600 text-sm mt-4">
+          Already have an account?{' '}
+          <Link to="/login" className="text-red-600 hover:underline font-semibold">
+            Login
+          </Link>
+        </p>
       </div>
 
-      {/* Loader Spinner Style */}
       <style>{`
-        .loader {
-          border-top-color: #3498db;
-          animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
         .input-style {
           width: 100%;
           padding: 1rem;

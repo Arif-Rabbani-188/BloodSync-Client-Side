@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
+import Loader from "../../Components/Loader/Loader";
 
 const PublickDonation = () => {
   const [requests, setRequests] = useState([]);
@@ -37,35 +38,7 @@ const PublickDonation = () => {
     }
   };
 
-  if (dataLoading) {
-    return (
-      <div className="flex mt-30 flex-col justify-center items-center h-64">
-        <svg
-          className="animate-spin h-10 w-10 text-red-600 mb-4"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v8z"
-          ></path>
-        </svg>
-        <span className="text-gray-600 text-lg">
-          Data is loading, please wait...
-        </span>
-      </div>
-    );
-  }
+  if (dataLoading) return <div className="mt-20"><Loader size="lg" /></div>;
 
   if (!requests) {
     return (

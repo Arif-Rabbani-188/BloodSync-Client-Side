@@ -6,6 +6,7 @@ import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import useUserRole from "../../Hooks/useUserRole";
 import useUsers from "../../Hooks/useUsers";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Loader from "../../Components/Loader/Loader";
 
 const ContentPage = () => {
   const { user } = useContext(AuthContext);
@@ -77,14 +78,7 @@ const ContentPage = () => {
     }
   };
 
-  if (roleLoading || isLoading || !role || !users) {
-    
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600"></div>
-      </div>
-    );
-  }
+  if (roleLoading || isLoading || !role || !users) return <div className="h-screen flex items-center justify-center"><Loader size="lg" /></div>;
   if (role !== "admin" && role !== "volunteer") {
     return (
       <div className="flex justify-center items-center min-h-screen">

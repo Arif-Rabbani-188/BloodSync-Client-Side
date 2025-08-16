@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Loader from "../../Components/Loader/Loader";
 
 
 const AllDonationRequests = () => {
@@ -25,13 +26,7 @@ const AllDonationRequests = () => {
     fetchFundings();
   }, []);
 
-  if (loading) { return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-lg text-blue-700 font-semibold">Loading fundings...</p>
-      </div>
-    );
-  };
+  if (loading) return <div className="min-h-[60vh] flex items-center justify-center"><Loader size="lg" message="Loading fundings..." /></div>;
 
   return (
     <div className="p-4 mt-20 md:mt-30 w-11/12 mx-auto">

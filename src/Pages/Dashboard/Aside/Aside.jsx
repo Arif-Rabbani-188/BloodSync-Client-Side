@@ -3,6 +3,7 @@ import Logo from "../../../Components/Logo/Logo";
 import { Link, NavLink } from "react-router";
 import useUserRole from "../../../Hooks/useUserRole";
 import { AuthContext } from "../../../Contexts/AuthContext/AuthContext";
+import Loader from "../../../Components/Loader/Loader";
 
 const Aside = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,13 +16,7 @@ const Aside = () => {
     setIsOpen(!isOpen);
   };
 
-  if (!role && isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-500"></div>
-      </div>
-    );
-  }
+  if (!role && isLoading) return <div className="h-screen flex items-center justify-center"><Loader size="lg" /></div>;
 
   // Sidebar content for reuse
   const sidebarContent = (

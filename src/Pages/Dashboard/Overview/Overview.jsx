@@ -126,14 +126,14 @@ const Overview = () => {
   }, [myRequests]);
 
   return (
-    <div className="section-y">
+    <div className="section-y mt-10">
       <div className="container-x">
       <h1 className="text-2xl md:text-3xl font-bold">Dashboard Overview</h1>
       <p className="text-muted">A quick look at the activity across donation requests.</p>
 
       {loading ? (
         <div className="flex justify-center items-center h-40">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+          <div className="flex items-center justify-center"><div className="rounded-full h-12 w-12 border-4 animate-spin" style={{borderColor:"var(--color-border)", borderTopColor:"var(--color-primary)"}} /></div>
         </div>
       ) : (
         <>

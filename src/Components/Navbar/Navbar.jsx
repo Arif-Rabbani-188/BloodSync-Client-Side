@@ -82,6 +82,11 @@ const Navbar = () => {
                     </NavLink>
                   </li>
                   <li>
+                    <NavLink to="/funding">
+                      Funding
+                    </NavLink>
+                  </li>
+                  <li>
                     <NavLink
                       to="/dashboard"
                       className="text-white/90 hover:text-white"
@@ -172,95 +177,7 @@ const Navbar = () => {
 
                       {/* Protected routes in dropdown */
                       }
-                      <div className="space-y-2 mb-3">
-                        <NavLink
-                          to="/dashboard"
-                          className="block py-2 px-3 rounded hover-surface"
-                          onClick={() => setProfileMenuOpen(false)}
-                        >
-                          Dashboard Home
-                        </NavLink>
-                        {/* Role-specific homes */}
-                        {userData?.role === "admin" ? (
-                          <NavLink
-                            to="/dashboard/admin-home"
-                            className="block py-2 px-3 rounded hover-surface"
-                            onClick={() => setProfileMenuOpen(false)}
-                          >
-                            Admin Home
-                          </NavLink>
-                        ) : (
-                          <NavLink
-                            to="/dashboard/donor-home"
-                            className="block py-2 px-3 rounded hover-surface"
-                            onClick={() => setProfileMenuOpen(false)}
-                          >
-                            Donor Home
-                          </NavLink>
-                        )}
-                        <NavLink
-                          to="/dashboard/my-donation"
-                          className="block py-2 px-3 rounded hover-surface"
-                          onClick={() => setProfileMenuOpen(false)}
-                        >
-                          My Donation Requests
-                        </NavLink>
-                        <NavLink
-                          to="/dashboard/create-donation"
-                          className="block py-2 px-3 rounded hover-surface"
-                          onClick={() => setProfileMenuOpen(false)}
-                        >
-                          Create Donation Request
-                        </NavLink>
-                        {/* Always visible protected links */}
-                        <NavLink
-                          to="/funding"
-                          className="block py-2 px-3 rounded hover-surface"
-                          onClick={() => setProfileMenuOpen(false)}
-                        >
-                          Funding
-                        </NavLink>
-                        <NavLink
-                          to="/give-fund"
-                          className="block py-2 px-3 rounded hover-surface"
-                          onClick={() => setProfileMenuOpen(false)}
-                        >
-                          Give Fund
-                        </NavLink>
-                        {/* Admin-only shortcuts */}
-                        {userData?.role === "admin" && (
-                          <>
-                            <NavLink
-                              to="/dashboard/all-users"
-                              className="block py-2 px-3 rounded hover-surface"
-                              onClick={() => setProfileMenuOpen(false)}
-                            >
-                              Manage Users
-                            </NavLink>
-                            <NavLink
-                              to="/dashboard/all-donation-requests"
-                              className="block py-2 px-3 rounded hover-surface"
-                              onClick={() => setProfileMenuOpen(false)}
-                            >
-                              All Donation Requests
-                            </NavLink>
-                            <NavLink
-                              to="/dashboard/content-management"
-                              className="block py-2 px-3 rounded hover-surface"
-                              onClick={() => setProfileMenuOpen(false)}
-                            >
-                              Content Management
-                            </NavLink>
-                            <NavLink
-                              to="/dashboard/content-management/add-blog"
-                              className="block py-2 px-3 rounded hover-surface"
-                              onClick={() => setProfileMenuOpen(false)}
-                            >
-                              Add Blog
-                            </NavLink>
-                          </>
-                        )}
-                      </div>
+                      
 
                       <button
                         onClick={handleLogOut}
