@@ -67,6 +67,11 @@ const Register = () => {
       formDataImg.append("image", file);
 
       const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
+      if (!apiKey) {
+        console.error("IMGBB API key is missing. Set VITE_IMGBB_API_KEY in your .env file.");
+        setUploading(false);
+        return;
+      }
 
       try {
         const response = await axios.post(
