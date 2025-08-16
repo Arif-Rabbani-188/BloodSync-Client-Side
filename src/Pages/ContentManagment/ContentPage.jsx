@@ -4,14 +4,12 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import useUserRole from "../../Hooks/useUserRole";
-import useUsers from "../../Hooks/useUsers";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loader from "../../Components/Loader/Loader";
 
 const ContentPage = () => {
   const { user } = useContext(AuthContext);
   const { role, isLoading: roleLoading } = useUserRole();
-  const { data: users, isLoading } = useUsers();
   const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -78,7 +76,7 @@ const ContentPage = () => {
     }
   };
 
-  if (roleLoading || isLoading || !role || !users) return <div className="h-screen flex items-center justify-center"><Loader size="lg" /></div>;
+  if (roleLoading) return <div className="h-screen flex items-center justify-center"><Loader size="lg" /></div>;
   if (role !== "admin" && role !== "volunteer") {
     return (
       <div className="flex justify-center items-center min-h-screen">
