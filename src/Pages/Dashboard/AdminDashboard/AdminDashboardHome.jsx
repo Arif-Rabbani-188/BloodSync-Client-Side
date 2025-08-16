@@ -186,7 +186,7 @@ const AdminDashboardHome = () => {
   };
 
   return (
-  <div className="p-6 mt-20 md:mt-10 mx-auto max-w-screen-xl">
+  <div className="p-6 mt-20 md:mt-10 w-full px-4 md:px-6">
       <div className="mb-8 card p-6 flex items-center gap-4">
         <div className="text-4xl">🏠</div>
         <div>

@@ -64,7 +64,7 @@ const DashboardHome = () => {
     .slice(0, 3);
 
   return (
-    <div className="p-4 mt-20 md:mt-10 w-10/12 mx-auto">
+  <div className="p-4 mt-20 md:mt-10 w-full px-4 md:px-6">
       <h2 className="text-2xl font-bold mb-4 text-center">
         Welcome, {user?.displayName || user?.email}!
       </h2>

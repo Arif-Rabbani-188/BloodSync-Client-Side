@@ -26,31 +26,11 @@ const Aside = () => {
   // Sidebar content for reuse
   const sidebarContent = (
     <>
-      <div className="flex items-center justify-between mb-10 md:mt-10 lg:mt-0">
-        <Logo />
-        <button
-          onClick={toggleSidebar}
-          className="lg:hidden p-2 rounded-full text-gray-600 hover-surface focus:outline-none focus:ring-2"
-          aria-label="Close sidebar"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
-        </button>
-      </div>
       <nav className="flex-1">
         <ul className="space-y-4">
+          <li className="hidden lg:flex">
+            <Logo></Logo>
+          </li>
           <li>
             <NavLink
             onClick={toggleSidebar}
@@ -72,26 +52,6 @@ const Aside = () => {
                 ></path>
               </svg>
               Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-            onClick={toggleSidebar}
-              to="/dashboard/overview"
-              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
-            >
-              <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 3v18m-7-7h18"/></svg>
-              Overview
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-            onClick={toggleSidebar}
-              to="/dashboard/profile"
-              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
-            >
-              <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-              Profile
             </NavLink>
           </li>
           <li>
@@ -117,6 +77,26 @@ const Aside = () => {
               Dashboard Home
             </Link>
             </li>
+          <li>
+            <NavLink
+            onClick={toggleSidebar}
+              to="/dashboard/overview"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
+            >
+              <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 3v18m-7-7h18"/></svg>
+              Overview
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+            onClick={toggleSidebar}
+              to="/dashboard/profile"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover-surface transition duration-200"
+            >
+              <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              Profile
+            </NavLink>
+          </li>
           {(role === "admin" || role === "volunteer") && !isLoading && (
             <li>
               <NavLink
@@ -247,33 +227,34 @@ const Aside = () => {
     <>
       {/* Mobile sidebar toggle + drawer (below global navbar) */}
       <div className="lg:hidden">
-        <button
-          onClick={toggleSidebar}
-          className="fixed top-20 left-4 z-40 btn btn-outline px-3 py-1"
-          aria-label="Open sidebar"
+        {/* Mobile dashboard header under global navbar */}
+        <div
+          className="fixed top-0 md:top-0 left-0 right-0 z-40 flex items-center gap-3 px-4 py-2"
+          style={{ background: "var(--color-surface)", color: "var(--color-text)", borderBottom: "1px solid var(--color-border)" }}
         >
-          Menu
-        </button>
+          <button
+            onClick={toggleSidebar}
+            className="p-2 rounded-lg hover-surface border border-token"
+            aria-label="Open sidebar"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <span className="font-semibold">Dashboard</span>
+        </div>
         {isOpen && (
           <div
-            className="fixed inset-0 top-16 bg-black/40 z-40"
+            className="fixed inset-0 top-16 md:top-20 bg-black/40 z-40"
             onClick={toggleSidebar}
           />
         )}
         <aside
-          className={`fixed left-0 top-16 h-[calc(100vh-4rem)] w-4/5 max-w-[18rem] z-50 shadow-lg flex flex-col p-6 font-sans overflow-y-auto transform transition-transform duration-300 ease-in-out ${
+          className={`fixed left-0 top-14 md:top-13 h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] w-4/5 max-w-[18rem] z-50 shadow-lg flex flex-col p-6 font-sans overflow-y-auto transform transition-transform duration-300 ease-in-out ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
           style={{ background: "var(--color-surface)", color: "var(--color-text)", borderRight: "1px solid var(--color-border)" }}
         >
-          <div className="flex items-center justify-between mb-6">
-            <Logo />
-            <button onClick={toggleSidebar} className="p-2 rounded hover-surface" aria-label="Close sidebar">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
           {sidebarContent}
         </aside>
       </div>
@@ -281,7 +262,7 @@ const Aside = () => {
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <aside
-          className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-80 shadow-lg flex flex-col p-6 font-sans overflow-y-auto"
+          className="fixed left-0 top-0 h-[calc(100vh)] w-80 shadow-lg flex flex-col p-6 font-sans overflow-y-auto"
           style={{ background: "var(--color-surface)", color: "var(--color-text)", borderRight: "1px solid var(--color-border)" }}
         >
           {sidebarContent}

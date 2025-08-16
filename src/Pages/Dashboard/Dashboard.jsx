@@ -6,11 +6,9 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen">
       <Aside />
-      {/* Left padding for desktop aside; Root already offsets the fixed navbar */}
-      <main className="lg:pl-80">
-        <div className="w-11/12 md:w-10/12 mx-auto">
-          <Outlet />
-        </div>
+      {/* Full-width content; Root offsets navbar. Desktop gets left pad for the aside. */}
+      <main className="lg:pl-80 px-4 md:px-6">
+        <Outlet />
       </main>
     </div>
   );

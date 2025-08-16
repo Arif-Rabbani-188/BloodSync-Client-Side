@@ -163,7 +163,7 @@ if (role !== "admin" && role !== "volunteer") {
   };
 
   return (
-  <div className="w-11/12 md:w-10/12 mx-auto p-2 md:p-6 mt-20">
+  <div className="w-full px-4 md:px-6 p-2 md:p-6 mt-20">
       <div className="flex items-center justify-between mb-4">
         <label htmlFor="status-filter" className="font-medium">
           Filter by Status:

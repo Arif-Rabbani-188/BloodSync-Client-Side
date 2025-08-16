@@ -13,7 +13,7 @@ const Profile = () => {
 
   return (
     <div className="section-y">
-      <div className="container-x">
+  <div className="w-full mx-auto mt-5 md:ml-5">
         <div className="card r-xl p-6 md:p-8">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
           <img
@@ -61,7 +61,7 @@ const Profile = () => {
               <h2 className="text-lg font-semibold mb-3">Address</h2>
             <InfoRow label="District" value={userData?.recipientDistrict || userData?.district} />
             <InfoRow label="Upazila" value={userData?.recipientUpazila || userData?.upazila} />
-              <InfoRow label="Address" value={userData?.address} />
+              <InfoRow label="Address" value={userData?.upazila+ ", "+ userData?.district} />
           </div>
         </div>
         </div>
