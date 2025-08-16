@@ -7,19 +7,36 @@ import { AuthContext } from "../../Contexts/AuthContext/AuthContext";
 import Feature from "../Features/Feature";
 import HomeBlogs from "../Blogs/HomeBlogs";
 import BloodDonationCampaign from "../Features/BloodDonationCampaign";
+import Stats from "../Features/Stats";
+import FeaturedCampaigns from "../Features/FeaturedCampaigns";
+import Testimonials from "../Features/Testimonials";
+import Newsletter from "../Features/Newsletter";
 
 
 const Home = () => {
 
   return (
     <div>
-        <Banner />
-        <Feature></Feature>
-        <DonateNow></DonateNow>
-        <DonationPoccess></DonationPoccess>
-        {/* <BloodDonationCampaign></BloodDonationCampaign> */}
-        <HomeBlogs></HomeBlogs>
-        <Appointment></Appointment>
+  {/* 1. Hero */}
+  <Banner />
+  {/* 2. Stats */}
+  <Stats />
+  {/* 3. Features */}
+  <Feature />
+  {/* 4. Featured Campaigns (cards with images) */}
+  <FeaturedCampaigns />
+  {/* 5. Donate Now CTA */}
+  <DonateNow />
+  {/* 6. Donation Process */}
+  <DonationPoccess />
+  {/* 7. Recent Blogs */}
+  <HomeBlogs />
+  {/* 8. Testimonials */}
+  <Testimonials />
+  {/* 9. Newsletter */}
+  <Newsletter />
+  {/* 10. Contact/Appointment */}
+  <Appointment />
     </div>
   );
 };

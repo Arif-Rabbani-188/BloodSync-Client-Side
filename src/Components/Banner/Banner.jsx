@@ -9,10 +9,14 @@ const Banner = () => {
   return (
     <div className="hero pt-30 pb-10 bg-gradient-to-br from-green-100 to-white min-h-[600px] rounded-tl-[100px]">
       <div className="flex flex-col lg:flex-row-reverse w-11/12 mx-auto items-center justify-between">
-        <img
-          src="Blood_thumbnail.jpg"
-          className=" border-l-10 border-b-10 border-red-600 rounded-tl-full rounded-tr-full rounded-br-full shadow-2xl flex-1"
-        />
+        <div className="flex-1 w-full flex items-center justify-center">
+          <img
+            src="Blood_thumbnail.jpg"
+            alt="Hero"
+            className="rounded-tl-full rounded-tr-full rounded-br-full shadow-2xl border-l-10 border-b-10 border-red-600 object-cover"
+            style={{ width: "100%", maxWidth: 520, height: 360 }}
+          />
+        </div>
         <div className="flex-1 flex flex-col justify-center items-start px-2 pt-10 md:p-10">
           <h1 className="text-3xl md:text-5xl font-bold">
             Donate Blood <br /> save life!

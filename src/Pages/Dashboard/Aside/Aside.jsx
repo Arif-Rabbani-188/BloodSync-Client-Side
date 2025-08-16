@@ -75,6 +75,26 @@ const Aside = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink
+            onClick={toggleSidebar}
+              to="/dashboard/overview"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition duration-200"
+            >
+              <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 3v18m-7-7h18"/></svg>
+              Overview
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+            onClick={toggleSidebar}
+              to="/dashboard/profile"
+              className="flex items-center p-3 rounded-xl text-lg font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition duration-200"
+            >
+              <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              Profile
+            </NavLink>
+          </li>
+          <li>
             <Link
             onClick={toggleSidebar}
               to="/dashboard"

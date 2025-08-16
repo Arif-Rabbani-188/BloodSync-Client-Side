@@ -43,11 +43,11 @@ const HomeBlogs = () => {
           can help save lives.
         </p>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {blogs.map((blog) => (
             <div
               key={blog._id}
-              className="bg-red-50 hover:bg-red-100 transition p-6 rounded-xl shadow-md border border-red-100 flex flex-col justify-between"
+        className="bg-red-50 hover:bg-red-100 transition p-6 rounded-xl shadow-md border border-red-100 flex flex-col justify-between min-h-[380px]"
             >
               <img
                 src={blog.thumbnail}
@@ -69,9 +69,9 @@ const HomeBlogs = () => {
                 </p>
                 <Link
                   to={`/blogs/${blog._id}`}
-                  className="text-sm text-red-600 hover:underline font-semibold"
+          className="text-sm text-red-600 hover:underline font-semibold"
                 >
-                  Read More →
+          See more →
                 </Link>
               </div>
             </div>

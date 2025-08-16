@@ -26,6 +26,8 @@ import AddBlogs from "./Pages/ContentManagment/AddBlogs";
 import AllBlogs from "./Pages/Blogs/AllBlogs";
 import SingleBlog from "./Pages/Blogs/SingleBlog";
 import DashboardHome from "./Pages/Dashboard/DashboardHome/DashboardHome";
+import Overview from "./Pages/Dashboard/Overview/Overview";
+import Profile from "./Pages/Dashboard/Profile/Profile";
 import Error from "./Pages/Error/Error";
 import AllFunding from "./Pages/Funding/AllFunding";
 import GiveFund from "./Pages/Funding/GiveFund";
@@ -98,6 +100,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <PrivateRoute><DashboardHome></DashboardHome></PrivateRoute>
+      },
+      {
+        path: "overview",
+        element: <PrivateRoute><Overview /></PrivateRoute>
+      },
+      {
+        path: "profile",
+        element: <PrivateRoute><Profile /></PrivateRoute>
       },
       {
         path:"admin-home",
